@@ -1,0 +1,197 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Products
+  fields:
+    - name: categoryId
+      type: Uuid!
+    - name: countryOfOrigin
+      type: Text!
+    - name: createdAt
+      type: Timestamptz!
+    - name: description
+      type: Text!
+    - name: id
+      type: Uuid!
+    - name: image
+      type: Text!
+    - name: manufacturerId
+      type: Uuid!
+    - name: name
+      type: Text!
+    - name: price
+      type: Int4!
+    - name: updatedAt
+      type: Timestamptz!
+    - name: vector
+      type: Vector
+  graphql:
+    typeName: Experience_Products
+    inputTypeName: Experience_ProductsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: db1
+      dataConnectorObjectType: products
+      fieldMapping:
+        categoryId:
+          column:
+            name: category_id
+        countryOfOrigin:
+          column:
+            name: country_of_origin
+        createdAt:
+          column:
+            name: created_at
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        image:
+          column:
+            name: image
+        manufacturerId:
+          column:
+            name: manufacturer_id
+        name:
+          column:
+            name: name
+        price:
+          column:
+            name: price
+        updatedAt:
+          column:
+            name: updated_at
+        vector:
+          column:
+            name: vector
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Products
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - categoryId
+          - countryOfOrigin
+          - createdAt
+          - description
+          - id
+          - image
+          - manufacturerId
+          - name
+          - price
+          - updatedAt
+          - vector
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: ProductsBoolExp
+  objectType: Products
+  dataConnectorName: db1
+  dataConnectorObjectType: products
+  comparableFields:
+    - fieldName: categoryId
+      operators:
+        enableAll: true
+    - fieldName: countryOfOrigin
+      operators:
+        enableAll: true
+    - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: description
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: image
+      operators:
+        enableAll: true
+    - fieldName: manufacturerId
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+    - fieldName: price
+      operators:
+        enableAll: true
+    - fieldName: updatedAt
+      operators:
+        enableAll: true
+    - fieldName: vector
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Experience_ProductsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Products
+  objectType: Products
+  source:
+    dataConnectorName: db1
+    collection: products
+  filterExpressionType: ProductsBoolExp
+  orderableFields:
+    - fieldName: categoryId
+      orderByDirections:
+        enableAll: true
+    - fieldName: countryOfOrigin
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: image
+      orderByDirections:
+        enableAll: true
+    - fieldName: manufacturerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: vector
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: experience_products
+    selectUniques:
+      - queryRootField: experience_productsById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Products
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
