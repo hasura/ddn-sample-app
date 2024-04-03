@@ -1,6 +1,22 @@
+# version: v1
+# project: climbing-coral-6568
+# subgraphs:
+#   experience:
+#     path: experience
+# defaultSupergraphManifest: base
+
 version: v1
-project: climbing-coral-6568
+project: hardy-pheasant-6274
+
+# Location of the Project's Subgraphs.
+# Subgraphs are used to group your metadata objects together in a way 
+# that makes sense for your application and your team. Multiple HML files can belong to a 
+# Subgraph and you can have multiple Subgraphs in your Supergraph. We have created 
+# the Subgraph "app" by default to get you started.
 subgraphs:
-  experience:
-    path: experience
+  app:
+    path: ./experience
+  
+# The default SupergraphManifest to create a SupergraphBuild with
+# when no SupergraphManifest is explicitly specified.
 defaultSupergraphManifest: base

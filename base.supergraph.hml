@@ -7,8 +7,4 @@ version: v1
 definition:
   name: base
   envfile: base.env.yaml
-
-  # List of Subgraphs to include in the SupergraphBuild
-  subgraphs:
-    - experience
   
