@@ -1,0 +1,6 @@
+version: v1
+project: climbing-coral-6568
+subgraphs:
+  experience:
+    path: experience
+defaultSupergraphManifest: base
