@@ -1,0 +1,16 @@
+kind: ConnectorManifest
+version: v1
+spec:
+  supergraphManifests:
+  - base
+definition:
+  name: db1
+  type: cloud
+  connector:
+    type: hub
+    name: hasura/postgres:v0.5.1
+  deployments:
+  - context: .
+    env:
+      CONNECTION_URI:
+        value: "postgresql://read_only_user:readonlyuser@35.236.11.122:5432/v3-docs-sample-app"
