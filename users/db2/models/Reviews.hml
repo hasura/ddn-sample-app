@@ -142,6 +142,7 @@ definition:
       orderByDirections:
         enableAll: true
   graphql:
+    orderByExpressionType: Users_ReviewsOrderBy
     selectMany:
       queryRootField: users_reviews
     selectUniques:
