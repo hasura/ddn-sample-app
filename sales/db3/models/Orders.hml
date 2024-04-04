@@ -2,39 +2,49 @@
 kind: ObjectType
 version: v1
 definition:
-  name: Carts
+  name: Orders
   fields:
     - name: createdAt
+      type: Timestamptz!
+    - name: deliveryDate
       type: Timestamptz
     - name: id
       type: Uuid!
-    - name: isComplete
+    - name: isReviewed
       type: Bool!
-    - name: isReminderSent
-      type: Bool!
+    - name: productId
+      type: Uuid!
+    - name: status
+      type: Text!
     - name: updatedAt
-      type: Timestamptz
+      type: Timestamptz!
     - name: userId
       type: Uuid!
   graphql:
-    typeName: Experience_Carts
-    inputTypeName: Experience_CartsInput
+    typeName: Sales_Orders
+    inputTypeName: Sales_OrdersInput
   dataConnectorTypeMapping:
-    - dataConnectorName: db1
-      dataConnectorObjectType: carts
+    - dataConnectorName: db3
+      dataConnectorObjectType: orders
       fieldMapping:
         createdAt:
           column:
             name: created_at
+        deliveryDate:
+          column:
+            name: delivery_date
         id:
           column:
             name: id
-        isComplete:
+        isReviewed:
           column:
-            name: is_complete
-        isReminderSent:
+            name: is_reviewed
+        productId:
           column:
-            name: is_reminder_sent
+            name: product_id
+        status:
+          column:
+            name: status
         updatedAt:
           column:
             name: updated_at
@@ -46,15 +56,17 @@ definition:
 kind: TypePermissions
 version: v1
 definition:
-  typeName: Carts
+  typeName: Orders
   permissions:
     - role: admin
       output:
         allowedFields:
           - createdAt
+          - deliveryDate
           - id
-          - isComplete
-          - isReminderSent
+          - isReviewed
+          - productId
+          - status
           - updatedAt
           - userId
 
@@ -62,21 +74,27 @@ definition:
 kind: ObjectBooleanExpressionType
 version: v1
 definition:
-  name: CartsBoolExp
-  objectType: Carts
-  dataConnectorName: db1
-  dataConnectorObjectType: carts
+  name: OrdersBoolExp
+  objectType: Orders
+  dataConnectorName: db3
+  dataConnectorObjectType: orders
   comparableFields:
     - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: deliveryDate
       operators:
         enableAll: true
     - fieldName: id
       operators:
         enableAll: true
-    - fieldName: isComplete
+    - fieldName: isReviewed
       operators:
         enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: productId
+      operators:
+        enableAll: true
+    - fieldName: status
       operators:
         enableAll: true
     - fieldName: updatedAt
@@ -86,29 +104,35 @@ definition:
       operators:
         enableAll: true
   graphql:
-    typeName: Experience_CartsBoolExp
+    typeName: Sales_OrdersBoolExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: Carts
-  objectType: Carts
+  name: Orders
+  objectType: Orders
   source:
-    dataConnectorName: db1
-    collection: carts
-  filterExpressionType: CartsBoolExp
+    dataConnectorName: db3
+    collection: orders
+  filterExpressionType: OrdersBoolExp
   orderableFields:
     - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: deliveryDate
       orderByDirections:
         enableAll: true
     - fieldName: id
       orderByDirections:
         enableAll: true
-    - fieldName: isComplete
+    - fieldName: isReviewed
       orderByDirections:
         enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
       orderByDirections:
         enableAll: true
     - fieldName: updatedAt
@@ -119,9 +143,9 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_carts
+      queryRootField: sales_orders
     selectUniques:
-      - queryRootField: experience_cartsById
+      - queryRootField: sales_ordersById
         uniqueIdentifier:
           - id
 
@@ -129,36 +153,17 @@ definition:
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: Carts
+  modelName: Orders
   permissions:
     - role: admin
       select:
         filter: null
-
----
-kind: Relationship
-version: v1
-definition:
-  name: cartItems
-  source: Carts
-  target:
-    model:
-      name: CartItems
-      relationshipType: Array
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: cartId
-
 ---
 kind: Relationship
 version: v1
 definition:
   name: users
-  source: Carts
+  source: Orders
   target:
     model:
       name: Users
@@ -168,6 +173,25 @@ definition:
     - source:
         fieldPath:
           - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: Orders
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
       target:
         modelField:
           - fieldName: id

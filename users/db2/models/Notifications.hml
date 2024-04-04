@@ -2,26 +2,24 @@
 kind: ObjectType
 version: v1
 definition:
-  name: Carts
+  name: Notifications
   fields:
     - name: createdAt
-      type: Timestamptz
+      type: Timestamptz!
     - name: id
       type: Uuid!
-    - name: isComplete
-      type: Bool!
-    - name: isReminderSent
-      type: Bool!
+    - name: message
+      type: Text!
     - name: updatedAt
-      type: Timestamptz
+      type: Timestamptz!
     - name: userId
       type: Uuid!
   graphql:
-    typeName: Experience_Carts
-    inputTypeName: Experience_CartsInput
+    typeName: Users_Notifications
+    inputTypeName: Users_NotificationsInput
   dataConnectorTypeMapping:
-    - dataConnectorName: db1
-      dataConnectorObjectType: carts
+    - dataConnectorName: db2
+      dataConnectorObjectType: notifications
       fieldMapping:
         createdAt:
           column:
@@ -29,12 +27,9 @@ definition:
         id:
           column:
             name: id
-        isComplete:
+        message:
           column:
-            name: is_complete
-        isReminderSent:
-          column:
-            name: is_reminder_sent
+            name: message
         updatedAt:
           column:
             name: updated_at
@@ -46,15 +41,14 @@ definition:
 kind: TypePermissions
 version: v1
 definition:
-  typeName: Carts
+  typeName: Notifications
   permissions:
     - role: admin
       output:
         allowedFields:
           - createdAt
           - id
-          - isComplete
-          - isReminderSent
+          - message
           - updatedAt
           - userId
 
@@ -62,10 +56,10 @@ definition:
 kind: ObjectBooleanExpressionType
 version: v1
 definition:
-  name: CartsBoolExp
-  objectType: Carts
-  dataConnectorName: db1
-  dataConnectorObjectType: carts
+  name: NotificationsBoolExp
+  objectType: Notifications
+  dataConnectorName: db2
+  dataConnectorObjectType: notifications
   comparableFields:
     - fieldName: createdAt
       operators:
@@ -73,10 +67,7 @@ definition:
     - fieldName: id
       operators:
         enableAll: true
-    - fieldName: isComplete
-      operators:
-        enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: message
       operators:
         enableAll: true
     - fieldName: updatedAt
@@ -86,18 +77,18 @@ definition:
       operators:
         enableAll: true
   graphql:
-    typeName: Experience_CartsBoolExp
+    typeName: Users_NotificationsBoolExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: Carts
-  objectType: Carts
+  name: Notifications
+  objectType: Notifications
   source:
-    dataConnectorName: db1
-    collection: carts
-  filterExpressionType: CartsBoolExp
+    dataConnectorName: db2
+    collection: notifications
+  filterExpressionType: NotificationsBoolExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -105,10 +96,7 @@ definition:
     - fieldName: id
       orderByDirections:
         enableAll: true
-    - fieldName: isComplete
-      orderByDirections:
-        enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: message
       orderByDirections:
         enableAll: true
     - fieldName: updatedAt
@@ -119,9 +107,9 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_carts
+      queryRootField: users_notifications
     selectUniques:
-      - queryRootField: experience_cartsById
+      - queryRootField: users_notificationsById
         uniqueIdentifier:
           - id
 
@@ -129,36 +117,19 @@ definition:
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: Carts
+  modelName: Notifications
   permissions:
     - role: admin
       select:
         filter: null
 
----
-kind: Relationship
-version: v1
-definition:
-  name: cartItems
-  source: Carts
-  target:
-    model:
-      name: CartItems
-      relationshipType: Array
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: cartId
 
 ---
 kind: Relationship
 version: v1
 definition:
   name: users
-  source: Carts
+  source: Notifications
   target:
     model:
       name: Users

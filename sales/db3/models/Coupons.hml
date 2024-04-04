@@ -2,39 +2,51 @@
 kind: ObjectType
 version: v1
 definition:
-  name: Carts
+  name: Coupons
   fields:
+    - name: amount
+      type: Int4
+    - name: code
+      type: Text!
     - name: createdAt
-      type: Timestamptz
+      type: Timestamptz!
+    - name: expirationDate
+      type: Timestamptz!
     - name: id
       type: Uuid!
-    - name: isComplete
-      type: Bool!
-    - name: isReminderSent
-      type: Bool!
+    - name: percentOrValue
+      type: Text
+      deprecated:
+        reason: test1
     - name: updatedAt
-      type: Timestamptz
+      type: Timestamptz!
     - name: userId
       type: Uuid!
   graphql:
-    typeName: Experience_Carts
-    inputTypeName: Experience_CartsInput
+    typeName: Sales_Coupons
+    inputTypeName: Sales_CouponsInput
   dataConnectorTypeMapping:
-    - dataConnectorName: db1
-      dataConnectorObjectType: carts
+    - dataConnectorName: db3
+      dataConnectorObjectType: coupons
       fieldMapping:
+        amount:
+          column:
+            name: amount
+        code:
+          column:
+            name: code
         createdAt:
           column:
             name: created_at
+        expirationDate:
+          column:
+            name: expiration_date
         id:
           column:
             name: id
-        isComplete:
+        percentOrValue:
           column:
-            name: is_complete
-        isReminderSent:
-          column:
-            name: is_reminder_sent
+            name: percent_or_value
         updatedAt:
           column:
             name: updated_at
@@ -46,15 +58,17 @@ definition:
 kind: TypePermissions
 version: v1
 definition:
-  typeName: Carts
+  typeName: Coupons
   permissions:
     - role: admin
       output:
         allowedFields:
+          - amount
+          - code
           - createdAt
+          - expirationDate
           - id
-          - isComplete
-          - isReminderSent
+          - percentOrValue
           - updatedAt
           - userId
 
@@ -62,21 +76,27 @@ definition:
 kind: ObjectBooleanExpressionType
 version: v1
 definition:
-  name: CartsBoolExp
-  objectType: Carts
-  dataConnectorName: db1
-  dataConnectorObjectType: carts
+  name: CouponsBoolExp
+  objectType: Coupons
+  dataConnectorName: db3
+  dataConnectorObjectType: coupons
   comparableFields:
+    - fieldName: amount
+      operators:
+        enableAll: true
+    - fieldName: code
+      operators:
+        enableAll: true
     - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: expirationDate
       operators:
         enableAll: true
     - fieldName: id
       operators:
         enableAll: true
-    - fieldName: isComplete
-      operators:
-        enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: percentOrValue
       operators:
         enableAll: true
     - fieldName: updatedAt
@@ -86,29 +106,35 @@ definition:
       operators:
         enableAll: true
   graphql:
-    typeName: Experience_CartsBoolExp
+    typeName: Sales_CouponsBoolExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: Carts
-  objectType: Carts
+  name: Coupons
+  objectType: Coupons
   source:
-    dataConnectorName: db1
-    collection: carts
-  filterExpressionType: CartsBoolExp
+    dataConnectorName: db3
+    collection: coupons
+  filterExpressionType: CouponsBoolExp
   orderableFields:
+    - fieldName: amount
+      orderByDirections:
+        enableAll: true
+    - fieldName: code
+      orderByDirections:
+        enableAll: true
     - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: expirationDate
       orderByDirections:
         enableAll: true
     - fieldName: id
       orderByDirections:
         enableAll: true
-    - fieldName: isComplete
-      orderByDirections:
-        enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: percentOrValue
       orderByDirections:
         enableAll: true
     - fieldName: updatedAt
@@ -119,9 +145,9 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_carts
+      queryRootField: sales_coupons
     selectUniques:
-      - queryRootField: experience_cartsById
+      - queryRootField: sales_couponsById
         uniqueIdentifier:
           - id
 
@@ -129,7 +155,7 @@ definition:
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: Carts
+  modelName: Coupons
   permissions:
     - role: admin
       select:
@@ -139,26 +165,8 @@ definition:
 kind: Relationship
 version: v1
 definition:
-  name: cartItems
-  source: Carts
-  target:
-    model:
-      name: CartItems
-      relationshipType: Array
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: cartId
-
----
-kind: Relationship
-version: v1
-definition:
   name: users
-  source: Carts
+  source: Coupons
   target:
     model:
       name: Users

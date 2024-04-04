@@ -2,186 +2,162 @@
 kind: ObjectType
 version: v1
 definition:
-  name: Products
+  name: Users
   fields:
-    - name: categoryId
-      type: Uuid!
-    - name: countryOfOrigin
-      type: Text!
     - name: createdAt
       type: Timestamptz!
-    - name: description
+    - name: email
       type: Text!
+    - name: favoriteArtist
+      type: Int4
     - name: id
       type: Uuid!
-    - name: image
-      type: Text!
-    - name: manufacturerId
-      type: Uuid!
+    - name: isEmailVerified
+      type: Bool
+    - name: lastSeen
+      type: Timestamptz
     - name: name
       type: Text!
-    - name: price
-      type: Int4!
+    - name: password
+      type: Text
     - name: updatedAt
       type: Timestamptz!
-    - name: vector
-      type: Vector
   graphql:
-    typeName: Experience_Products
-    inputTypeName: Experience_ProductsInput
+    typeName: Users_Users
+    inputTypeName: Users_UsersInput
   dataConnectorTypeMapping:
-    - dataConnectorName: db1
-      dataConnectorObjectType: products
+    - dataConnectorName: db2
+      dataConnectorObjectType: users
       fieldMapping:
-        categoryId:
-          column:
-            name: category_id
-        countryOfOrigin:
-          column:
-            name: country_of_origin
         createdAt:
           column:
             name: created_at
-        description:
+        email:
           column:
-            name: description
+            name: email
+        favoriteArtist:
+          column:
+            name: favorite_artist
         id:
           column:
             name: id
-        image:
+        isEmailVerified:
           column:
-            name: image
-        manufacturerId:
+            name: is_email_verified
+        lastSeen:
           column:
-            name: manufacturer_id
+            name: last_seen
         name:
           column:
             name: name
-        price:
+        password:
           column:
-            name: price
+            name: password
         updatedAt:
           column:
             name: updated_at
-        vector:
-          column:
-            name: vector
 
 ---
 kind: TypePermissions
 version: v1
 definition:
-  typeName: Products
+  typeName: Users
   permissions:
     - role: admin
       output:
         allowedFields:
-          - categoryId
-          - countryOfOrigin
           - createdAt
-          - description
+          - email
+          - favoriteArtist
           - id
-          - image
-          - manufacturerId
+          - isEmailVerified
+          - lastSeen
           - name
-          - price
+          - password
           - updatedAt
-          - vector
 
 ---
 kind: ObjectBooleanExpressionType
 version: v1
 definition:
-  name: ProductsBoolExp
-  objectType: Products
-  dataConnectorName: db1
-  dataConnectorObjectType: products
+  name: UsersBoolExp
+  objectType: Users
+  dataConnectorName: db2
+  dataConnectorObjectType: users
   comparableFields:
-    - fieldName: categoryId
-      operators:
-        enableAll: true
-    - fieldName: countryOfOrigin
-      operators:
-        enableAll: true
     - fieldName: createdAt
       operators:
         enableAll: true
-    - fieldName: description
+    - fieldName: email
+      operators:
+        enableAll: true
+    - fieldName: favoriteArtist
       operators:
         enableAll: true
     - fieldName: id
       operators:
         enableAll: true
-    - fieldName: image
+    - fieldName: isEmailVerified
       operators:
         enableAll: true
-    - fieldName: manufacturerId
+    - fieldName: lastSeen
       operators:
         enableAll: true
     - fieldName: name
       operators:
         enableAll: true
-    - fieldName: price
+    - fieldName: password
       operators:
         enableAll: true
     - fieldName: updatedAt
       operators:
         enableAll: true
-    - fieldName: vector
-      operators:
-        enableAll: true
   graphql:
-    typeName: Experience_ProductsBoolExp
+    typeName: Users_UsersBoolExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: Products
-  objectType: Products
+  name: Users
+  objectType: Users
   source:
-    dataConnectorName: db1
-    collection: products
-  filterExpressionType: ProductsBoolExp
+    dataConnectorName: db2
+    collection: users
+  filterExpressionType: UsersBoolExp
   orderableFields:
-    - fieldName: categoryId
-      orderByDirections:
-        enableAll: true
-    - fieldName: countryOfOrigin
-      orderByDirections:
-        enableAll: true
     - fieldName: createdAt
       orderByDirections:
         enableAll: true
-    - fieldName: description
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: favoriteArtist
       orderByDirections:
         enableAll: true
     - fieldName: id
       orderByDirections:
         enableAll: true
-    - fieldName: image
+    - fieldName: isEmailVerified
       orderByDirections:
         enableAll: true
-    - fieldName: manufacturerId
+    - fieldName: lastSeen
       orderByDirections:
         enableAll: true
     - fieldName: name
       orderByDirections:
         enableAll: true
-    - fieldName: price
+    - fieldName: password
       orderByDirections:
         enableAll: true
     - fieldName: updatedAt
       orderByDirections:
         enableAll: true
-    - fieldName: vector
-      orderByDirections:
-        enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_products
+      queryRootField: users_users
     selectUniques:
-      - queryRootField: experience_productsById
+      - queryRootField: users_usersById
         uniqueIdentifier:
           - id
 
@@ -189,7 +165,7 @@ definition:
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: Products
+  modelName: Users
   permissions:
     - role: admin
       select:
@@ -199,11 +175,11 @@ definition:
 kind: Relationship
 version: v1
 definition:
-  name: cartItems
-  source: Products
+  name: carts
+  source: Users
   target:
     model:
-      name: CartItems
+      name: Carts
       subgraph: experience
       relationshipType: Array
   mapping:
@@ -212,14 +188,52 @@ definition:
           - fieldName: id
       target:
         modelField:
-          - fieldName: productId
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: coupons
+  source: Users
+  target:
+    model:
+      name: Coupons
+      subgraph: sales
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: notifications
+  source: Users
+  target:
+    model:
+      name: Notifications
+      subgraph: users
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
 
 ---
 kind: Relationship
 version: v1
 definition:
   name: orders
-  source: Products
+  source: Users
   target:
     model:
       name: Orders
@@ -231,52 +245,14 @@ definition:
           - fieldName: id
       target:
         modelField:
-          - fieldName: productId
-
----
-kind: Relationship
-version: v1
-definition:
-  name: categories
-  source: Products
-  target:
-    model:
-      name: Categories
-      subgraph: experience
-      relationshipType: Object
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: categoryId
-      target:
-        modelField:
-          - fieldName: id
-
----
-kind: Relationship
-version: v1
-definition:
-  name: manufacturers
-  source: Products
-  target:
-    model:
-      name: Manufacturers
-      subgraph: experience
-      relationshipType: Object
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: manufacturerId
-      target:
-        modelField:
-          - fieldName: id
+          - fieldName: userId
 
 ---
 kind: Relationship
 version: v1
 definition:
   name: reviews
-  source: Products
+  source: Users
   target:
     model:
       name: Reviews
@@ -288,4 +264,4 @@ definition:
           - fieldName: id
       target:
         modelField:
-          - fieldName: productId
+          - fieldName: userId

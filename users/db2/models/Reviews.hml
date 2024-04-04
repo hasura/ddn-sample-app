@@ -2,26 +2,30 @@
 kind: ObjectType
 version: v1
 definition:
-  name: Carts
+  name: Reviews
   fields:
     - name: createdAt
-      type: Timestamptz
+      type: Timestamptz!
     - name: id
       type: Uuid!
-    - name: isComplete
+    - name: isVisible
       type: Bool!
-    - name: isReminderSent
-      type: Bool!
+    - name: productId
+      type: Uuid!
+    - name: rating
+      type: Int4!
+    - name: text
+      type: Text!
     - name: updatedAt
-      type: Timestamptz
+      type: Timestamptz!
     - name: userId
       type: Uuid!
   graphql:
-    typeName: Experience_Carts
-    inputTypeName: Experience_CartsInput
+    typeName: Users_Reviews
+    inputTypeName: Users_ReviewsInput
   dataConnectorTypeMapping:
-    - dataConnectorName: db1
-      dataConnectorObjectType: carts
+    - dataConnectorName: db2
+      dataConnectorObjectType: reviews
       fieldMapping:
         createdAt:
           column:
@@ -29,12 +33,18 @@ definition:
         id:
           column:
             name: id
-        isComplete:
+        isVisible:
           column:
-            name: is_complete
-        isReminderSent:
+            name: is_visible
+        productId:
           column:
-            name: is_reminder_sent
+            name: product_id
+        rating:
+          column:
+            name: rating
+        text:
+          column:
+            name: text
         updatedAt:
           column:
             name: updated_at
@@ -46,15 +56,17 @@ definition:
 kind: TypePermissions
 version: v1
 definition:
-  typeName: Carts
+  typeName: Reviews
   permissions:
     - role: admin
       output:
         allowedFields:
           - createdAt
           - id
-          - isComplete
-          - isReminderSent
+          - isVisible
+          - productId
+          - rating
+          - text
           - updatedAt
           - userId
 
@@ -62,10 +74,10 @@ definition:
 kind: ObjectBooleanExpressionType
 version: v1
 definition:
-  name: CartsBoolExp
-  objectType: Carts
-  dataConnectorName: db1
-  dataConnectorObjectType: carts
+  name: ReviewsBoolExp
+  objectType: Reviews
+  dataConnectorName: db2
+  dataConnectorObjectType: reviews
   comparableFields:
     - fieldName: createdAt
       operators:
@@ -73,10 +85,16 @@ definition:
     - fieldName: id
       operators:
         enableAll: true
-    - fieldName: isComplete
+    - fieldName: isVisible
       operators:
         enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: productId
+      operators:
+        enableAll: true
+    - fieldName: rating
+      operators:
+        enableAll: true
+    - fieldName: text
       operators:
         enableAll: true
     - fieldName: updatedAt
@@ -86,18 +104,18 @@ definition:
       operators:
         enableAll: true
   graphql:
-    typeName: Experience_CartsBoolExp
+    typeName: Users_ReviewsBoolExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: Carts
-  objectType: Carts
+  name: Reviews
+  objectType: Reviews
   source:
-    dataConnectorName: db1
-    collection: carts
-  filterExpressionType: CartsBoolExp
+    dataConnectorName: db2
+    collection: reviews
+  filterExpressionType: ReviewsBoolExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -105,10 +123,16 @@ definition:
     - fieldName: id
       orderByDirections:
         enableAll: true
-    - fieldName: isComplete
+    - fieldName: isVisible
       orderByDirections:
         enableAll: true
-    - fieldName: isReminderSent
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: rating
+      orderByDirections:
+        enableAll: true
+    - fieldName: text
       orderByDirections:
         enableAll: true
     - fieldName: updatedAt
@@ -119,9 +143,9 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_carts
+      queryRootField: users_reviews
     selectUniques:
-      - queryRootField: experience_cartsById
+      - queryRootField: users_reviewsById
         uniqueIdentifier:
           - id
 
@@ -129,7 +153,7 @@ definition:
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: Carts
+  modelName: Reviews
   permissions:
     - role: admin
       select:
@@ -139,26 +163,27 @@ definition:
 kind: Relationship
 version: v1
 definition:
-  name: cartItems
-  source: Carts
+  name: products
+  source: Reviews
   target:
     model:
-      name: CartItems
-      relationshipType: Array
+      name: Products
+      subgraph: experience
+      relationshipType: Object
   mapping:
     - source:
         fieldPath:
-          - fieldName: id
+          - fieldName: productId
       target:
         modelField:
-          - fieldName: cartId
+          - fieldName: id
 
 ---
 kind: Relationship
 version: v1
 definition:
   name: users
-  source: Carts
+  source: Reviews
   target:
     model:
       name: Users
