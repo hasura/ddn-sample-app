@@ -1,0 +1,753 @@
+kind: DataConnectorLink
+version: v1
+definition:
+    name: db3
+    url:
+        Fn::ManifestRef: db3
+    schema:
+        version: v0.1
+        schema:
+            scalar_types:
+                bool:
+                    aggregate_functions:
+                        bool_and:
+                            result_type:
+                                type: named
+                                name: bool
+                        bool_or:
+                            result_type:
+                                type: named
+                                name: bool
+                        every:
+                            result_type:
+                                type: named
+                                name: bool
+                    comparison_operators:
+                        _eq:
+                            type: equal
+                        _gt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: bool
+                        _gte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: bool
+                        _in:
+                            type: in
+                        _lt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: bool
+                        _lte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: bool
+                        _neq:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: bool
+                int4:
+                    aggregate_functions:
+                        bit_and:
+                            result_type:
+                                type: named
+                                name: int4
+                        bit_or:
+                            result_type:
+                                type: named
+                                name: int4
+                        bit_xor:
+                            result_type:
+                                type: named
+                                name: int4
+                        max:
+                            result_type:
+                                type: named
+                                name: int4
+                        min:
+                            result_type:
+                                type: named
+                                name: int4
+                    comparison_operators:
+                        _eq:
+                            type: equal
+                        _gt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: int4
+                        _gte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: int4
+                        _in:
+                            type: in
+                        _lt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: int4
+                        _lte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: int4
+                        _neq:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: int4
+                text:
+                    aggregate_functions:
+                        max:
+                            result_type:
+                                type: named
+                                name: text
+                        min:
+                            result_type:
+                                type: named
+                                name: text
+                    comparison_operators:
+                        _eq:
+                            type: equal
+                        _gt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _gte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _ilike:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _in:
+                            type: in
+                        _iregex:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _like:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _lt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _lte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _neq:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _nilike:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _niregex:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _nlike:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _nregex:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        _regex:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        starts_with:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                        ts_match_tt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: text
+                timestamptz:
+                    aggregate_functions:
+                        max:
+                            result_type:
+                                type: named
+                                name: timestamptz
+                        min:
+                            result_type:
+                                type: named
+                                name: timestamptz
+                    comparison_operators:
+                        _eq:
+                            type: equal
+                        _gt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: timestamptz
+                        _gte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: timestamptz
+                        _in:
+                            type: in
+                        _lt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: timestamptz
+                        _lte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: timestamptz
+                        _neq:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: timestamptz
+                uuid:
+                    aggregate_functions: {}
+                    comparison_operators:
+                        _eq:
+                            type: equal
+                        _gt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: uuid
+                        _gte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: uuid
+                        _in:
+                            type: in
+                        _lt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: uuid
+                        _lte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: uuid
+                        _neq:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: uuid
+                vector:
+                    aggregate_functions:
+                        avg:
+                            result_type:
+                                type: named
+                                name: vector
+                        sum:
+                            result_type:
+                                type: named
+                                name: vector
+                    comparison_operators:
+                        _eq:
+                            type: equal
+                        _gt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: vector
+                        _gte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: vector
+                        _in:
+                            type: in
+                        _lt:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: vector
+                        _lte:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: vector
+                        _neq:
+                            type: custom
+                            argument_type:
+                                type: named
+                                name: vector
+            object_types:
+                cart_items:
+                    fields:
+                        cart_id:
+                            type:
+                                type: named
+                                name: uuid
+                        created_at:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: timestamptz
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        product_id:
+                            type:
+                                type: named
+                                name: uuid
+                        quantity:
+                            type:
+                                type: named
+                                name: int4
+                        updated_at:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: timestamptz
+                carts:
+                    fields:
+                        created_at:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: timestamptz
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        is_complete:
+                            type:
+                                type: named
+                                name: bool
+                        is_reminder_sent:
+                            type:
+                                type: named
+                                name: bool
+                        updated_at:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: timestamptz
+                        user_id:
+                            type:
+                                type: named
+                                name: uuid
+                categories:
+                    fields:
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        name:
+                            type:
+                                type: named
+                                name: text
+                coupons:
+                    fields:
+                        amount:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: int4
+                        code:
+                            type:
+                                type: named
+                                name: text
+                        created_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        expiration_date:
+                            type:
+                                type: named
+                                name: timestamptz
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        percent_or_value:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: text
+                        updated_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        user_id:
+                            type:
+                                type: named
+                                name: uuid
+                manufacturers:
+                    fields:
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        name:
+                            type:
+                                type: named
+                                name: text
+                notifications:
+                    fields:
+                        created_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        message:
+                            type:
+                                type: named
+                                name: text
+                        updated_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        user_id:
+                            type:
+                                type: named
+                                name: uuid
+                orders:
+                    fields:
+                        created_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        delivery_date:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: timestamptz
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        is_reviewed:
+                            type:
+                                type: named
+                                name: bool
+                        product_id:
+                            type:
+                                type: named
+                                name: uuid
+                        status:
+                            type:
+                                type: named
+                                name: text
+                        updated_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        user_id:
+                            type:
+                                type: named
+                                name: uuid
+                products:
+                    fields:
+                        category_id:
+                            type:
+                                type: named
+                                name: uuid
+                        country_of_origin:
+                            type:
+                                type: named
+                                name: text
+                        created_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        description:
+                            type:
+                                type: named
+                                name: text
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        image:
+                            type:
+                                type: named
+                                name: text
+                        manufacturer_id:
+                            type:
+                                type: named
+                                name: uuid
+                        name:
+                            type:
+                                type: named
+                                name: text
+                        price:
+                            type:
+                                type: named
+                                name: int4
+                        updated_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        vector:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: vector
+                reviews:
+                    fields:
+                        created_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        is_visible:
+                            type:
+                                type: named
+                                name: bool
+                        product_id:
+                            type:
+                                type: named
+                                name: uuid
+                        rating:
+                            type:
+                                type: named
+                                name: int4
+                        text:
+                            type:
+                                type: named
+                                name: text
+                        updated_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        user_id:
+                            type:
+                                type: named
+                                name: uuid
+                users:
+                    fields:
+                        created_at:
+                            type:
+                                type: named
+                                name: timestamptz
+                        email:
+                            type:
+                                type: named
+                                name: text
+                        favorite_artist:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: int4
+                        id:
+                            type:
+                                type: named
+                                name: uuid
+                        is_email_verified:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: bool
+                        last_seen:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: timestamptz
+                        name:
+                            type:
+                                type: named
+                                name: text
+                        password:
+                            type:
+                                type: nullable
+                                underlying_type:
+                                    type: named
+                                    name: text
+                        updated_at:
+                            type:
+                                type: named
+                                name: timestamptz
+            collections:
+                - name: cart_items
+                  arguments: {}
+                  type: cart_items
+                  uniqueness_constraints:
+                    cart_items_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys:
+                    cart_items_cart_id_foreign:
+                        column_mapping:
+                            cart_id: id
+                        foreign_collection: carts
+                    cart_items_product_id_foreign:
+                        column_mapping:
+                            product_id: id
+                        foreign_collection: products
+                - name: carts
+                  arguments: {}
+                  type: carts
+                  uniqueness_constraints:
+                    carts_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys:
+                    carts_user_id_foreign:
+                        column_mapping:
+                            user_id: id
+                        foreign_collection: users
+                - name: categories
+                  arguments: {}
+                  type: categories
+                  uniqueness_constraints:
+                    categories_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys: {}
+                - name: coupons
+                  arguments: {}
+                  type: coupons
+                  uniqueness_constraints:
+                    coupons_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys:
+                    coupons_user_id_fkey:
+                        column_mapping:
+                            user_id: id
+                        foreign_collection: users
+                - name: manufacturers
+                  arguments: {}
+                  type: manufacturers
+                  uniqueness_constraints:
+                    manufacturers_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys: {}
+                - name: notifications
+                  arguments: {}
+                  type: notifications
+                  uniqueness_constraints:
+                    notifications_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys:
+                    notifications_user_id_fkey:
+                        column_mapping:
+                            user_id: id
+                        foreign_collection: users
+                - name: orders
+                  arguments: {}
+                  type: orders
+                  uniqueness_constraints:
+                    orders_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys:
+                    orders_customer_id_fkey:
+                        column_mapping:
+                            user_id: id
+                        foreign_collection: users
+                    orders_product_id_fkey:
+                        column_mapping:
+                            product_id: id
+                        foreign_collection: products
+                - name: products
+                  arguments: {}
+                  type: products
+                  uniqueness_constraints:
+                    products_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys:
+                    products_category_foreign:
+                        column_mapping:
+                            category_id: id
+                        foreign_collection: categories
+                    products_manufacturer_foreign:
+                        column_mapping:
+                            manufacturer_id: id
+                        foreign_collection: manufacturers
+                - name: reviews
+                  arguments: {}
+                  type: reviews
+                  uniqueness_constraints:
+                    reviews_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys:
+                    reviews_product_id_foreign:
+                        column_mapping:
+                            product_id: id
+                        foreign_collection: products
+                    reviews_user_id_foreign:
+                        column_mapping:
+                            user_id: id
+                        foreign_collection: users
+                - name: users
+                  arguments: {}
+                  type: users
+                  uniqueness_constraints:
+                    users_pkey:
+                        unique_columns:
+                            - id
+                  foreign_keys: {}
+            functions: []
+            procedures: []
+        capabilities:
+            version: 0.1.1
+            capabilities:
+                query:
+                    aggregates: {}
+                    variables: {}
+                    explain: {}
+                mutation:
+                    transactional: {}
+                    explain: {}
+                relationships:
+                    relation_comparisons: {}
+                    order_by_aggregate: {}

@@ -2,24 +2,24 @@
 kind: ObjectType
 version: v1
 definition:
-  name: Categories
+  name: Manufacturers
   fields:
     - name: id
       type: Uuid!
     - name: name
       type: Text!
   graphql:
-    typeName: Experience_Categories
-    inputTypeName: Experience_CategoriesInput
+    typeName: Experience_Manufacturers
+    inputTypeName: Experience_ManufacturersInput
   dataConnectorTypeMapping:
     - dataConnectorName: db1
-      dataConnectorObjectType: categories
+      dataConnectorObjectType: manufacturers
 
 ---
 kind: TypePermissions
 version: v1
 definition:
-  typeName: Categories
+  typeName: Manufacturers
   permissions:
     - role: admin
       output:
@@ -31,10 +31,10 @@ definition:
 kind: ObjectBooleanExpressionType
 version: v1
 definition:
-  name: CategoriesBoolExp
-  objectType: Categories
+  name: ManufacturersBoolExp
+  objectType: Manufacturers
   dataConnectorName: db1
-  dataConnectorObjectType: categories
+  dataConnectorObjectType: manufacturers
   comparableFields:
     - fieldName: id
       operators:
@@ -43,18 +43,18 @@ definition:
       operators:
         enableAll: true
   graphql:
-    typeName: Experience_CategoriesBoolExp
+    typeName: Experience_ManufacturersBoolExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: Categories
-  objectType: Categories
+  name: Manufacturers
+  objectType: Manufacturers
   source:
     dataConnectorName: db1
-    collection: categories
-  filterExpressionType: CategoriesBoolExp
+    collection: manufacturers
+  filterExpressionType: ManufacturersBoolExp
   orderableFields:
     - fieldName: id
       orderByDirections:
@@ -64,9 +64,9 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_categories
+      queryRootField: experience_manufacturers
     selectUniques:
-      - queryRootField: experience_categoriesById
+      - queryRootField: experience_manufacturersById
         uniqueIdentifier:
           - id
 
@@ -74,7 +74,7 @@ definition:
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: Categories
+  modelName: Manufacturers
   permissions:
     - role: admin
       select:
@@ -85,7 +85,7 @@ kind: Relationship
 version: v1
 definition:
   name: products
-  source: Categories
+  source: Manufacturers
   target:
     model:
       name: Products
@@ -97,4 +97,4 @@ definition:
           - fieldName: id
       target:
         modelField:
-          - fieldName: categoryId
+          - fieldName: manufacturerId

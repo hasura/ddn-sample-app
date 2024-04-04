@@ -135,3 +135,40 @@ definition:
       select:
         filter: null
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: carts
+  source: CartItems
+  target:
+    model:
+      name: Carts
+      subgraph: null
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: cartId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: CartItems
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
