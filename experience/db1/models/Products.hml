@@ -184,6 +184,7 @@ definition:
       - queryRootField: experience_productsById
         uniqueIdentifier:
           - id
+    orderByExpressionType: Experience_ProductsOrderBy
 
 ---
 kind: ModelPermissions
@@ -289,3 +290,4 @@ definition:
       target:
         modelField:
           - fieldName: productId
+

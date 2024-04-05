@@ -150,6 +150,7 @@ definition:
       - queryRootField: sales_couponsById
         uniqueIdentifier:
           - id
+    orderByExpressionType: Sales_CouponsOrderBy
 
 ---
 kind: ModelPermissions
@@ -179,3 +180,4 @@ definition:
       target:
         modelField:
           - fieldName: id
+

@@ -160,6 +160,7 @@ definition:
       - queryRootField: users_usersById
         uniqueIdentifier:
           - id
+    orderByExpressionType: Users_UsersOrderBy
 
 ---
 kind: ModelPermissions
@@ -265,3 +266,4 @@ definition:
       target:
         modelField:
           - fieldName: userId
+

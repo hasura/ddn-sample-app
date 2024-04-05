@@ -124,6 +124,7 @@ definition:
       - queryRootField: experience_cartItemsById
         uniqueIdentifier:
           - id
+    orderByExpressionType: Experience_CartItemsOrderBy
 
 ---
 kind: ModelPermissions
@@ -172,3 +173,4 @@ definition:
       target:
         modelField:
           - fieldName: id
+
