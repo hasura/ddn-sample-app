@@ -148,6 +148,7 @@ definition:
       - queryRootField: sales_ordersById
         uniqueIdentifier:
           - id
+    orderByExpressionType: Sales_OrdersOrderBy
 
 ---
 kind: ModelPermissions
@@ -158,6 +159,7 @@ definition:
     - role: admin
       select:
         filter: null
+
 ---
 kind: Relationship
 version: v1
