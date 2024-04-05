@@ -8,8 +8,8 @@
 - [Login to Hasura CLI](https://hasura.io/docs/3.0/cli/commands/login)
 - [Create Project](https://hasura.io/docs/3.0/cli/commands/create-project)
 - Copy Project Name
-- Create New Folder
-- Git Clone Repo
+- Create New Folder (Important)
+- Git Clone [Repo](https://github.com/hasura/ddn_beta_ecommerce.git)
 - Go to Hasua.yaml and replace the project name with the one above
 - [run ddn build supergraph-manifest](https://hasura.io/docs/3.0/cli/commands/build-supergraph-manifest)
 - go to console and test using queries in complex.graphQL
