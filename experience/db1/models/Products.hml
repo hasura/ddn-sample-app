@@ -321,3 +321,22 @@ definition:
         modelField:
           - fieldName: productId
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: product
+  source: ProductsVectorDistance
+  target:
+    model:
+      name: Products
+      subgraph: null
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: id
+

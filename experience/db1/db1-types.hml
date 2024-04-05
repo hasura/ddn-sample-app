@@ -106,3 +106,21 @@ definition:
   graphql:
     comparisonExpressionTypeName: Experience_VectorComparisonExp
 
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Float8
+  graphql:
+    typeName: Experience_Float8
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: db1
+  dataConnectorScalarType: float8
+  representation: Float8
+  graphql:
+    comparisonExpressionTypeName: Experience_Float8ComparisonExp
+
