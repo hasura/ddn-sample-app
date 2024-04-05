@@ -1,5 +1,5 @@
 version: v1
-project: # add project name here
+project: hardy-pheasant-6274
 subgraphs:
     experience:
         path: ./experience
