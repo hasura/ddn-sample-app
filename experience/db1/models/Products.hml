@@ -87,6 +87,30 @@ definition:
           - price
           - updatedAt
           - vector
+    - role: customer
+      output:
+        allowedFields:
+          - categoryId
+          - countryOfOrigin
+          - createdAt
+          - description
+          - id
+          - image
+          - manufacturerId
+          - name
+          - price
+          - updatedAt
+    - role: guest
+      output:
+        allowedFields:
+          - categoryId
+          - countryOfOrigin
+          - description
+          - id
+          - image
+          - manufacturerId
+          - name
+          - price
 
 ---
 kind: ObjectBooleanExpressionType
@@ -193,6 +217,12 @@ definition:
   modelName: Products
   permissions:
     - role: admin
+      select:
+        filter: null
+    - role: customer
+      select:
+        filter: null
+    - role: guest
       select:
         filter: null
 

@@ -75,6 +75,22 @@ definition:
           - name
           - password
           - updatedAt
+    - role: customer
+      output:
+        allowedFields:
+          - createdAt
+          - email
+          - favoriteArtist
+          - id
+          - isEmailVerified
+          - name
+          - password
+          - updatedAt
+    - role: guest
+      output:
+        allowedFields:
+          - name
+
 
 ---
 kind: ObjectBooleanExpressionType
