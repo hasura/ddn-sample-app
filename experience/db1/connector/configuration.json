@@ -783,7 +783,42 @@
       }
     },
     "compositeTypes": {},
-    "nativeQueries": {},
+    "nativeQueries": {
+      "products_vector_distance": {
+        "sql": {
+          "inline": "SELECT id, vector <=> {{query_vector}} AS distance FROM products"
+        },
+        "columns": {
+          "distance": {
+            "name": "distance",
+            "type": {
+              "scalarType": "float8"
+            },
+            "nullable": "nullable",
+            "description": null
+          },
+          "id": {
+            "name": "id",
+            "type": {
+              "scalarType": "uuid"
+            },
+            "nullable": "nullable",
+            "description": null
+          }
+        },
+        "arguments": {
+          "query_vector": {
+            "name": "query_vector",
+            "type": {
+              "scalarType": "vector"
+            },
+            "nullable": "nullable",
+            "description": null
+          }
+        },
+        "description": null
+      }
+    },
     "aggregateFunctions": {
       "bool": {
         "bool_and": {
@@ -794,6 +829,38 @@
         },
         "every": {
           "returnType": "bool"
+        }
+      },
+      "float8": {
+        "avg": {
+          "returnType": "float8"
+        },
+        "max": {
+          "returnType": "float8"
+        },
+        "min": {
+          "returnType": "float8"
+        },
+        "stddev": {
+          "returnType": "float8"
+        },
+        "stddev_pop": {
+          "returnType": "float8"
+        },
+        "stddev_samp": {
+          "returnType": "float8"
+        },
+        "sum": {
+          "returnType": "float8"
+        },
+        "var_pop": {
+          "returnType": "float8"
+        },
+        "var_samp": {
+          "returnType": "float8"
+        },
+        "variance": {
+          "returnType": "float8"
         }
       },
       "int4": {
@@ -880,6 +947,50 @@
           "operatorName": "<>",
           "operatorKind": "custom",
           "argumentType": "bool",
+          "isInfix": true
+        }
+      },
+      "float8": {
+        "_eq": {
+          "operatorName": "=",
+          "operatorKind": "equal",
+          "argumentType": "float8",
+          "isInfix": true
+        },
+        "_gt": {
+          "operatorName": ">",
+          "operatorKind": "custom",
+          "argumentType": "float8",
+          "isInfix": true
+        },
+        "_gte": {
+          "operatorName": ">=",
+          "operatorKind": "custom",
+          "argumentType": "float8",
+          "isInfix": true
+        },
+        "_in": {
+          "operatorName": "IN",
+          "operatorKind": "in",
+          "argumentType": "float8",
+          "isInfix": true
+        },
+        "_lt": {
+          "operatorName": "<",
+          "operatorKind": "custom",
+          "argumentType": "float8",
+          "isInfix": true
+        },
+        "_lte": {
+          "operatorName": "<=",
+          "operatorKind": "custom",
+          "argumentType": "float8",
+          "isInfix": true
+        },
+        "_neq": {
+          "operatorName": "<>",
+          "operatorKind": "custom",
+          "argumentType": "float8",
           "isInfix": true
         }
       },
