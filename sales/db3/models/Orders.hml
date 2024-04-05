@@ -69,6 +69,16 @@ definition:
           - status
           - updatedAt
           - userId
+    - role: customer
+      output:
+        allowedFields:
+          - createdAt
+          - deliveryDate
+          - id
+          - isReviewed
+          - productId
+          - status
+          - userId
 
 ---
 kind: ObjectBooleanExpressionType
@@ -159,7 +169,15 @@ definition:
     - role: admin
       select:
         filter: null
-
+    - role: customer
+      select: 
+        filter:
+          and:
+            - fieldComparison:
+                field: userId
+                operator: _eq
+                value:
+                  sessionVariable: x-hasura-user-id
 ---
 kind: Relationship
 version: v1

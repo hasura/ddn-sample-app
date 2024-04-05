@@ -1,0 +1,248 @@
+### Local Relationships 
+
+query MyQuery {
+  products {
+    name
+    category {
+      name
+    }
+  }
+}
+
+
+### Nested queries - Joins
+### GraphQL query using the above schema such that there are N+1 queries in fetching data from different subgraphs
+
+query {
+  salesUsers { # Fetching users might be the initial query
+    id
+    name
+    orders { # For each user, fetch orders (N queries for N users)
+      id
+      product { # For each order, fetch products (1+N queries if each user has 1 order)
+        id
+        name
+      }
+    }
+  }
+}
+
+query {
+  products {
+    reviews {
+      id
+      user {
+        email
+        reviews {
+          id
+        }
+      }
+    }
+  }
+}
+
+## Chaining Resolver Example
+
+{
+  communicationReviews(where: {id: {_eq: "dc9768a4-673c-11ed-b682-7224baf239e5"}}) {
+    text
+    rating
+    user {
+      name
+    }
+  }
+}
+
+### Top N
+
+{
+  salesUsers(limit: 2) {
+    id   #From subgraph-1
+    name
+        #From subgraph-2
+    reviews(order_by: {created_at: Asc}, limit: 3) {
+      id
+      created_at
+      rating
+    }
+  }
+}
+
+### Product Page (Top N)
+
+# {
+#   products(
+#     where: {country_of_origin: {_eq: "US"}}
+#     order_by: {price: Asc}
+#     limit: 10
+#   ) {
+#     id
+#     name
+#     price
+#     manufacturer {
+#       name
+#     }
+#     topReviews: reviews(
+#       where: {created_at: {_gt: "2023-10-15"}}
+#       order_by: {rating: Desc}
+#       limit: 3
+#     ) {
+#       rating
+#       text
+#       user {
+#         name
+#       }
+#     }
+#     worstReviews: reviews(
+#       where: {created_at: {_gt: "2023-10-15"}}
+#       order_by: {rating: Asc}
+#       limit: 3
+#     ) {
+#       rating
+#       text
+#       user {
+#         name
+#       }
+#     }
+#   }
+# }
+
+### Peoduct Page Top N and local relationships in boolean expressions work
+
+query ProductHomePage {
+  products(
+    where: {country_of_origin: {_eq: "US"}, category: {name: {_eq: "T-Shirts"}}}
+    order_by: {price: Asc}
+    limit: 10
+  ) {
+    id
+    name
+    price
+    manufacturer {
+      name
+    }
+    topReviews: reviews(
+      where: {created_at: {_gt: "2023-10-15"}}
+      order_by: {rating: Desc}
+      limit: 3
+    ) {
+      rating
+      text
+      user {
+        name
+      }
+    }
+    worstReviews: reviews(
+      where: {created_at: {_gt: "2023-10-15"}}
+      order_by: {rating: Asc}
+      limit: 3
+    ) {
+      rating
+      text
+      user {
+        name
+      }
+    }
+    category {
+      name
+    }
+  }
+}
+
+### Nested Relationship Traversal, Filtering, Offsetting and Sorting
+
+query MyQuery {
+  products {
+    reviews {
+      id
+      user {
+        email
+        reviews(
+          where: {is_visible: {_eq: "false"}}
+          offset: 1
+          order_by: {created_at: Desc}
+        ) {
+          id
+          is_visible
+        }
+      }
+    }
+  }
+}
+
+### Remote Relationship in Filter
+
+query MyQuery {
+  products(
+    where: {manufacturer_id: {_eq: "e99cbfe2-65b4-11ed-b13b-6a8b11ef7372"}}
+    order_by: {manufacturer_id: Asc}
+  ) {
+    orders(order_by: {delivery_date: Desc}) {
+      id
+      user {
+        notifications(order_by: {created_at: Asc}) {
+          message
+          updated_at
+        }
+      }
+    }
+  }
+}
+
+### Parallel Execution 
+
+query MyQuery {
+  salesUsers {
+    id
+    reviews { # remote relationship
+      rating
+    }
+    carts { # remote relationship
+      created_at
+    }
+  }
+  products {
+    name
+  }
+}
+
+------
+### AuthZ 
+
+query UserOrders {
+  salesOrders(order_by: {created_at: Desc}) {
+    id
+    product {
+      name
+    }
+  }
+}
+
+
+# ### Nested Aggregations 
+
+# query MyQuery {
+#   Artist {
+#     Albums_aggregate {
+#       aggregate {
+#         sum {
+#           AlbumId
+#         }
+#       }
+#     }
+#   }
+# }
+
+## Optum Query (Remote Relns in Predicates)
+
+query MyQuery {
+ StaffAvailability{
+   Slots {
+     Appointments(where: {PatientRef: {_eq: 1570204}}) {
+       PatientRef
+     }
+   }
+   AvailabilityDate
+   staffName
+ }
+}
