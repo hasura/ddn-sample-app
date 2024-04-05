@@ -112,6 +112,7 @@ definition:
       - queryRootField: users_notificationsById
         uniqueIdentifier:
           - id
+    orderByExpressionType: Users_NotificationsOrderBy
 
 ---
 kind: ModelPermissions
@@ -122,7 +123,6 @@ definition:
     - role: admin
       select:
         filter: null
-
 
 ---
 kind: Relationship
@@ -142,3 +142,4 @@ definition:
       target:
         modelField:
           - fieldName: id
+
