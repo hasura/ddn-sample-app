@@ -1,6 +1,6 @@
 # Ecommerce App Demo using DDN (beta)
 
-<!-- ![Alt text](ddn_beta_ecommerce/ecommappschema.png "Title") -->
+![Alt text](https://github.com/hasura/ddn_beta_ecommerce/blob/main/ecommappschema.png)
 
 ## Instructions
 
