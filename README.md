@@ -10,8 +10,8 @@
 - Copy Project Name
 - Create New Folder (Important)
 - Git Clone [Repo](https://github.com/hasura/ddn_beta_ecommerce.git)
-- Go to Hasua.yaml and replace the project name with the one above
+- Go to Hasura.yaml and replace the project name with the one you get in the step above
 - [run ddn build supergraph-manifest](https://hasura.io/docs/3.0/cli/commands/build-supergraph-manifest)
-- go to console and test using queries in complex.graphQL
+- go to console and test using queries from complex.graphQL
 - For AuthZ
   - Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
