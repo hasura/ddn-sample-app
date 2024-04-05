@@ -1,5 +1,5 @@
 version: v1
-project: # hardy-pheasant-6274
+project: hardy-pheasant-6274
 subgraphs:
     experience:
         path: ./experience
