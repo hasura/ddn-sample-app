@@ -1,5 +1,7 @@
 # Ecommerce App Demo using DDN (beta)
 
+<!-- ![Alt text](ddn_beta_ecommerce/ecommappschema.png "Title") -->
+
 ## Instructions
 
 - Install Hasura CLI
