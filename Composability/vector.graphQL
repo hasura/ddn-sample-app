@@ -30,3 +30,36 @@ query ProductsPriceVector {
     }
   }
 }
+
+
+# query PersonalizedRecommendations($userId: ID!) {
+#   users_users(id: $userId) {
+#     recommendations {
+#       basedOnHistory: cartItems(limit: 5, order_by: {createdAt: Desc}) {
+#         product {
+#           id
+#           name
+#           price
+#           image
+#           category {
+#             name
+#           }
+#         }
+#       }
+#       basedOnPurchases: orders(limit: 5, order_by: {createdAt: Desc}) {
+#         product {
+#           id
+#           name
+#           price
+#           image
+#           similarProducts: vectorDistance(limit: 5, order_by: {distance: Asc}) {
+#             product {
+#               id
+#               name
+#             }
+#           }
+#         }
+#       }
+#     }
+#   }
+# }

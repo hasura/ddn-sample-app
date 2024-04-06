@@ -236,6 +236,79 @@ query Parallelexecution {
 }
 
 
-------
+query UserOrderHistory {
+  sales_orders(
+    where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+    order_by: {createdAt: Desc}
+    limit: 1
+    # offset: 0
+  ) {
+    id
+    status
+    deliveryDate
+    products {
+      name
+      image
+      categories {
+        name
+      }
+      reviews(
+        where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+        order_by: {createdAt: Desc}
+      ) {
+        rating
+        text
+        createdAt
+      }
+    }
+  }
+}
+
+
+query OrderTracking {
+  sales_orders(where: {id: {_eq: "c7406b75-6b24-41e4-9c5b-ff3feada9447"}}) {
+    id
+    status
+    deliveryDate
+    products {
+      id
+      name
+      price
+      image
+      manufacturers {
+        name
+      }
+    }
+    users {
+      id
+      name
+    }
+  }
+}
+
+
+# query CartSummaryWithOffers($userId: ID!) {
+#   users_users(id: $userId) {
+#     carts(where: {isComplete: {_eq: false}}) {
+#       items: cartItems {
+#         products {
+#           id
+#           name
+#           price
+#         }
+#         quantity
+#       }
+#       offers: coupons {
+#         code
+#         amount
+#       }
+#     }
+#   }
+# }
+
+
+
+
+
 
 
