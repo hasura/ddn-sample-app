@@ -287,6 +287,79 @@ query OrderTracking {
 }
 
 
+query CartSummaryWithOffers {
+  experience_carts(
+    where: {id: {_eq: "e2f27008-673d-11ed-8a24-7224baf239e5"}, userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+  ) {
+    id
+    cartItems {
+      products {
+        id
+        name
+        price
+        manufacturers {
+          name
+        }
+      }
+      quantity
+    }
+    users {
+      id
+      coupons(where: {expirationDate: {_is_null: false}}) {
+        id
+        users {
+          orders {
+            products {
+              categories {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query ProductReviews {
+  experience_products(where: {id: {_eq: "7992fdfa-65b5-11ed-8612-6a8b11ef7372"}}) {
+    id
+    name
+    reviews(where: {rating: {_gte: 4}}, order_by: {createdAt: Desc}) {
+      id
+      text
+      rating
+      users {
+        id
+        email
+      }
+    }
+  }
+}
+
+query MyQuery {
+  users_users(order_by: {createdAt: Asc}) {
+    orders {
+      products {
+        cartItems(order_by: {products: {name: Asc, price: Desc}}) {
+          carts {
+            updatedAt
+          }
+        }
+        reviews(offset: 1) {
+          text
+          users {
+            notifications(limit: 1) {
+              message
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 # query CartSummaryWithOffers($userId: ID!) {
 #   users_users(id: $userId) {
 #     carts(where: {isComplete: {_eq: false}}) {
