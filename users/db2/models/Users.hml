@@ -3,6 +3,8 @@ kind: ObjectType
 version: v1
 definition:
   name: Users
+  globalIdFields:
+    - user_id
   fields:
     - name: createdAt
       type: Timestamptz!
@@ -10,7 +12,7 @@ definition:
       type: Text!
     - name: favoriteArtist
       type: Int4
-    - name: id
+    - name: user_id
       type: Uuid!
     - name: isEmailVerified
       type: Bool
@@ -38,7 +40,7 @@ definition:
         favoriteArtist:
           column:
             name: favorite_artist
-        id:
+        user_id:
           column:
             name: id
         isEmailVerified:
@@ -69,7 +71,7 @@ definition:
           - createdAt
           - email
           - favoriteArtist
-          - id
+          - user_id
           - isEmailVerified
           - lastSeen
           - name
@@ -81,7 +83,7 @@ definition:
           - createdAt
           - email
           - favoriteArtist
-          - id
+          - user_id
           - isEmailVerified
           - name
           - password
@@ -110,7 +112,7 @@ definition:
     - fieldName: favoriteArtist
       operators:
         enableAll: true
-    - fieldName: id
+    - fieldName: user_id
       operators:
         enableAll: true
     - fieldName: isEmailVerified
@@ -137,6 +139,7 @@ version: v1
 definition:
   name: Users
   objectType: Users
+  globalIdSource: true
   source:
     dataConnectorName: db2
     collection: users
@@ -151,7 +154,7 @@ definition:
     - fieldName: favoriteArtist
       orderByDirections:
         enableAll: true
-    - fieldName: id
+    - fieldName: user_id
       orderByDirections:
         enableAll: true
     - fieldName: isEmailVerified
@@ -175,7 +178,7 @@ definition:
     selectUniques:
       - queryRootField: users_usersById
         uniqueIdentifier:
-          - id
+          - user_id
     orderByExpressionType: Users_UsersOrderBy
 
 ---
@@ -202,7 +205,7 @@ definition:
   mapping:
     - source:
         fieldPath:
-          - fieldName: id
+          - fieldName: user_id
       target:
         modelField:
           - fieldName: userId
@@ -221,7 +224,7 @@ definition:
   mapping:
     - source:
         fieldPath:
-          - fieldName: id
+          - fieldName: user_id
       target:
         modelField:
           - fieldName: userId
@@ -240,7 +243,7 @@ definition:
   mapping:
     - source:
         fieldPath:
-          - fieldName: id
+          - fieldName: user_id
       target:
         modelField:
           - fieldName: userId
@@ -259,7 +262,7 @@ definition:
   mapping:
     - source:
         fieldPath:
-          - fieldName: id
+          - fieldName: user_id
       target:
         modelField:
           - fieldName: userId
@@ -278,7 +281,7 @@ definition:
   mapping:
     - source:
         fieldPath:
-          - fieldName: id
+          - fieldName: user_id
       target:
         modelField:
           - fieldName: userId

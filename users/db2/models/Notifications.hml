@@ -141,5 +141,5 @@ definition:
           - fieldName: userId
       target:
         modelField:
-          - fieldName: id
+          - fieldName: user_id
 
