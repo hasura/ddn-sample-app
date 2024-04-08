@@ -3,12 +3,14 @@ kind: ObjectType
 version: v1
 definition:
   name: Orders
+  globalIdFields:
+    - order_id
   fields:
     - name: createdAt
       type: Timestamptz!
     - name: deliveryDate
       type: Timestamptz
-    - name: id
+    - name: order_id
       type: Uuid!
     - name: isReviewed
       type: Bool!
@@ -33,7 +35,7 @@ definition:
         deliveryDate:
           column:
             name: delivery_date
-        id:
+        order_id:
           column:
             name: id
         isReviewed:
@@ -63,7 +65,7 @@ definition:
         allowedFields:
           - createdAt
           - deliveryDate
-          - id
+          - order_id
           - isReviewed
           - productId
           - status
@@ -74,7 +76,7 @@ definition:
         allowedFields:
           - createdAt
           - deliveryDate
-          - id
+          - order_id
           - isReviewed
           - productId
           - status
@@ -95,7 +97,7 @@ definition:
     - fieldName: deliveryDate
       operators:
         enableAll: true
-    - fieldName: id
+    - fieldName: order_id
       operators:
         enableAll: true
     - fieldName: isReviewed
@@ -122,6 +124,7 @@ version: v1
 definition:
   name: Orders
   objectType: Orders
+  globalIdSource: true
   source:
     dataConnectorName: db3
     collection: orders
@@ -133,7 +136,7 @@ definition:
     - fieldName: deliveryDate
       orderByDirections:
         enableAll: true
-    - fieldName: id
+    - fieldName: order_id
       orderByDirections:
         enableAll: true
     - fieldName: isReviewed
@@ -157,7 +160,7 @@ definition:
     selectUniques:
       - queryRootField: sales_ordersById
         uniqueIdentifier:
-          - id
+          - order_id
     orderByExpressionType: Sales_OrdersOrderBy
 
 ---
