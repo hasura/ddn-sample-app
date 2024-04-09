@@ -1,3 +1,40 @@
+### Main Query used in the blog
+
+query ProductHomePage {
+  experience_products(
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
+    order_by: {price: Asc}
+    limit: 10
+  ) {
+    id
+    name
+    price
+    manufacturers {
+      name
+    }
+    topReviews: reviews(
+      where: {createdAt: {_gt: "2023-10-15"}}
+      order_by: {rating: Desc}
+      limit: 3
+    ) {
+      rating
+      text
+      users {
+        name
+      }
+    }
+    orders {
+      createdAt
+      deliveryDate
+      status
+    }
+    categories {
+      name
+    }
+  }
+}
+
+
 ### Local Relationships 
 
 query LocalRelns {
