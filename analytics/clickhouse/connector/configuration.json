@@ -1,0 +1,42 @@
+{
+  "$schema": "configuration.schema.json",
+  "tables": {
+    "browsing_history": {
+      "name": "browsing_history",
+      "schema": "default",
+      "comment": "",
+      "primary_key": {
+        "name": "user_id",
+        "columns": [
+          "user_id"
+        ]
+      },
+      "return_type": {
+        "kind": "definition",
+        "columns": {
+          "product_id": "UUID",
+          "user_id": "UUID",
+          "viewed_at": "DateTime"
+        }
+      }
+    },
+    "session_history": {
+      "name": "session_history",
+      "schema": "default",
+      "comment": "",
+      "primary_key": {
+        "name": "user_id",
+        "columns": [
+          "user_id"
+        ]
+      },
+      "return_type": {
+        "kind": "definition",
+        "columns": {
+          "logged_in_at": "DateTime",
+          "user_id": "UUID"
+        }
+      }
+    }
+  }
+}

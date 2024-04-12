@@ -286,3 +286,21 @@ definition:
         modelField:
           - fieldName: userId
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: recentlyViewedProducts
+  source: Users
+  target:
+    model:
+      name: BrowsingHistory
+      subgraph: analytics
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: user_id
+      target:
+        modelField:
+          - fieldName: userId

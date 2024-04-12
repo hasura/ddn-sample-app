@@ -16,6 +16,10 @@
     - ddn create subgraph users
     - ddn create subgraph sales
     - ddn create subgraph experience
+    - ddn create subgraph analytics
 - run [ddn build supergraph-manifest](https://hasura.io/docs/3.0/cli/commands/build-supergraph-manifest)
 - go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
   - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
+
+### Disclaimer
+- This repo has credentials for databases, which are intentionally published by Hasura for demo purposes.

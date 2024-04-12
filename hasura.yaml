@@ -1,10 +1,12 @@
 version: v1
-project: hardy-pheasant-6274
+project: ample-reptile-5067
 subgraphs:
-    experience:
-        path: ./experience
-    sales:
-        path: ./sales
-    users:
-        path: ./users
+  analytics:
+    path: ./analytics
+  experience:
+    path: ./experience
+  sales:
+    path: ./sales
+  users:
+    path: ./users
 defaultSupergraphManifest: base
