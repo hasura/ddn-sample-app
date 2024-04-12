@@ -5,9 +5,9 @@ definition:
   name: BrowsingHistory
   fields:
     - name: productId
-      type: Uuid!
+      type: String!
     - name: userId
-      type: Uuid!
+      type: String!
     - name: viewedAt
       type: DateTime!
   graphql:

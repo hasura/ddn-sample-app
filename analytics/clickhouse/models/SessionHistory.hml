@@ -7,7 +7,7 @@ definition:
     - name: loggedInAt
       type: DateTime!
     - name: userId
-      type: Uuid!
+      type: String!
   graphql:
     typeName: Analytics_SessionHistory
     inputTypeName: Analytics_SessionHistoryInput
