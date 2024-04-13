@@ -1,0 +1,124 @@
+{
+  "name": "product_details",
+  "collections": {
+    "product_details": {
+      "type": "product_details"
+    }
+  },
+  "objectTypes": {
+    "product_details": {
+      "fields": {
+        "_id": {
+          "type": {
+            "scalar": "objectId"
+          }
+        },
+        "features": {
+          "type": {
+            "arrayOf": {
+              "scalar": "string"
+            }
+          }
+        },
+        "product_id": {
+          "type": {
+            "scalar": "string"
+          }
+        },
+        "specifications": {
+          "type": {
+            "object": "product_details_specifications"
+          }
+        }
+      }
+    },
+    "product_details_specifications": {
+      "fields": {
+        "additional_specs": {
+          "type": {
+            "object": "product_details_specifications_additional_specs"
+          }
+        },
+        "color_options": {
+          "type": {
+            "arrayOf": {
+              "scalar": "string"
+            }
+          }
+        },
+        "material": {
+          "type": {
+            "scalar": "string"
+          }
+        },
+        "size_options": {
+          "type": {
+            "arrayOf": {
+              "scalar": "string"
+            }
+          }
+        }
+      }
+    },
+    "product_details_specifications_additional_specs": {
+      "fields": {
+        "brim": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "build": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "care_instructions": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "closure": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "durability": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "fabric_weight": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "heat_resistance": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "packaging": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

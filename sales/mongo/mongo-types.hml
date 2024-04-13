@@ -1,0 +1,28 @@
+---
+kind: ScalarType
+version: v1
+definition:
+  name: ObjectId
+  graphql:
+    typeName: App_ObjectId
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: mongo
+  dataConnectorScalarType: ObjectId
+  representation: ObjectId
+  graphql:
+    comparisonExpressionTypeName: App_ObjectIdComparisonExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: mongo
+  dataConnectorScalarType: String
+  representation: String
+  graphql:
+    comparisonExpressionTypeName: App_StringComparisonExp_1
+
