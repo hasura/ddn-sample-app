@@ -357,3 +357,21 @@ definition:
       target:
         modelField:
           - fieldName: productId
+---
+kind: Relationship
+version: v1
+definition:
+  name: recentlyViewedProducts
+  source: Products
+  target:
+    model:
+      name: RecentlyViewedProducts
+      subgraph: analytics
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId

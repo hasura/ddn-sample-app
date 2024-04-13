@@ -1,0 +1,57 @@
+{
+  "$schema": "configuration.schema.json",
+  "tables": {
+    "browsing_history": {
+      "name": "browsing_history",
+      "schema": "default",
+      "comment": "",
+      "primary_key": {
+        "name": "user_id",
+        "columns": [
+          "user_id"
+        ]
+      },
+      "return_type": {
+        "kind": "definition",
+        "columns": {
+          "product_id": "String",
+          "user_id": "String",
+          "viewed_at": "DateTime"
+        }
+      }
+    },
+    "session_history": {
+      "name": "session_history",
+      "schema": "default",
+      "comment": "",
+      "primary_key": {
+        "name": "user_id",
+        "columns": [
+          "user_id"
+        ]
+      },
+      "return_type": {
+        "kind": "definition",
+        "columns": {
+          "logged_in_at": "DateTime",
+          "user_id": "String"
+        }
+      }
+    }
+  },
+  "queries": {
+    "recently_viewed_products": {
+      "exposed_as": "collection",
+      "file": "queries/recentlyViewedProducts.sql",
+      "return_type": {
+        "kind": "definition",
+        "columns": {
+          "product_id": "String",
+          "user_id": "String",
+          "viewed": "Int32",
+          "viewed_at": "Array(String)"
+        }
+      }
+    }
+  }
+}

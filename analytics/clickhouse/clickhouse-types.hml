@@ -1,0 +1,45 @@
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: clickhouse
+  dataConnectorScalarType: String
+  representation: String
+  graphql:
+    comparisonExpressionTypeName: Analytics_StringComparisonExp
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: DateTime
+  graphql:
+    typeName: Analytics_DateTime
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: clickhouse
+  dataConnectorScalarType: DateTime
+  representation: DateTime
+  graphql:
+    comparisonExpressionTypeName: Analytics_DateTimeComparisonExp
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Int32
+  graphql:
+    typeName: Analytics_Int32
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: clickhouse
+  dataConnectorScalarType: Int32
+  representation: Int32
+  graphql:
+    comparisonExpressionTypeName: Analytics_Int32ComparisonExp
