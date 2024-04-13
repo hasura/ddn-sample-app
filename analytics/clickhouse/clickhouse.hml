@@ -1,0 +1,276 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: clickhouse
+  url:
+    Fn::ManifestRef: clickhouse
+  schema:
+    version: v0.1
+    schema:
+      scalar_types:
+        DateTime:
+          aggregate_functions:
+            max:
+              result_type:
+                type: named
+                name: DateTime
+            min:
+              result_type:
+                type: named
+                name: DateTime
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _nin:
+              type: custom
+              argument_type:
+                type: array
+                element_type:
+                  type: named
+                  name: DateTime
+        Int32:
+          aggregate_functions:
+            avg:
+              result_type:
+                type: named
+                name: Float64
+            max:
+              result_type:
+                type: named
+                name: Int32
+            min:
+              result_type:
+                type: named
+                name: Int32
+            stddev_pop:
+              result_type:
+                type: named
+                name: Float64
+            stddev_samp:
+              result_type:
+                type: named
+                name: Float64
+            sum:
+              result_type:
+                type: named
+                name: Int64
+            var_pop:
+              result_type:
+                type: named
+                name: Float64
+            var_samp:
+              result_type:
+                type: named
+                name: Float64
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: Int32
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: Int32
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: Int32
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: Int32
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: Int32
+            _nin:
+              type: custom
+              argument_type:
+                type: array
+                element_type:
+                  type: named
+                  name: Int32
+        String:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _ilike:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _in:
+              type: in
+            _like:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _match:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _nilike:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _nin:
+              type: custom
+              argument_type:
+                type: array
+                element_type:
+                  type: named
+                  name: String
+            _nlike:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+      object_types:
+        browsing_history:
+          description: ""
+          fields:
+            product_id:
+              type:
+                type: named
+                name: String
+            user_id:
+              type:
+                type: named
+                name: String
+            viewed_at:
+              type:
+                type: named
+                name: DateTime
+        recently_viewed_products:
+          fields:
+            product_id:
+              type:
+                type: named
+                name: String
+            user_id:
+              type:
+                type: named
+                name: String
+            viewed:
+              type:
+                type: named
+                name: Int32
+            viewed_at:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: String
+        session_history:
+          description: ""
+          fields:
+            logged_in_at:
+              type:
+                type: named
+                name: DateTime
+            user_id:
+              type:
+                type: named
+                name: String
+      collections:
+        - name: browsing_history
+          description: ""
+          arguments: {}
+          type: browsing_history
+          uniqueness_constraints:
+            user_id:
+              unique_columns:
+                - user_id
+          foreign_keys: {}
+        - name: session_history
+          description: ""
+          arguments: {}
+          type: session_history
+          uniqueness_constraints:
+            user_id:
+              unique_columns:
+                - user_id
+          foreign_keys: {}
+        - name: recently_viewed_products
+          arguments: {}
+          type: recently_viewed_products
+          uniqueness_constraints: {}
+          foreign_keys: {}
+      functions: []
+      procedures: []
+    capabilities:
+      version: ^0.1.1
+      capabilities:
+        query:
+          aggregates: {}
+          variables: {}
+          explain: {}
+        mutation: {}
+        relationships:
+          relation_comparisons: {}
+          order_by_aggregate: {}
