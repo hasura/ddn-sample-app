@@ -218,3 +218,19 @@ definition:
       target:
         modelField:
           - fieldName: id
+---
+kind: Relationship
+version: v1
+definition:
+  name: formattedCreatedAt
+  source: Orders
+  target:
+    command:
+      name: ToDateString
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: createdAt
+      target:
+        argument:
+          argumentName: date
