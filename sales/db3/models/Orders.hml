@@ -173,7 +173,7 @@ definition:
       select:
         filter: null
     - role: customer
-      select: 
+      select:
         filter:
           and:
             - fieldComparison:
@@ -181,6 +181,7 @@ definition:
                 operator: _eq
                 value:
                   sessionVariable: x-hasura-user-id
+
 ---
 kind: Relationship
 version: v1
@@ -218,3 +219,20 @@ definition:
       target:
         modelField:
           - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: formattedCreatedAt
+  source: Orders
+  target:
+    command:
+      name: ToDateString
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: createdAt
+      target:
+        argument:
+          argumentName: date
