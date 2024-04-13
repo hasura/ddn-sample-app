@@ -234,3 +234,21 @@ definition:
       target:
         argument:
           argumentName: date
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: formattedDeliveryDate
+  source: Orders
+  target:
+    command:
+      name: ToDateString
+      subgraph: null
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: deliveryDate
+      target:
+        argument:
+          argumentName: date
