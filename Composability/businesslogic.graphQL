@@ -4,6 +4,12 @@ query TSFunctions {
     formattedCreatedAt # data transformation using TS functions
     deliveryDate
     formattedDeliveryDate # data transformation using TS functions
+    users{
+      coupons{
+        amount
+        formatCurrency # data transformation using TS functions
+      }
+    }
     products{
       price
       formatCurrency # data transformation using TS functions

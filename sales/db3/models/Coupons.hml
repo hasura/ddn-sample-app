@@ -181,3 +181,20 @@ definition:
         modelField:
           - fieldName: user_id
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: formatCurrency
+  source: Coupons
+  target:
+    command:
+      name: ToCurrencyString
+      subgraph: null
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: amount
+      target:
+        argument:
+          argumentName: amount
