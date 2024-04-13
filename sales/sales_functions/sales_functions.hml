@@ -1,0 +1,47 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: sales_functions
+  url:
+    Fn::ManifestRef: sales_functions
+  schema:
+    version: v0.1
+    schema:
+      scalar_types:
+        String:
+          aggregate_functions: {}
+          comparison_operators: {}
+      object_types: {}
+      collections: []
+      functions:
+        - name: hello
+          arguments:
+            name:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+          result_type:
+            type: named
+            name: String
+        - name: toDateString
+          description: Formats a date string to a human-readable format.
+          arguments:
+            date:
+              description: The date string to format.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+          result_type:
+            type: named
+            name: String
+      procedures: []
+    capabilities:
+      version: 0.1.0
+      capabilities:
+        query:
+          variables: {}
+        mutation: {}
