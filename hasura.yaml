@@ -1,5 +1,5 @@
 version: v1
-project: ample-reptile-5067
+project: hardy-pheasant-6274
 subgraphs:
   analytics:
     path: ./analytics

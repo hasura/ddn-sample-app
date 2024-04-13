@@ -8,6 +8,53 @@ definition:
     version: v0.1
     schema:
       scalar_types:
+        DateTime:
+          aggregate_functions:
+            max:
+              result_type:
+                type: named
+                name: DateTime
+            min:
+              result_type:
+                type: named
+                name: DateTime
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: DateTime
+            _nin:
+              type: custom
+              argument_type:
+                type: array
+                element_type:
+                  type: named
+                  name: DateTime
         Int32:
           aggregate_functions:
             avg:
@@ -143,92 +190,6 @@ definition:
               argument_type:
                 type: named
                 name: String
-        DateTime:
-          aggregate_functions:
-            max:
-              result_type:
-                type: named
-                name: DateTime
-            min:
-              result_type:
-                type: named
-                name: DateTime
-          comparison_operators:
-            _eq:
-              type: equal
-            _gt:
-              type: custom
-              argument_type:
-                type: named
-                name: DateTime
-            _gte:
-              type: custom
-              argument_type:
-                type: named
-                name: DateTime
-            _in:
-              type: in
-            _lt:
-              type: custom
-              argument_type:
-                type: named
-                name: DateTime
-            _lte:
-              type: custom
-              argument_type:
-                type: named
-                name: DateTime
-            _neq:
-              type: custom
-              argument_type:
-                type: named
-                name: DateTime
-            _nin:
-              type: custom
-              argument_type:
-                type: array
-                element_type:
-                  type: named
-                  name: DateTime
-        UUID:
-          aggregate_functions: {}
-          comparison_operators:
-            _eq:
-              type: equal
-            _gt:
-              type: custom
-              argument_type:
-                type: named
-                name: UUID
-            _gte:
-              type: custom
-              argument_type:
-                type: named
-                name: UUID
-            _in:
-              type: in
-            _lt:
-              type: custom
-              argument_type:
-                type: named
-                name: UUID
-            _lte:
-              type: custom
-              argument_type:
-                type: named
-                name: UUID
-            _neq:
-              type: custom
-              argument_type:
-                type: named
-                name: UUID
-            _nin:
-              type: custom
-              argument_type:
-                type: array
-                element_type:
-                  type: named
-                  name: UUID
       object_types:
         browsing_history:
           description: ""
@@ -236,11 +197,11 @@ definition:
             product_id:
               type:
                 type: named
-                name: UUID
+                name: String
             user_id:
               type:
                 type: named
-                name: UUID
+                name: String
             viewed_at:
               type:
                 type: named
@@ -275,7 +236,7 @@ definition:
             user_id:
               type:
                 type: named
-                name: UUID
+                name: String
       collections:
         - name: browsing_history
           description: ""

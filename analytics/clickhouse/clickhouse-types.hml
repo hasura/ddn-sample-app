@@ -1,12 +1,4 @@
 ---
-kind: ScalarType
-version: v1
-definition:
-  name: Uuid
-  graphql:
-    typeName: Analytics_Uuid
-
----
 kind: DataConnectorScalarRepresentation
 version: v1
 definition:
@@ -23,16 +15,6 @@ definition:
   name: DateTime
   graphql:
     typeName: Analytics_DateTime
-
----
-kind: DataConnectorScalarRepresentation
-version: v1
-definition:
-  dataConnectorName: clickhouse
-  dataConnectorScalarType: UUID
-  representation: Uuid
-  graphql:
-    comparisonExpressionTypeName: Analytics_UuidComparisonExp
 
 ---
 kind: DataConnectorScalarRepresentation
