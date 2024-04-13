@@ -1,19 +1,30 @@
-query MyQuery {
-  salesOrders {
-    createdDateFormatted # data transformation using TS functions
-    deliveryDateFormatted # data transformation using TS functions
-    created_at
-    delivery_date
-    paymentStatus #not there in order table
-    id
+# query MyQuery {
+#   salesOrders {
+#     createdDateFormatted # data transformation using TS functions
+#     #deliveryDateFormatted # data transformation using TS functions
+#     created_at
+#     delivery_date
+#     paymentStatus #not there in order table
+#     id
+#   }
+# }
+
+query TSFunctions {
+  sales_orders {
+    formattedCreatedAt # data transformation using TS functions
+    formattedDeliveryDate # data transformation using TS functions
+    createdAt
+    deliveryDate
+    createdAt
   }
 }
+
 #created_at is passed to lambda dataformatted, take this up this long date string to human readable without having any time reference
 #same is used for two fields;
 # whenever the date is invalid it will show
 #payment_status - is a stripe service
 
 
-query MyQuery {
+query testTSfunction {
   toDateString(date: "03-21-2024")
 }
