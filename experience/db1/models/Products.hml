@@ -348,7 +348,7 @@ definition:
   target:
     model:
       name: ProductDetails
-      subgraph: sales
+      subgraph: null
       relationshipType: Object
   mapping:
     - source:
