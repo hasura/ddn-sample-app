@@ -375,3 +375,21 @@ definition:
       target:
         modelField:
           - fieldName: productId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: formatCurrency
+  source: Products
+  target:
+    command:
+      name: ToCurrencyString
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: price
+      target:
+        argument:
+          argumentName: amount

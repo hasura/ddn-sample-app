@@ -1,0 +1,28 @@
+---
+kind: Command
+version: v1
+definition:
+  name: ToCurrencyString
+  outputType: String!
+  arguments:
+    - name: amount
+      type: Float
+      description: The number to format into currency.
+  source:
+    dataConnectorName: sales_functions
+    dataConnectorCommand:
+      function: toCurrencyString
+  graphql:
+    rootFieldName: sales_toCurrencyString
+    rootFieldKind: Query
+  description: Formats a number into a currency string.
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: ToCurrencyString
+  permissions:
+    - role: admin
+      allowExecution: true
+

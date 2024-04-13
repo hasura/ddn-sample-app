@@ -8,3 +8,13 @@ definition:
   graphql:
     comparisonExpressionTypeName: Sales_StringComparisonExp
 
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: sales_functions
+  dataConnectorScalarType: Float
+  representation: Float
+  graphql:
+    comparisonExpressionTypeName: Sales_FloatComparisonExp
+

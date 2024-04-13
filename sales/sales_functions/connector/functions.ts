@@ -24,3 +24,26 @@ export function toDateString(date?: string): string {
     return "Invalid date";
   }
 }
+
+/**
+ * Formats a number into a currency string.
+ *
+ * @param amount The number to format into currency.
+ * @returns The formatted currency string.
+ * @readonly This function should only format data without making modifications to the input.
+ */
+ export function toCurrencyString(amount?: number): string {
+  console.log("amount", amount);
+  if (amount === undefined || isNaN(amount)) {
+      return "Invalid amount";
+  }
+  try {
+      return amount.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+      });
+  } catch (error) {
+      console.error("Error formatting currency:", error);
+      return "Invalid amount";
+  }
+}
