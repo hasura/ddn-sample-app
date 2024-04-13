@@ -339,4 +339,21 @@ definition:
       target:
         modelField:
           - fieldName: id
-
+---
+kind: Relationship
+version: v1
+definition:
+  name: productDetails
+  source: Products
+  target:
+    model:
+      name: ProductDetails
+      subgraph: sales
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
