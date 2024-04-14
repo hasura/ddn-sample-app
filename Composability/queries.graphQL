@@ -1,123 +1,77 @@
-### Main Query used in the blog
-
-query ProductHomePage {
-  experience_products(
-    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
-    order_by: {price: Asc}
-    limit: 10
-  ) {
-    id
+# Select list
+query MyQuery {
+  experience_products {
     name
-    price
-    manufacturers {
-      name
-    }
-    topReviews: reviews(
-      where: {createdAt: {_gt: "2023-10-15"}}
-      order_by: {rating: Desc}
-      limit: 3
-    ) {
-      rating
-      text
-      users {
-        name
-      }
-    }
+  }
+}
+# Select one
+query MyQuery {
+  experience_productsById(id: "")
+}
+# Filter
+query MyQuery {
+  experience_products(where: {countryOfOrigin: {_eq: "US"}}) {
+    id
+    countryOfOrigin
+  }
+}
+# Paginate
+query MyQuery {
+  experience_products(offset: 1, limit: 2) {
+    countryOfOrigin
+    name
+  }
+}
+# Sort
+query MyQuery {
+  experience_products(order_by: {createdAt: Asc}) {
+    name
+    createdAt
+  }
+}
+#Joins (Across DBs)
+
+query MyQuery {
+  experience_products {
+    name
     orders {
       createdAt
-      deliveryDate
-      status
-    }
-    categories {
-      name
-    }
-  }
-}
-
-
-### Local Relationships 
-
-query LocalRelns {
-  experience_products {
-    name
-    categories {
-      name
-    }
-    manufacturers {
-      name
-    }
-    cartItems {
-      carts {
-        updatedAt
-      }
-      productId
-    }
-  }
-}
-
-### Nested queries - Joins
-### GraphQL query using the above schema such that there are N+1 queries in fetching data from different subgraphs
-
-query CrossRelns1 {
-  users_users { # Fetching users might be the initial query
-    id
-    name
-    orders { # For each user, fetch orders (N queries for N users)
-      id
-      products { # For each order, fetch products (1+N queries if each user has 1 order)
-        id
-        name
-      }
-    }
-  }
-}
-
-query CrossRelns2 {
-  experience_products {
-    reviews {
-      id
       users {
-        email
+        name
         reviews {
-          id
+          text
         }
       }
     }
   }
 }
 
-## Chaining Resolver Example
-
-query ChainingResolver {
-  users_reviews(where: {id: {_eq: "dc9768a4-673c-11ed-b682-7224baf239e5"}}) {
-    text
-    rating
+# Nested filter
+      #   fetch articles where article.author.city == SF
+query MyQuery {
+  experience_products(where: {categories: {name: {_eq: "Hats"}}}) {
     id
-    users {
-      name
-      id
-    }
-    products{
-      price
-      id
-    }
   }
 }
+# Nested sort 
+      # fetch articles orderby article.author.city
+query MyQuery {
+  experience_products(order_by: {manufacturers: {name: Asc}}) {
+    id
+  }
+}
+# Nested paginate (top n)
+      # fetch top 5 authors and their top 5 articles by rating
 
-### Top N
-
-# {
-#   salesUsers(limit: 2) {
-#     id   #From subgraph-1
-#     name
-#         #From subgraph-2
-#     reviews(order_by: {created_at: Asc}, limit: 3) {
-#       id
-#       created_at
-#       rating
-#     }
-#   }
-# }
+query MyQuery {
+  experience_products(limit: 3, order_by: {price: Desc}) {
+    reviews(limit: 1, order_by: {createdAt: Asc}) {
+      id
+      text
+    }
+    name
+  }
+}
 
 query TopN{
   experience_products(offset: 1, order_by: {manufacturers: {name: Asc}}) {
@@ -134,291 +88,91 @@ query TopN{
   }
 }
 
-### Product Page (Top N)
-
-# {
-#   products(
-#     where: {country_of_origin: {_eq: "US"}}
-#     order_by: {price: Asc}
-#     limit: 10
-#   ) {
-#     id
-#     name
-#     price
-#     manufacturer {
-#       name
-#     }
-#     topReviews: reviews(
-#       where: {created_at: {_gt: "2023-10-15"}}
-#       order_by: {rating: Desc}
-#       limit: 3
-#     ) {
-#       rating
-#       text
-#       user {
-#         name
-#       }
-#     }
-#     worstReviews: reviews(
-#       where: {created_at: {_gt: "2023-10-15"}}
-#       order_by: {rating: Asc}
-#       limit: 3
-#     ) {
-#       rating
-#       text
-#       user {
-#         name
-#       }
-#     }
-#   }
-# }
-
-### Peoduct Page Top N and local relationships in boolean expressions work
-
 query ProductHomePage {
-  experience_products(
-    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
-    order_by: {price: Asc}
-    limit: 10
+  experience_products( #1 Select list
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}} # 2 Filtering and 7 Nested Filtering
+    # order_by: {price: Asc} # 3 Sorting
+    order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
+    offset: 1 # 4 Pagination
+    limit: 5 # 4 Pagination
   ) {
     id
     name
     price
+    description
+    categories { # 5 Same Database Join
+      name}
     manufacturers {
-      name
+      name # 5 Same Database Join
     }
-    topReviews: reviews(
-      where: {createdAt: {_gt: "2023-10-15"}}
-      order_by: {rating: Desc}
-      limit: 3
-    ) {
-      rating
-      text
-      users {
-        name
-      }
-    }
-    worstReviews: reviews(
-      where: {createdAt: {_gt: "2023-10-15"}}
-      order_by: {rating: Asc}
-      limit: 3
-    ) {
-      rating
-      text
-      users {
-        name
-      }
-    }
-    categories {
-      name
-    }
-  }
-}
-
-### Nested Relationship Traversal, Filtering, Offsetting and Sorting
-
-query NestedRelnsFiltsort {
-  experience_products {
-    reviews {
-      id
-      users {
-        email
-        reviews(
-          where: {isVisible: {_eq: "false"}}
-          offset: 1
-          order_by: {createdAt: Desc}
-        ) {
-          id
-          isVisible
-        }
-      }
-    }
-  }
-}
-
-### Remote Relationship in Filter
-
-query Relnsinfilter {
-  experience_products(
-    where: {manufacturerId: {_eq: "e99cbfe2-65b4-11ed-b13b-6a8b11ef7372"}}
-    order_by: {manufacturerId: Asc}
-  ) {
-    orders(order_by: {deliveryDate: Desc}) {
-      id
-      users {
-        notifications(order_by: {createdAt: Asc}) {
-          message
-          createdAt
-        }
-      }
-    }
-  }
-}
-
-### Parallel Execution 
-
-query Parallelexecution {
-  users_users {
-    id
-    orders { # remote relationship
-      deliveryDate
-    }
-    carts { # remote relationship
+    orders{  # Two level nested join across database
       createdAt
-    }
-  }
-  experience_products {
-    name
-  }
-}
-
-
-query UserOrderHistory {
-  sales_orders(
-    where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
-    order_by: {createdAt: Desc}
-    limit: 1
-    # offset: 0
-  ) {
-    id
-    status
-    deliveryDate
-    products {
-      name
-      image
-      categories {
-        name
-      }
-      reviews(
-        where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
-        order_by: {createdAt: Desc}
-      ) {
-        rating
-        text
-        createdAt
+      deliveryDate
+      status
+      users{
+        name  # 6 Three Level Nested Join across database
       }
     }
-  }
-}
-
-
-query OrderTracking {
-  sales_orders(where: {id: {_eq: "c7406b75-6b24-41e4-9c5b-ff3feada9447"}}) {
-    id
-    status
-    deliveryDate
-    products {
-      id
-      name
-      price
-      image
-      manufacturers {
-        name
-      }
-    }
-    users {
-      id
-      name
-    }
-  }
-}
-
-
-query CartSummaryWithOffers {
-  experience_carts(
-    where: {id: {_eq: "e2f27008-673d-11ed-8a24-7224baf239e5"}, userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
-  ) {
-    id
-    cartItems {
-      products {
-        id
-        name
-        price
-        manufacturers {
-          name
-        }
-      }
-      quantity
-    }
-    users {
-      id
-      coupons(where: {expirationDate: {_is_null: false}}) {
-        id
-        users {
-          orders {
-            products {
-              categories {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query ProductReviews {
-  experience_products(where: {id: {_eq: "7992fdfa-65b5-11ed-8612-6a8b11ef7372"}}) {
-    id
-    name
-    reviews(where: {rating: {_gte: 4}}, order_by: {createdAt: Desc}) {
-      id
-      text
+    # 9 Nested paginate (top n)
+    topReviews: reviews( 
+      where: {createdAt: {_gt: "2023-10-15"}} # Filtering
+      order_by: {rating: Desc} # Sorting
+      limit: 3 # Pagination
+    ) {
       rating
-      users {
-        id
-        email
-      }
+      text
+    }
+  }}
+
+# Clickhouse
+query ClickhouseJoin {
+  users_users {
+    createdAt
+    email
+    favoriteArtist
+    user_id
+    isEmailVerified
+    lastSeen
+    name
+    password
+    updatedAt
+    SessionHistory(order_by: {loggedInAt: Asc}, limit: 3) {
+      loggedInAt
+    }
+    recentlyViewedProducts(order_by: {viewed: Desc}, where: {viewed: {_gt: "20"}}) {
+      viewed
+      userId
+      productId
     }
   }
 }
 
-query MyQuery {
-  users_users(order_by: {createdAt: Asc}) {
-    orders {
-      products {
-        cartItems(order_by: {products: {name: Asc, price: Desc}}) {
-          carts {
-            updatedAt
-          }
+
+# Mongo
+
+query Mongo {
+  experience_products {
+    id
+    name
+    productDetails {
+      features
+      id
+      productId
+      specifications {
+        additionalSpecs {
+          packaging
+          heatResistance
+          durability
+          fabricWeight
+          closure
+          build
+          careInstructions
+          brim
         }
-        reviews(offset: 1) {
-          text
-          users {
-            notifications(limit: 1) {
-              message
-            }
-          }
-        }
+        colorOptions
+        sizeOptions
+        material
       }
     }
   }
 }
-
-
-# query CartSummaryWithOffers($userId: ID!) {
-#   users_users(id: $userId) {
-#     carts(where: {isComplete: {_eq: false}}) {
-#       items: cartItems {
-#         products {
-#           id
-#           name
-#           price
-#         }
-#         quantity
-#       }
-#       offers: coupons {
-#         code
-#         amount
-#       }
-#     }
-#   }
-# }
-
-
-
-
-
-
-
