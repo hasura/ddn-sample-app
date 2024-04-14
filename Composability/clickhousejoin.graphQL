@@ -1,0 +1,22 @@
+# Clickhouse
+query ClickhouseJoin {
+  users_users {
+    createdAt
+    email
+    favoriteArtist
+    user_id
+    isEmailVerified
+    lastSeen
+    name
+    password
+    updatedAt
+    SessionHistory(order_by: {loggedInAt: Asc}, limit: 3) {
+      loggedInAt
+    }
+    recentlyViewedProducts(order_by: {viewed: Desc}, where: {viewed: {_gt: "20"}}) {
+      viewed
+      userId
+      productId
+    }
+  }
+}
