@@ -1,8 +1,14 @@
-
-# Mongo
+query mongoonemodel{
+  app_productDetails {
+    specifications {
+      material
+      sizeOptions
+    }
+  }
+}
 
 query Mongo {
-  experience_products {
+  experience_products(offset: 1, order_by: {categories: {id: Asc}}) {
     id
     name
     productDetails {
