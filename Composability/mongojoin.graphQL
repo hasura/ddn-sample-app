@@ -1,0 +1,29 @@
+
+# Mongo
+
+query Mongo {
+  experience_products {
+    id
+    name
+    productDetails {
+      features
+      id
+      productId
+      specifications {
+        additionalSpecs {
+          packaging
+          heatResistance
+          durability
+          fabricWeight
+          closure
+          build
+          careInstructions
+          brim
+        }
+        colorOptions
+        sizeOptions
+        material
+      }
+    }
+  }
+}
