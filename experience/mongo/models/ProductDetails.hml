@@ -21,8 +21,8 @@ definition:
     - name: packaging
       type: String
   graphql:
-    typeName: App_ProductDetailsSpecificationsAdditionalSpecs
-    inputTypeName: App_ProductDetailsSpecificationsAdditionalSpecsInput
+    typeName: experience_productDetailsSpecificationsAdditionalSpecs
+    inputTypeName: experience_productDetailsSpecificationsAdditionalSpecsInput
   dataConnectorTypeMapping:
     - dataConnectorName: mongo
       dataConnectorObjectType: product_details_specifications_additional_specs
@@ -85,8 +85,8 @@ definition:
     - name: sizeOptions
       type: "[String!]!"
   graphql:
-    typeName: App_ProductDetailsSpecifications
-    inputTypeName: App_ProductDetailsSpecificationsInput
+    typeName: experience_productDetailsSpecifications
+    inputTypeName: experience_productDetailsSpecificationsInput
   dataConnectorTypeMapping:
     - dataConnectorName: mongo
       dataConnectorObjectType: product_details_specifications
@@ -133,8 +133,8 @@ definition:
     - name: specifications
       type: ProductDetailsSpecifications!
   graphql:
-    typeName: App_ProductDetails
-    inputTypeName: App_ProductDetailsInput
+    typeName: experience_productDetails
+    inputTypeName: experience_productDetailsInput
   dataConnectorTypeMapping:
     - dataConnectorName: mongo
       dataConnectorObjectType: product_details
@@ -188,7 +188,7 @@ definition:
       operators:
         enableAll: true
   graphql:
-    typeName: App_ProductDetailsBoolExp
+    typeName: experience_productDetailsBoolExp
 
 ---
 kind: Model
@@ -215,12 +215,12 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: app_productDetails
+      queryRootField: experience_productDetails
     selectUniques:
-      - queryRootField: app_productDetailsById
+      - queryRootField: experience_productDetailsById
         uniqueIdentifier:
           - id
-    orderByExpressionType: App_ProductDetailsOrderBy
+    orderByExpressionType: experience_productDetailsOrderBy
 
 ---
 kind: ModelPermissions
