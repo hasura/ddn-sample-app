@@ -1,0 +1,28 @@
+---
+kind: Command
+version: v1
+definition:
+  name: GetGithubProfileDescription
+  outputType: String
+  arguments:
+    - name: username
+      type: String!
+      description: Username of the user who's bio will be fetched.
+  source:
+    dataConnectorName: sales_functions
+    dataConnectorCommand:
+      function: get_github_profile_description
+  graphql:
+    rootFieldName: sales_getGithubProfileDescription
+    rootFieldKind: Query
+  description: Returns the github bio for the userid provided
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: GetGithubProfileDescription
+  permissions:
+    - role: admin
+      allowExecution: true
+
