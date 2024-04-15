@@ -1,3 +1,43 @@
+# Part 9 Nested paginate (top N)
+
+query ProductHomePage {
+  experience_products( #1 Select list
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}} # 2 Filtering and 7 Nested Filtering
+    # order_by: {price: Asc} # 3 Sorting
+    order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
+    offset: 1 # 4 Pagination
+    limit: 5 # 4 Pagination
+  ) {
+    id
+    name
+    price
+    description
+    categories { # 5 Same Database Join
+      name}
+    manufacturers {
+      name # 5 Same Database Join
+    }
+    orders{  # Two level nested join across database
+      createdAt
+      deliveryDate
+      status
+      users{
+        name  # 6 Three Level Nested Join across database
+      }
+    }
+    # 9 Nested paginate (top n)
+    topReviews: reviews( 
+      where: {createdAt: {_gt: "2023-10-15"}} # Filtering
+      order_by: {rating: Desc} # Sorting
+      limit: 3 # Pagination
+    ) {
+      rating
+      text
+    }
+  }}
+
+# Building the query now step by step
+
 # Part 1 - Select List
 
 query Part1 {
