@@ -1,3 +1,4 @@
+// @language javascript
 // Part 1 (Select List)
 // GET /experience-products
 
