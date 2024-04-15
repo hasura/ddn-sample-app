@@ -54,6 +54,32 @@ definition:
           result_type:
             type: named
             name: String
+        - name: get_github_profile_description
+          description: Returns the github bio for the userid provided
+          arguments:
+            username:
+              description: Username of the user who's bio will be fetched.
+              type:
+                type: named
+                name: String
+          result_type:
+            type: nullable
+            underlying_type:
+              type: named
+              name: String
+        - name: get_github_profile_description_noparallel
+          description: Returns the github bio for the userid provided
+          arguments:
+            username:
+              description: Username of the user who's bio will be fetched.
+              type:
+                type: named
+                name: String
+          result_type:
+            type: nullable
+            underlying_type:
+              type: named
+              name: String
       procedures: []
     capabilities:
       version: 0.1.0

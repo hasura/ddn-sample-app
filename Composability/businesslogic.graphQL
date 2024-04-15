@@ -20,6 +20,14 @@ query TSFunctions {
 # whenever the date is invalid it will show
 #payment_status - is a stripe service
 
+# Parallel Degree 1 - it should be 15 secs; otherwise 1 sec
+query ParallelCommands {
+  users_users {
+    email
+    githubprofile
+  }
+}
+
 
 query testTSfunction {
   toDateString(date: "03-21-2024")

@@ -322,3 +322,39 @@ definition:
       target:
         modelField:
           - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: githubprofile
+  source: Users
+  target:
+    command:
+      name: GetGithubProfileDescription
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: name
+      target:
+        argument:
+          argumentName: username
+---
+
+kind: Relationship
+version: v1
+definition:
+  name: githubprofilenoparallel
+  source: Users
+  target:
+    command:
+      name: GetGithubProfileDescriptionNoparallel
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: name
+      target:
+        argument:
+          argumentName: username

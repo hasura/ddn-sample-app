@@ -1,0 +1,28 @@
+---
+kind: Command
+version: v1
+definition:
+  name: GetGithubProfileDescriptionNoparallel
+  outputType: String
+  arguments:
+    - name: username
+      type: String!
+      description: Username of the user who's bio will be fetched.
+  source:
+    dataConnectorName: sales_functions
+    dataConnectorCommand:
+      function: get_github_profile_description_noparallel
+  graphql:
+    rootFieldName: sales_getGithubProfileDescriptionNoparallel
+    rootFieldKind: Query
+  description: Returns the github bio for the userid provided
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: GetGithubProfileDescriptionNoparallel
+  permissions:
+    - role: admin
+      allowExecution: true
+
