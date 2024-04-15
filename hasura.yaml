@@ -1,12 +1,6 @@
 version: v1
-project: hardy-pheasant-6274
+project: first-pangolin-5436
 subgraphs:
-    analytics:
-        path: ./analytics
-    experience:
-        path: ./experience
-    sales:
-        path: ./sales
-    users:
-        path: ./users
+  users:
+    path: ./users
 defaultSupergraphManifest: base
