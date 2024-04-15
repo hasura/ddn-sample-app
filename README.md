@@ -38,8 +38,15 @@ This demo showcases an Ecommerce App built using Hasura's Data Delivery Network 
     - ddn create subgraph analytics
 - run [ddn build supergraph-manifest](https://hasura.io/docs/3.0/cli/commands/build-supergraph-manifest)
     - Heads up - it will take approximately 3 minutes to build
+    - For more details on the build process, refer to the [Build Process](#build-process) section.
 - go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
   - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
+
+## Build
+
+During the build process, Hasura builds and deploys all the data connectors and supergraph builds. This includes connector configurations, models, functions, and all other related components, which are integrated into the deployments.
+
+Considering the size of the supergraph and separate deployments, it may initially take some time to complete. Once deployed, the supergraph provides a unified GraphQL API that leverages the capabilities of all subgraphs to offer a comprehensive Ecommerce solution.
 
 ### Disclaimer
 - This repo has credentials for databases, which are intentionally published by Hasura for demo purposes.
