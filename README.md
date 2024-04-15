@@ -17,9 +17,9 @@ This demo showcases an Ecommerce App built using Hasura's Data Delivery Network 
   - postgres (Coupons, Orders)
   - TypescriptFunctions (ToCurrencyString, ToDateString)
 
-![alt text](image-1.png)
+![alt text](supergraph-1.png)
 
-![alt text](image-2.png)
+![alt text](supergraph-2.png)
 
 ## Instructions
 
