@@ -1,3 +1,4 @@
+```js
 // # Part 7 - Nested Filtering (same database)
 
 //  experience-products?countryOfOrigin=US&categoryName=T-Shirts&sort=price:desc&offset=1&limit=5
@@ -37,4 +38,4 @@ app.get('/experience-products', async (req, res) => {
             limit: parseInt(limit, 10) || 10
         });
 
-        //  rest same as above
+        //  rest same as above```

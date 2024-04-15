@@ -1,3 +1,4 @@
+```js
 // Part 8 - Nested Sorting (same database)
 // GET /experience-products?countryOfOrigin=US&categoryName=T-Shirts&categorySort=DESC&offset=1&limit=5
 
@@ -29,3 +30,4 @@ app.get('/experience-products', async (req, res) => {
             limit: parseInt(limit, 10)
 
     //  rest same as above
+```
