@@ -1,6 +1,9 @@
 # Ecommerce App Demo using DDN (beta)
+This demo showcases an Ecommerce App built using Hasura's Data Delivery Network (DDN) with the [supergraph.io](https://supergraph.io/) architecture. The supergraph is composed of four main subgraphs - users, analytics, experience, and sales, each backed by one or more data connectors. These subgraphs integrate various data sources to provide a comprehensive Ecommerce solution as follows.
 
-![Alt text](https://github.com/hasura/ddn_beta_ecommerce/blob/main/ecommappschema.png)
+![alt text](image-1.png)
+
+![alt text](image.png)
 
 ## Instructions
 
