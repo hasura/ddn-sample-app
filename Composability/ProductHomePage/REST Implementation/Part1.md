@@ -1,3 +1,4 @@
+```js
 // Part 1 (Select List)
 // GET /experience-products
 
@@ -58,3 +59,4 @@ app.get('/experience-products', async (req, res) => {
 //     Server Setup: The code initializes an Express server and listens on a specified port.
 
 // This example translates the GraphQL query into a RESTful model, utilizing the simplicity of REST combined with the structure and robustness of using an ORM like Sequelize for database interactions.
+```
