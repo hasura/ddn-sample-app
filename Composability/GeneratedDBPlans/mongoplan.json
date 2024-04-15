@@ -1,0 +1,33 @@
+{
+    "query": {
+      "aggregate": "product_details",
+      "pipeline": [
+        {
+          "$replaceWith": {
+            "specifications": {
+              "$cond": {
+                "if": "$specifications",
+                "then": {
+                  "material": {
+                    "$ifNull": [
+                      "$specifications.material",
+                      null
+                    ]
+                  },
+                  "sizeOptions": {
+                    "$ifNull": [
+                      "$specifications.size_options",
+                      null
+                    ]
+                  }
+                },
+                "else": null
+              }
+            }
+          }
+        }
+      ],
+      "cursor": {}
+    }
+  }
+  
