@@ -1,3 +1,4 @@
+// @language javascript
 // Part 4  Pagination
 // GET experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5
 

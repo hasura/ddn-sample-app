@@ -1,3 +1,5 @@
+// @language javascript
+
 // # Part 7 - Nested Filtering (same database)
 
 //  experience-products?countryOfOrigin=US&categoryName=T-Shirts&sort=price:desc&offset=1&limit=5

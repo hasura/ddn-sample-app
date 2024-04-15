@@ -1,3 +1,4 @@
+// @language javascript
 // Part 2 Filter
 // GET /experience-products?countryOfOrigin=US
 app.get('/experience-products', async (req, res) => {
