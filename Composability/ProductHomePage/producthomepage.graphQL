@@ -1,7 +1,7 @@
 # Part 9 Nested paginate (top N)
 
 query ProductHomePage {
-  experience_products( #1 Select list
+  topTShirtsInUS: experience_products( #1 Select list
     where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}} # 2 Filtering and 7 Nested Filtering
     # order_by: {price: Asc} # 3 Sorting
     order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
@@ -12,17 +12,18 @@ query ProductHomePage {
     name
     price
     description
-    categories { # 5 Same Database Join
-      name}
-    manufacturers {
+    # categories { # 5 Same Database Join
+    #   name}
+    manufacturedBy: manufacturers {
       name # 5 Same Database Join
     }
-    orders{  # Two level nested join across database
+    latestOrders: orders{  # Two level nested join across database
       createdAt
-      deliveryDate
-      status
-      users{
+      # deliveryDate
+      # status
+      userActivity:users{
         name  # 6 Three Level Nested Join across database
+        lastSeen
       }
     }
     # 9 Nested paginate (top n)
@@ -41,7 +42,7 @@ query ProductHomePage {
 # Part 1 - Select List
 
 query Part1 {
-  experience_products{
+ allProducts: experience_products{
     id
     name
     price
@@ -53,7 +54,7 @@ query Part1 {
 # Part 2 - Filter
 
 query Part2 {
-  experience_products(where: {countryOfOrigin: {_eq: "US"}}) {
+  productsInUS: experience_products(where: {countryOfOrigin: {_eq: "US"}}) {
     id
     name
     price
@@ -64,7 +65,7 @@ query Part2 {
 # Part 3 - Sorting
 
 query Part3 {
-  experience_products(
+  productsInUSByPrice: experience_products(
     where: {countryOfOrigin: {_eq: "US"}}
     order_by: {price: Desc}
   ) {
@@ -78,7 +79,7 @@ query Part3 {
 # Part 4 - Pagination
 
 query Part4 {
-  experience_products(
+   productsInUSByPrice: experience_products(
     where: {countryOfOrigin: {_eq: "US"}}
     order_by: {price: Desc}
     offset: 1
@@ -116,7 +117,7 @@ query Part5 {
 # Part 6 - Two Level Nested cross database joins
 
 query Part6 {
-  experience_products(
+  productsInUSByPrice: experience_products(
     where: {countryOfOrigin: {_eq: "US"}}
     order_by: {price: Desc}
     offset: 1
@@ -126,18 +127,19 @@ query Part6 {
     name
     price
     description
-    categories{
+    # categories{
+    #   name
+    # }
+   manufacturedBy: manufacturers{
       name
     }
-    manufacturers{
-      name
-    }
-    orders{
+    latestOrders:orders{
       createdAt
       deliveryDate
       status
-      users{
+      userActivity: users{
         name
+        lastSeen
       }
     }
   }
@@ -146,7 +148,7 @@ query Part6 {
 # Part 7 - Nested Filtering (same database)
 
 query Part7 {
-  experience_products(
+ topTShirtsInUS: experience_products(
     where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
     order_by: {price: Desc}
     offset: 1
@@ -156,17 +158,17 @@ query Part7 {
     name
     price
     description
-    categories {
+    # categories {
+    #   name
+    }
+    manufacturedBy:manufacturers {
       name
     }
-    manufacturers {
-      name
-    }
-    orders {
+    latestOrders:orders {
       createdAt
       deliveryDate
       status
-      users {
+      userActivity:users {
         name
       }
     }
@@ -176,7 +178,7 @@ query Part7 {
 # Part 8 - Nested Sorting (same database)
 
 query Part8 {
-  experience_products(
+  topTShirtsInUS: experience_products(
     where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
     offset: 1
     limit: 5
@@ -186,17 +188,17 @@ query Part8 {
     name
     price
     description
-    categories {
+    # categories {
+    #   name
+    # }
+   manufacturedBy: manufacturers {
       name
     }
-    manufacturers {
-      name
-    }
-    orders {
+    latestOrders: orders {
       createdAt
       deliveryDate
       status
-      users {
+      userActivity: users {
         name
       }
     }
@@ -206,7 +208,7 @@ query Part8 {
 # Part 9 Nested paginate (top N)
 
 query Part9 {
-  experience_products(
+ topTShirtsInUS: experience_products(
     where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
     offset: 1
     limit: 5
