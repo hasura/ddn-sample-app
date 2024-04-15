@@ -13,8 +13,8 @@ definition:
     - name: viewedAt
       type: "[String!]!"
   graphql:
-    typeName: App_RecentlyViewedProducts
-    inputTypeName: App_RecentlyViewedProductsInput
+    typeName: analytics_recentlyViewedProducts
+    inputTypeName: analytics_recentlyViewedProductsInput
   dataConnectorTypeMapping:
     - dataConnectorName: clickhouse
       dataConnectorObjectType: recently_viewed_products
@@ -68,7 +68,7 @@ definition:
       operators:
         enableAll: true
   graphql:
-    typeName: App_RecentlyViewedProductsBoolExp
+    typeName: analytics_recentlyViewedProductsBoolExp
 
 ---
 kind: Model
@@ -95,9 +95,9 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: app_recentlyViewedProducts
+      queryRootField: analytics_recentlyViewedProducts
     selectUniques: []
-    orderByExpressionType: App_RecentlyViewedProductsOrderBy
+    orderByExpressionType: analytics_recentlyViewedProductsOrderBy
 
 ---
 kind: ModelPermissions
