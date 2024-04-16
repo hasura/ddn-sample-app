@@ -12,15 +12,11 @@ query ProductHomePage {
     name
     price
     description
-    # categories { # 5 Same Database Join
-    #   name}
     manufacturedBy: manufacturers {
       name # 5 Same Database Join
     }
     latestOrders: orders{  # Two level nested join across database
       createdAt
-      # deliveryDate
-      # status
       userActivity:users{
         name  # 6 Three Level Nested Join across database
         lastSeen
@@ -40,6 +36,7 @@ query ProductHomePage {
 # Building the query now step by step
 
 # Part 1 - Select List
+# GET /experience-products
 
 query Part1 {
  allProducts: experience_products{
@@ -52,6 +49,7 @@ query Part1 {
 
 
 # Part 2 - Filter
+# GET /experience-products?countryOfOrigin=US
 
 query Part2 {
   productsInUS: experience_products(where: {countryOfOrigin: {_eq: "US"}}) {
@@ -63,6 +61,7 @@ query Part2 {
 }
 
 # Part 3 - Sorting
+# GET /experience-products?countryOfOrigin=US&sort=price:desc
 
 query Part3 {
   productsInUSByPrice: experience_products(
@@ -77,7 +76,7 @@ query Part3 {
 }
 
 # Part 4 - Pagination
-
+# GET experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5
 query Part4 {
    productsInUSByPrice: experience_products(
     where: {countryOfOrigin: {_eq: "US"}}
@@ -94,6 +93,8 @@ query Part4 {
 
 # Part 5 - Same Database Joins
 
+# GET/ experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5&categoryFields=name,description&manufacturerFields=name,location
+
 query Part5 {
   experience_products(
     where: {countryOfOrigin: {_eq: "US"}}
@@ -108,13 +109,26 @@ query Part5 {
     categories{
       name
     }
-    manufacturers{
+    manufacturedBy:manufacturers{
       name
     }
   }
 }
 
 # Part 6 - Two Level Nested cross database joins
+
+# Part 6 - Two Level Nested cross database joins
+# Fetch Experience Products
+# GET http://localhost:3000/experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5
+# Fetch Categories for Each Product
+# GET http://localhost:3000/categories?productId=123
+# You might need to make multiple calls depending on the number of products:
+# Fetch Manufacturers for Each Product
+# GET http://localhost:3000/manufacturers?productId=123
+# Fetch Orders Related to Each Product
+# GET http://localhost:3000/orders?productId=123
+# Fetch Users for Each Order
+# GET http://localhost:3000/users?orderId=456
 
 query Part6 {
   productsInUSByPrice: experience_products(
@@ -127,16 +141,11 @@ query Part6 {
     name
     price
     description
-    # categories{
-    #   name
-    # }
    manufacturedBy: manufacturers{
       name
     }
     latestOrders:orders{
       createdAt
-      deliveryDate
-      status
       userActivity: users{
         name
         lastSeen
@@ -158,16 +167,12 @@ query Part7 {
     name
     price
     description
-    # categories {
-    #   name
     }
     manufacturedBy:manufacturers {
       name
     }
     latestOrders:orders {
       createdAt
-      deliveryDate
-      status
       userActivity:users {
         name
       }
@@ -176,6 +181,7 @@ query Part7 {
 }
 
 # Part 8 - Nested Sorting (same database)
+# GET /experience-products?countryOfOrigin=US&categoryName=T-Shirts&categorySort=DESC&offset=1&limit=5
 
 query Part8 {
   topTShirtsInUS: experience_products(
@@ -188,16 +194,11 @@ query Part8 {
     name
     price
     description
-    # categories {
-    #   name
-    # }
    manufacturedBy: manufacturers {
       name
     }
     latestOrders: orders {
       createdAt
-      deliveryDate
-      status
       userActivity: users {
         name
       }
@@ -207,31 +208,29 @@ query Part8 {
 
 # Part 9 Nested paginate (top N)
 
-query Part9 {
- topTShirtsInUS: experience_products(
-    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
-    offset: 1
-    limit: 5
-    order_by: {categories: {name: Asc}}
+query ProductHomePage {
+  topTShirtsInUS: experience_products( #1 Select list
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}} # 2 Filtering and 7 Nested Filtering
+    # order_by: {price: Asc} # 3 Sorting
+    order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
+    offset: 1 # 4 Pagination
+    limit: 5 # 4 Pagination
   ) {
     id
     name
     price
     description
-    categories {
-      name
+    manufacturedBy: manufacturers {
+      name # 5 Same Database Join
     }
-    manufacturers {
-      name
-    }
-    orders {
+    latestOrders: orders{  # Two level nested join across database
       createdAt
-      deliveryDate
-      status
-      users {
-        name
+      userActivity:users{
+        name  # 6 Three Level Nested Join across database
+        lastSeen
       }
     }
+    # 9 Nested paginate (top n)
     topReviews: reviews( 
       where: {createdAt: {_gt: "2023-10-15"}} # Filtering
       order_by: {rating: Desc} # Sorting
@@ -240,5 +239,4 @@ query Part9 {
       rating
       text
     }
-  }
-}
+  }}

@@ -1,4 +1,4 @@
-EXPLAIN
+-- With Native Query
 SELECT
   cast(
     tupleElement("_rowset"."_rowset", 1),
@@ -37,5 +37,36 @@ FROM
               product_id,
               user_id
           ) AS "_origin"
+      ) AS "_row"
+  ) AS "_rowset" FORMAT JSON;
+
+
+  --- With Predicate
+
+  SELECT
+  cast(
+    tupleElement("_rowset"."_rowset", 1),
+    'Array(Tuple("loggedInAt" String, "userId" String))'
+  ) AS "rows"
+FROM
+  (
+    SELECT
+      tuple(
+        groupArray(
+          tuple(
+            "_row"."_field_loggedInAt",
+            "_row"."_field_userId"
+          )
+        )
+      ) AS "_rowset"
+    FROM
+      (
+        SELECT
+          "_origin"."logged_in_at" AS "_field_loggedInAt",
+          "_origin"."user_id" AS "_field_userId"
+        FROM
+          "default"."session_history" AS "_origin"
+        WHERE
+          "_origin"."user_id" = '7cf0a66c-65b7-11ed-b904-fb49f034fbbb'
       ) AS "_row"
   ) AS "_rowset" FORMAT JSON;

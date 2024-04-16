@@ -1,0 +1,87 @@
+query UserOrderHistory {
+  sales_orders(
+    where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+    order_by: {createdAt: Desc}
+    limit: 1
+    # offset: 0
+  ) {
+    id
+    status
+    deliveryDate
+    products {
+      name
+      image
+      categories {
+        name
+      }
+      reviews(
+        where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+        order_by: {createdAt: Desc}
+      ) {
+        rating
+        text
+        createdAt
+      }
+    }
+  }
+}
+
+
+query OrderTracking {
+  sales_orders(
+    where: {order_id: {_eq: "c7406b75-6b24-41e4-9c5b-ff3feada9447"}}
+  ) {
+    id
+    status
+    deliveryDate
+    products {
+      id
+      name
+      price
+      image
+      manufacturers {
+        name
+      }
+    }
+    users {
+      id
+      name
+    }
+  }
+}
+
+
+
+query CartSummaryWithOffers {
+  experience_carts(
+    where: {id: {_eq: "e2f27008-673d-11ed-8a24-7224baf239e5"}, userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+  ) {
+    id
+    cartItems {
+      products {
+        id
+        name
+        price
+        manufacturers {
+          name
+        }
+      }
+      quantity
+    }
+    users {
+      id
+      coupons(where: {expirationDate: {_is_null: false}}) {
+        id
+        users {
+          orders {
+            products {
+              categories {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
