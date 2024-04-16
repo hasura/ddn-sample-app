@@ -1,3 +1,4 @@
+```js
 // Part 4  Pagination
 // GET experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5
 
@@ -34,3 +35,4 @@ app.get('/experience-products', async (req, res) => {
 // offset: This parameter specifies from what row to start fetching the data. This is useful for skipping a certain number of records.
 // limit: This parameter controls the maximum number of records to return.
 // Parsing Query Parameters: The offset and limit are parsed from the query string, converted from strings to integers. If they are not provided, default values are used (0 for offset and 10 for limit).
+```

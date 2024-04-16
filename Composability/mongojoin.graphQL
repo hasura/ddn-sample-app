@@ -1,5 +1,5 @@
 query mongoonemodel{
-  app_productDetails {
+  experience_productDetails {
     specifications {
       material
       sizeOptions

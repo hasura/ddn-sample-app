@@ -1,3 +1,4 @@
+```js
 // Part 5 - Same Database Joins
 // GET/ experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5&categoryFields=name,description&manufacturerFields=name,location
 
@@ -71,3 +72,4 @@ app.get('/experience-products', async (req, res) => {
 });
 // Dynamic Field Selection: As before, this version allows clients to dynamically select which fields to include from the related models.
 // Filtering, Sorting, and Pagination: These features are robustly integrated to work alongside dynamic field selection, providing a flexible API that can handle complex queries.
+```

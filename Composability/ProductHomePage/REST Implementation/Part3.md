@@ -1,3 +1,4 @@
+```js
 // Part 3 Sorting
 // GET /experience-products?countryOfOrigin=US&sort=price:desc
 
@@ -30,3 +31,4 @@ app.get('/experience-products', async (req, res) => {
 
 // Sorting Parameter: The endpoint now accepts a sort query parameter in addition to countryOfOrigin. The sort parameter should be formatted as field:direction (e.g., price:desc).
 // Ordering Logic: The order array in Sequelize's findAll method controls the order of results. If the sort parameter is provided, it's split into the field to sort by and the direction (asc or desc), and this order is applied to the query.
+```
