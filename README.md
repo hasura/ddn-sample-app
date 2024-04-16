@@ -7,25 +7,25 @@ This example supergraph is composed of four subgraphs - users, analytics, experi
 
 ### Subgraphs and Data Sources
 
-- **users**
-  - postgres
-    - Models: Users, Notifications, Reviews
+- **Subgraph: users**
+  - *Data Connector: postgres*
+    - *Models*: Users, Notifications, Reviews
+
+  - *Data Connector: clickhouse*
+    - *Models*: BrowsingHistory, RecentlyViewedProducts, SessionHistory
   
-- **analytics**
-  - clickhouse
-    - Models: BrowsingHistory, RecentlyViewedProducts, SessionHistory
+- **Subgraph: experience**
+  - *Data Connector: postgres*
+    - *Models*: Cart, CartItems, Categories, Manufacturers, Products, ProductVectorDistance
+  - *Data Connector: mongoDB*
+    - *Models*: ProductDetails
   
-- **experience**
-  - postgres
-    - Models: Cart, CartItems, Categories, Manufacturers, Products, ProductVectorDistance
-  - mongoDB
-    - Models: ProductDetails
-  
-- **sales**
-  - postgres 
-    - Models: Coupons, Orders
-  - TypescriptFunctions
-    - Commands: ToCurrencyString, ToDateString
+- **Subgraph: sales**
+  - *Data Connector: postgres*
+    - *Models*: Coupons, Orders
+  - *Typescript Functions*
+    - *Commands*: ToCurrencyString, ToDateString
+
 
 ![alt text](supergraph-1.png)
 
