@@ -1,0 +1,10 @@
+# Parallel Degree 1 - it should be 15 secs; otherwise 1 sec
+
+
+query ParallelCommands {
+  users_users {
+    email
+    #githubprofile
+    githubprofilenoparallel
+  }
+}

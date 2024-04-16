@@ -1,0 +1,27 @@
+query LargeData {
+  experience_products(limit: 10, order_by: {manufacturers: {name: Desc}}) {
+    categories {
+      name
+      id
+    }
+    image
+    id
+    reviews(where: {rating: {_gte: "4"}}, order_by: {rating: Desc}) {
+      rating
+      text
+      users {
+        email
+        name
+      }
+    }
+    orders(order_by: {createdAt: Desc}, limit: 3, where: {status: {_eq: "shipped"}}) {
+      order_id
+      status
+      createdAt
+    }
+    price
+    manufacturers {
+      name
+    }
+  }
+}

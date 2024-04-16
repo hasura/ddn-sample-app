@@ -68,7 +68,7 @@ export async function get_github_profile_description(
 ): Promise<string | null> {
   try {
     // const response = await fetch(`https://api.github.com/users/${username}`);
-    const response = await fetch(`https://httpbin.org/delay/3`);
+    const response = await fetch(`https://httpbin.org/delay/2`);
 
     // Check if the response is successful
     if (!response.ok) {

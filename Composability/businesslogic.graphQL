@@ -1,4 +1,41 @@
-query TSFunctions {
+query BasicOrders {
+  sales_orders {
+    createdAt
+    deliveryDate}}
+
+query OrderNestedFields {
+  sales_orders {
+    createdAt
+    deliveryDate
+    users {
+      coupons {
+        amount
+      }
+    }
+    products {
+      price
+    }
+  }
+}
+
+
+query DateTransformation {
+  sales_orders {
+    createdAt
+    formattedCreatedAt # data transformation using TS functions
+    deliveryDate
+    formattedDeliveryDate # data transformation using TS functions
+    users{
+      coupons{
+        amount
+      }
+    }
+    products{
+      price
+    }}}
+
+
+query SalesOrdersPage {
   sales_orders {
     createdAt
     formattedCreatedAt # data transformation using TS functions
@@ -19,14 +56,6 @@ query TSFunctions {
 #same is used for two fields;
 # whenever the date is invalid it will show
 #payment_status - is a stripe service
-
-# Parallel Degree 1 - it should be 15 secs; otherwise 1 sec
-query ParallelCommands {
-  users_users {
-    email
-    githubprofile
-  }
-}
 
 
 query testTSfunction {
