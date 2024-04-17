@@ -149,6 +149,7 @@ definition:
       - queryRootField: users_reviewsById
         uniqueIdentifier:
           - id
+  description: Description for model reviews
 
 ---
 kind: ModelPermissions

@@ -70,6 +70,7 @@ definition:
         uniqueIdentifier:
           - id
     orderByExpressionType: Experience_ManufacturersOrderBy
+  description: Description for model manufacturers
 
 ---
 kind: ModelPermissions

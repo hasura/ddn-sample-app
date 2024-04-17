@@ -55,7 +55,7 @@ definition:
             type: named
             name: String
         - name: get_github_profile_description
-          description: Returns the github bio for the userid provided
+          description: Returns the github bio for the userid provided with batching
           arguments:
             username:
               description: Username of the user who's bio will be fetched.
@@ -68,10 +68,22 @@ definition:
               type: named
               name: String
         - name: get_github_profile_description_noparallel
-          description: Returns the github bio for the userid provided
+          description: Returns the github bio for the userid provided without batching
           arguments:
             username:
               description: Username of the user who's bio will be fetched.
+              type:
+                type: named
+                name: String
+          result_type:
+            type: nullable
+            underlying_type:
+              type: named
+              name: String
+        - name: http300delay
+          description: Typescript Function with a 300 HTTP Delay
+          arguments:
+            username:
               type:
                 type: named
                 name: String

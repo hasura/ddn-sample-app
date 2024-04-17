@@ -98,6 +98,7 @@ definition:
       queryRootField: analytics_recentlyViewedProducts
     selectUniques: []
     orderByExpressionType: analytics_recentlyViewedProductsOrderBy
+  description: Description for model recently_viewed_products (using native query)
 
 ---
 kind: ModelPermissions

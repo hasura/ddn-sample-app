@@ -2,26 +2,25 @@
 kind: Command
 version: v1
 definition:
-  name: Hello
-  outputType: String!
+  name: Http300Delay
+  outputType: String
   arguments:
-    - name: name
-      type: String
+    - name: username
+      type: String!
   source:
     dataConnectorName: sales_functions
     dataConnectorCommand:
-      function: hello
+      function: http300delay
   graphql:
-    rootFieldName: sales_hello
-    deprecated:
-        reason: no longer in use
+    rootFieldName: sales_http300Delay
     rootFieldKind: Query
+  description: Typescript Function with a 300 HTTP Delay
 
 ---
 kind: CommandPermissions
 version: v1
 definition:
-  commandName: Hello
+  commandName: Http300Delay
   permissions:
     - role: admin
       allowExecution: true

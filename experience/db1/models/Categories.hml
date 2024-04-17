@@ -70,6 +70,7 @@ definition:
         uniqueIdentifier:
           - id
     orderByExpressionType: Experience_CategoriesOrderBy
+  description: Description for model categories
 
 ---
 kind: ModelPermissions

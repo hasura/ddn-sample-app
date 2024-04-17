@@ -209,6 +209,7 @@ definition:
         uniqueIdentifier:
           - id
     orderByExpressionType: Experience_ProductsOrderBy
+  description: Description for model products
 
 ---
 kind: ModelPermissions

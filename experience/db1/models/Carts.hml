@@ -12,6 +12,8 @@ definition:
       type: Bool!
     - name: isReminderSent
       type: Bool!
+      deprecated:
+          reason: no longer in use
     - name: updatedAt
       type: Timestamptz
     - name: userId
@@ -125,6 +127,7 @@ definition:
         uniqueIdentifier:
           - id
     orderByExpressionType: Experience_CartsOrderBy
+  description: Description for model carts
 
 ---
 kind: ModelPermissions

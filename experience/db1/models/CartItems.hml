@@ -125,6 +125,7 @@ definition:
         uniqueIdentifier:
           - id
     orderByExpressionType: Experience_CartItemsOrderBy
+  description: Description for model cart_items
 
 ---
 kind: ModelPermissions
