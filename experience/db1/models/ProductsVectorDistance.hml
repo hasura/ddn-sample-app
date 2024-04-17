@@ -73,6 +73,7 @@ definition:
     selectUniques: []
     argumentsInputType: Experience_ProductsVectorDistanceArguments
     orderByExpressionType: Experience_ProductsVectorDistanceOrderBy
+  description: Description for model products_vector_distance (using pgvector and native query)
 
 ---
 kind: ModelPermissions

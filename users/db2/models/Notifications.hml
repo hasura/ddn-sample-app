@@ -113,6 +113,7 @@ definition:
         uniqueIdentifier:
           - id
     orderByExpressionType: Users_NotificationsOrderBy
+  description: Description for model notifications
 
 ---
 kind: ModelPermissions
@@ -142,4 +143,6 @@ definition:
       target:
         modelField:
           - fieldName: user_id
+  deprecated:
+        reason: Relationship on users will not be supported
 

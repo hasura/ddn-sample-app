@@ -14,6 +14,8 @@ definition:
       type: Uuid!
     - name: isReviewed
       type: Bool!
+      deprecated:
+            reason: no longer in use
     - name: productId
       type: Uuid!
     - name: status
@@ -162,6 +164,7 @@ definition:
         uniqueIdentifier:
           - order_id
     orderByExpressionType: Sales_OrdersOrderBy
+  description: Description for model orders
 
 ---
 kind: ModelPermissions

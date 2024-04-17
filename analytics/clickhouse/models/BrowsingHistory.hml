@@ -89,6 +89,7 @@ definition:
         uniqueIdentifier:
           - userId
     orderByExpressionType: Analytics_BrowsingHistoryOrderBy
+  description: Description for model browsing_history
 
 ---
 kind: ModelPermissions

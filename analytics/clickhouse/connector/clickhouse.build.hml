@@ -8,7 +8,7 @@ definition:
   type: cloud
   connector:
     type: hub
-    name: hasura/clickhouse:v0.2.3
+    name: hasura/clickhouse:v0.2.5
   deployments:
     - context: .
       env:
