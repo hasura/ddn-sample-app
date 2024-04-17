@@ -2,18 +2,12 @@
 
 This demo provides a practical example of building an Ecommerce App using Hasura's Data Delivery Network (DDN) with a [supergraph](https://supergraph.io) architecture.
 
-
 This example supergraph is composed of four subgraphs - users, analytics, experience, and sales, each backed by one or more data connectors. These subgraphs integrate various data sources to provide a comprehensive Ecommerce solution as follows.
 
 ### Subgraphs and Data Sources
-
 - **Subgraph: users**
   - *Data Connector: postgres*
     - *Models*: Users, Notifications, Reviews
-
-  - *Data Connector: clickhouse*
-    - *Models*: BrowsingHistory, RecentlyViewedProducts, SessionHistory
-  
 - **Subgraph: experience**
   - *Data Connector: postgres*
     - *Models*: Cart, CartItems, Categories, Manufacturers, Products, ProductVectorDistance
@@ -26,13 +20,13 @@ This example supergraph is composed of four subgraphs - users, analytics, experi
   - *Typescript Functions*
     - *Commands*: ToCurrencyString, ToDateString
 
+- **Subgraph: analytics**  
+  - *Data Connector: clickhouse*
+    - *Models*: BrowsingHistory, RecentlyViewedProducts, SessionHistory
 
 ![alt text](supergraph-1.png)
 
-![alt text](supergraph-2.png)
-
 ## Instructions
-
 - [Install Hasura CLI](https://hasura.io/docs/3.0/cli/installation)
 - [Login to Hasura CLI](https://hasura.io/docs/3.0/cli/commands/login)
 - [Create Project](https://hasura.io/docs/3.0/cli/commands/create-project)
@@ -55,12 +49,17 @@ ddn create subgraph analytics
 - go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
   - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
 
+  ### Disclaimer
+  - This repo has credentials for databases, which are intentionally published by Hasura for demo purposes.
+
+![alt text](supergraph-2.png)
+
 # Core Concepts
 The following section outlines the core concepts of Hasura DDN, providing a deeper understanding of its architecture and functionality.
 
 ## Subgraph
 
-For a multi-team organization working on a Hasura project, it can make sense for any one team to not have access to all metadata objects. Subgraphs introduces the notion of a module system for your Hasura metadata.
+For a multi-team organization working on a Hasura project, it can make sense for any one team to not have access to all metadata objects. Subgraphs introduces the notion of a module system for your Hasura metadata. Think of it is as an independent domain consisting of one or more data sources.
 [Read More](https://hasura.io/docs/3.0/project-configuration/subgraphs/)
 
 ## Models
@@ -79,6 +78,3 @@ A build is a fully-functional, immutable supergraph API which is built based on 
 During the build process, Hasura builds and deploys all the data connectors and supergraph builds. This includes connector configurations, models, functions, and all other related components, which are integrated into the deployments.
 
 Considering the size of the supergraph and separate deployments, it may initially take some time to complete. Once deployed, the supergraph provides a unified GraphQL API that leverages the capabilities of all subgraphs to offer a comprehensive Ecommerce solution.
-
-### Disclaimer
-- This repo has credentials for databases, which are intentionally published by Hasura for demo purposes.
