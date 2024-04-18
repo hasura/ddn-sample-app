@@ -51,6 +51,9 @@ This example supergraph is composed of four subgraphs - users, analytics, experi
 
 ![alt text](supergraph-2.png)
 
+## Disclaimer
+This repository has credentials for databases, which are intentionally published by Hasura for demo purposes. These credentials allows for read-only access to synthetic datasets, which do not contain any user or customer sensitive data.
+
 # Core Concepts
 The following section outlines the core concepts of Hasura DDN, providing a deeper understanding of its architecture and functionality.
 
@@ -75,6 +78,3 @@ A build is a fully-functional, immutable supergraph API which is built based on 
 During the build process, Hasura builds and deploys all the data connectors and supergraph builds. This includes connector configurations, models, functions, and all other related components, which are integrated into the deployments.
 
 Considering the size of the supergraph and separate deployments, it may initially take some time to complete. Once deployed, the supergraph provides a unified GraphQL API that leverages the capabilities of all subgraphs to offer a comprehensive Ecommerce solution.
-
-## Disclaimer
-This repository has credentials for databases, which are intentionally published by Hasura for demo purposes. These credentials allows for read-only access to synthetic datasets, which do not contain any user or customer sensitive data.
