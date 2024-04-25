@@ -1,3 +1,9 @@
+import Stripe from "stripe";
+
+const stripe = new Stripe(
+  "sk_test_XXX"
+);
+
 /**
  * @readonly Exposes the function as an NDC function (the function should only query data without making modifications)
  */
@@ -34,19 +40,19 @@ export function toDateString(date?: string): string {
  * @readonly This function should only format data without making modifications to the input.
  * @paralleldegree 5
  */
- export function toCurrencyString(amount?: number): string {
+export function toCurrencyString(amount?: number): string {
   console.log("amount", amount);
   if (amount === undefined || isNaN(amount)) {
-      return "Invalid amount";
+    return "Invalid amount";
   }
   try {
-      return amount.toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD'
-      });
+    return amount.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
   } catch (error) {
-      console.error("Error formatting currency:", error);
-      return "Invalid amount";
+    console.error("Error formatting currency:", error);
+    return "Invalid amount";
   }
 }
 
@@ -95,7 +101,7 @@ export async function get_github_profile_description(
  * @paralleldegree 1
  */
 
- export async function get_github_profile_description_noparallel(
+export async function get_github_profile_description_noparallel(
   username: string
 ): Promise<string | null> {
   try {
@@ -124,9 +130,7 @@ export async function get_github_profile_description(
  * @paralleldegree 5
  */
 
-export async function http300delay(
-  username: string
-): Promise<string | null> {
+export async function http300delay(username: string): Promise<string | null> {
   try {
     // const response = await fetch(`https://api.github.com/users/${username}`);
     const response = await fetch(`https://httpbin.org/delay/3`);
@@ -144,5 +148,28 @@ export async function http300delay(
   } catch (error) {
     console.error("Error fetching GitHub profile:", error);
     throw error; // Or handle it as appropriate for your application
+  }
+}
+/**
+ * Function to fetch stripe payment intent status using payment id
+ * @readonly This function should only query data without making modifications
+ * @paralleldegree 5
+ */
+
+export async function GetPaymentStatus(
+  // stripe payment ID
+  paymentId: string
+): Promise<string | null> {
+  try {
+    const paymentIntent: Stripe.PaymentIntent =
+      await stripe.paymentIntents.retrieve(paymentId, {
+        expand: ["customer"],
+      });
+
+    console.log("Payment Intent:", paymentIntent);
+    return paymentIntent?.status ?? null;
+  } catch (error) {
+    console.error("Error fetching payment intent:", error);
+    return null;
   }
 }

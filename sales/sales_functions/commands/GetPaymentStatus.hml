@@ -1,0 +1,27 @@
+---
+kind: Command
+version: v1
+definition:
+  name: GetPaymentStatus
+  outputType: String
+  arguments:
+    - name: paymentId
+      type: String!
+  source:
+    dataConnectorName: sales_functions
+    dataConnectorCommand:
+      function: GetPaymentStatus
+  graphql:
+    rootFieldName: GetPaymentStatus
+    rootFieldKind: Query
+  description: Fetch payment status from the payment service
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: GetPaymentStatus
+  permissions:
+    - role: admin
+      allowExecution: true
+

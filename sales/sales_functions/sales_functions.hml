@@ -92,6 +92,18 @@ definition:
             underlying_type:
               type: named
               name: String
+        - name: GetPaymentStatus
+          description: fetch payment status from payment service
+          arguments:
+            paymentId:
+              type:
+                type: named
+                name: String
+          result_type:
+            type: nullable
+            underlying_type:
+              type: named
+              name: String
       procedures: []
     capabilities:
       version: 0.1.0

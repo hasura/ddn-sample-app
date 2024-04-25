@@ -427,6 +427,14 @@
             "nullable": "nonNullable",
             "description": null
           },
+          "payment_id": {
+            "name": "payment_id",
+            "type": {
+              "scalarType": "text"
+            },
+            "nullable": "nullable",
+            "description": null
+          },
           "status": {
             "name": "status",
             "type": {

@@ -15,7 +15,7 @@ definition:
     - name: isReviewed
       type: Bool!
       deprecated:
-            reason: no longer in use
+        reason: no longer in use
     - name: productId
       type: Uuid!
     - name: status
@@ -24,6 +24,8 @@ definition:
       type: Timestamptz!
     - name: userId
       type: Uuid!
+    - name: paymentId
+      type: Text!
   graphql:
     typeName: Sales_Orders
     inputTypeName: Sales_OrdersInput
@@ -55,6 +57,9 @@ definition:
         userId:
           column:
             name: user_id
+        paymentId:
+          column:
+            name: payment_id
 
 ---
 kind: TypePermissions
@@ -73,6 +78,7 @@ definition:
           - status
           - updatedAt
           - userId
+          - paymentId
     - role: customer
       output:
         allowedFields:
@@ -117,6 +123,9 @@ definition:
     - fieldName: userId
       operators:
         enableAll: true
+    - fieldName: paymentId
+      operators:
+        enableAll: true
   graphql:
     typeName: Sales_OrdersBoolExp
 
@@ -156,6 +165,9 @@ definition:
     - fieldName: userId
       orderByDirections:
         enableAll: true
+    - fieldName: paymentId
+      orderByDirections:
+        enableAll: true
   graphql:
     selectMany:
       queryRootField: sales_orders
@@ -176,7 +188,7 @@ definition:
       select:
         filter: null
     - role: customer
-      select: 
+      select:
         filter:
           and:
             - fieldComparison:
@@ -184,6 +196,7 @@ definition:
                 operator: _eq
                 value:
                   sessionVariable: x-hasura-user-id
+
 ---
 kind: Relationship
 version: v1
@@ -221,6 +234,7 @@ definition:
       target:
         modelField:
           - fieldName: id
+
 ---
 kind: Relationship
 version: v1
@@ -255,3 +269,20 @@ definition:
       target:
         argument:
           argumentName: date
+---
+kind: Relationship
+version: v1
+definition:
+  name: paymentStatus
+  source: Orders
+  target:
+    command:
+      name: GetPaymentStatus
+      subgraph: null
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: paymentId
+      target:
+        argument:
+          argumentName: paymentId
