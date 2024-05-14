@@ -13,4 +13,4 @@ definition:
         - context: .
           env:
             CONNECTION_URI:
-                value: "postgresql://read_only_user:readonlyuser@35.236.11.122:5432/v3-docs-sample-app"
+                value: "postgres://read_only_user:readonlyuser@34.94.43.240/ecomm"

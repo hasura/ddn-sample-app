@@ -8,6 +8,7 @@
     "watch": "ndc-lambda-sdk host -f functions.ts --watch serve --configuration ./ --pretty-print-logs"
   },
   "dependencies": {
-    "@hasura/ndc-lambda-sdk": "1.2.0"
+    "@hasura/ndc-lambda-sdk": "1.2.0",
+    "stripe": "^15.3.0"
   }
 }
