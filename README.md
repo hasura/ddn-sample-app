@@ -29,7 +29,7 @@ npx dotenv -e .env.local -- npm run watch
 ddn supergraph build local --output-dir ./engine
 ```
 
-### legacy (need to be updated)
+### Deploy to DDN Cloud
 
 - Copy Project Name. Feel free to delete the project folders/files that were created. Cloning the repo will regenerate all of that for you. All you need is the project name.
 - Git Clone [Repo](https://github.com/hasura/ddn_beta_ecommerce.git) and cd into it
@@ -37,16 +37,36 @@ ddn supergraph build local --output-dir ./engine
 - Execute the following commands to set up your subgraphs (copy paste them and run them one by one as it is)
 
 ```sh
-ddn delete subgraph app # Choose Y when prompt, this is because this project does not require app subgraph
-ddn create subgraph users
-ddn create subgraph sales
-ddn create subgraph experience
-ddn create subgraph analytics
+ddn project subgraph create analytics
+ddn project subgraph create sales
+ddn project subgraph create experience
+ddn project subgraph create users
+```
+#### Deploy each connectors 
+
+```shell
+
+## deploy connectors from analytics subgraph
+ddn connector build create --connector analytics/connector/clickhouse/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link clickhouse
+
+## deploy connectors from experience subgraph
+ddn connector build create --connector experience/connector/pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link pg
+ddn connector build create --connector experience/connector/mongo/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link mongo
+
+## deploy connectors from sales subgraph
+ddn connector build create --connector sales/connector/pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link pg
+ddn connector build create --connector sales/connector/ts/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link ts --log-level DEBUG
+
+## deploy connectors from users subgraph
+ddn connector build create --connector users/connector/user_pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link user_pg
 ```
 
-- run [ddn build supergraph-manifest](https://hasura.io/docs/3.0/cli/commands/build-supergraph-manifest) -d "Description of Build"
-  - Heads up - it will take approximately 3 minutes to build
-  - For more details on the build process, refer to the [Build Process](#build-process) section.
+## Deploy supergraph
+```shell
+ddn supergraph build create --supergraph supergraph.cloud.yaml
+```
+
+
 - go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
   - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
 
