@@ -59,7 +59,7 @@ query SalesOrdersPage {
 
 
 query testTSfunction {
-  toDateString(date: "03-21-2024")
+  sales_toDateString(date: "03-21-2024")
 }
 
 query sample_sales_toCurrencyString {
