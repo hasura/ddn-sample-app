@@ -1,0 +1,148 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: RecentlyViewedProducts
+  fields:
+    - name: productId
+      type: String!
+    - name: userId
+      type: String!
+    - name: viewed
+      type: Int32!
+    - name: viewedAt
+      type: "[String!]!"
+  graphql:
+    typeName: Analytics_RecentlyViewedProducts
+    inputTypeName: Analytics_RecentlyViewedProductsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clickhouse
+      dataConnectorObjectType: recently_viewed_products
+      fieldMapping:
+        productId:
+          column:
+            name: product_id
+        userId:
+          column:
+            name: user_id
+        viewed:
+          column:
+            name: viewed
+        viewedAt:
+          column:
+            name: viewed_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: RecentlyViewedProducts
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - productId
+          - userId
+          - viewed
+          - viewedAt
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: RecentlyViewedProductsBoolExp
+  objectType: RecentlyViewedProducts
+  dataConnectorName: clickhouse
+  dataConnectorObjectType: recently_viewed_products
+  comparableFields:
+    - fieldName: productId
+      operators:
+        enableAll: true
+    - fieldName: userId
+      operators:
+        enableAll: true
+    - fieldName: viewed
+      operators:
+        enableAll: true
+    - fieldName: viewedAt
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Analytics_RecentlyViewedProductsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: RecentlyViewedProducts
+  objectType: RecentlyViewedProducts
+  source:
+    dataConnectorName: clickhouse
+    collection: recently_viewed_products
+  filterExpressionType: RecentlyViewedProductsBoolExp
+  orderableFields:
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+    - fieldName: viewed
+      orderByDirections:
+        enableAll: true
+    - fieldName: viewedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: analytics_recentlyViewedProducts
+    selectUniques: []
+    orderByExpressionType: Analytics_RecentlyViewedProductsOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: RecentlyViewedProducts
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: product
+  source: RecentlyViewedProducts
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: user
+  source: RecentlyViewedProducts
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id

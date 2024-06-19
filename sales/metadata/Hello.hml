@@ -1,0 +1,26 @@
+---
+kind: Command
+version: v1
+definition:
+  name: Hello
+  outputType: String!
+  arguments:
+    - name: name
+      type: String
+  source:
+    dataConnectorName: ts
+    dataConnectorCommand:
+      function: hello
+  graphql:
+    rootFieldName: sales_hello
+    rootFieldKind: Query
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: Hello
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,113 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: ts
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: SALES_TS_READ_URL
+      write:
+        valueFromEnv: SALES_TS_WRITE_URL
+  schema:
+    version: v0.1
+    schema:
+      scalar_types:
+        Float:
+          representation:
+            type: float64
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+        String:
+          representation:
+            type: string
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+      object_types: {}
+      collections: []
+      functions:
+        - name: hello
+          arguments:
+            name:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+          result_type:
+            type: named
+            name: String
+        - name: toDateString
+          description: Formats a date string to a human-readable format.
+          arguments:
+            date:
+              description: The date string to format.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: String
+          result_type:
+            type: named
+            name: String
+        - name: toCurrencyString
+          description: Formats a number into a currency string.
+          arguments:
+            amount:
+              description: The number to format into currency.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: Float
+          result_type:
+            type: named
+            name: String
+        - name: get_github_profile_description
+          description: Returns the github bio for the userid provided with batching
+          arguments:
+            username:
+              description: Username of the user who's bio will be fetched.
+              type:
+                type: named
+                name: String
+          result_type:
+            type: nullable
+            underlying_type:
+              type: named
+              name: String
+        - name: get_github_profile_description_noparallel
+          description: Returns the github bio for the userid provided without batching
+          arguments:
+            username:
+              description: Username of the user who's bio will be fetched.
+              type:
+                type: named
+                name: String
+          result_type:
+            type: nullable
+            underlying_type:
+              type: named
+              name: String
+        - name: http300delay
+          description: Typescript Function with a 300 HTTP Delay
+          arguments:
+            username:
+              type:
+                type: named
+                name: String
+          result_type:
+            type: nullable
+            underlying_type:
+              type: named
+              name: String
+      procedures: []
+    capabilities:
+      version: 0.1.3
+      capabilities:
+        query:
+          variables: {}
+        mutation: {}
