@@ -3,12 +3,37 @@
 This demo provides a practical example of building an Ecommerce App using Hasura's Data Delivery Network (DDN) with a [supergraph](https://supergraph.io) architecture.
 
 ## Instructions
+
 - [Install Hasura CLI](https://hasura.io/docs/3.0/cli/installation)
 - [Login to Hasura CLI](https://hasura.io/docs/3.0/cli/commands/login)
 - [Create Project](https://hasura.io/docs/3.0/cli/commands/create-project)
+
+### local development
+
+1. Start the engine and connector services
+
+```shell
+HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f docker-compose.hasura.yaml watch
+```
+
+2. start the TS function runtime
+
+```shell
+cd sales/connector/ts && npm i
+npx dotenv -e .env.local -- npm run watch
+```
+
+3. To rebuild any changes
+
+```shell
+ddn supergraph build local --output-dir ./engine
+```
+
+### legacy (need to be updated)
+
 - Copy Project Name. Feel free to delete the project folders/files that were created. Cloning the repo will regenerate all of that for you. All you need is the project name.
 - Git Clone [Repo](https://github.com/hasura/ddn_beta_ecommerce.git) and cd into it
-- Go to Hasura.yaml and replace the project name with the one you get in the step above. Make sure you uncomment the project name. 
+- Go to Hasura.yaml and replace the project name with the one you get in the step above. Make sure you uncomment the project name.
 - Execute the following commands to set up your subgraphs (copy paste them and run them one by one as it is)
 
 ```sh
@@ -20,8 +45,8 @@ ddn create subgraph analytics
 ```
 
 - run [ddn build supergraph-manifest](https://hasura.io/docs/3.0/cli/commands/build-supergraph-manifest) -d "Description of Build"
-    - Heads up - it will take approximately 3 minutes to build
-    - For more details on the build process, refer to the [Build Process](#build-process) section.
+  - Heads up - it will take approximately 3 minutes to build
+  - For more details on the build process, refer to the [Build Process](#build-process) section.
 - go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
   - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
 
@@ -30,31 +55,34 @@ This example supergraph is composed of four subgraphs - users, analytics, experi
 ![alt text](supergraph-1.png)
 
 ### Subgraphs and Data Sources
-- **Subgraph: users**
-  - *Data Connector: postgres*
-    - *Models*: Users, Notifications, Reviews
-- **Subgraph: experience**
-  - *Data Connector: postgres*
-    - *Models*: Cart, CartItems, Categories, Manufacturers, Products, ProductVectorDistance
-  - *Data Connector: mongoDB*
-    - *Models*: ProductDetails
-  
-- **Subgraph: sales**
-  - *Data Connector: postgres*
-    - *Models*: Coupons, Orders
-  - *Typescript Functions*
-    - *Commands*: ToCurrencyString, ToDateString
 
-- **Subgraph: analytics**  
-  - *Data Connector: clickhouse*
-    - *Models*: BrowsingHistory, RecentlyViewedProducts, SessionHistory
+- **Subgraph: users**
+  - _Data Connector: postgres_
+    - _Models_: Users, Notifications, Reviews
+- **Subgraph: experience**
+  - _Data Connector: postgres_
+    - _Models_: Cart, CartItems, Categories, Manufacturers, Products, ProductVectorDistance
+  - _Data Connector: mongoDB_
+    - _Models_: ProductDetails
+- **Subgraph: sales**
+
+  - _Data Connector: postgres_
+    - _Models_: Coupons, Orders
+  - _Typescript Functions_
+    - _Commands_: ToCurrencyString, ToDateString
+
+- **Subgraph: analytics**
+  - _Data Connector: clickhouse_
+    - _Models_: BrowsingHistory, RecentlyViewedProducts, SessionHistory
 
 ![alt text](supergraph-2.png)
 
 ## Disclaimer
+
 This repository has credentials for databases, which are intentionally published by Hasura for demo purposes. These credentials allows for read-only access to synthetic datasets, which do not contain any user or customer sensitive data.
 
 # Core Concepts
+
 The following section outlines the core concepts of Hasura DDN, providing a deeper understanding of its architecture and functionality.
 
 ## Subgraph
@@ -63,10 +91,12 @@ For a multi-team organization working on a Hasura project, it can make sense for
 [Read More](https://hasura.io/docs/3.0/project-configuration/subgraphs/)
 
 ## Models
+
 Models are the link between your data connectors and the API Hasura generates. A model may be backed by a database table, an ad-hoc SQL query, a pre-materialized view, a custom REST or GraphQL API server, etc.
 [Read More](https://hasura.io/docs/3.0/supergraph-modeling/models/)
 
 ## Commands
+
 Commands are backed by functions or procedures declared in a DataConnectorLink allowing you to execute business logic directly from your GraphQL API. You can use them to validate, process or enrich data, call another API, or even log a user in.
 
 [Read More](https://hasura.io/docs/3.0/supergraph-modeling/commands)
