@@ -15,7 +15,7 @@ jobs:
           hasura-pat: ${{ secrets.HASURA_PAT }}
 
       - name: Deploy PG connector and update the connector link
-        run: ddn connector build create --connector app/connector/mypg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link mypg --project ${{ secrets.HASURA_PROJECT }}
+        run: ddn connector build create --connector app/connector/mypg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link mypg
 
       - name: Deploy connectors from analytics subgraph
         run: ddn connector build create --connector analytics/connector/clickhouse/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link clickhouse
