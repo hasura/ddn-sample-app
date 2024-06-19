@@ -14,6 +14,9 @@ jobs:
         with:
           hasura-pat: ${{ secrets.HASURA_PAT }}
 
+      - name: Check directory structure
+        run: ls
+
       - name: Deploy PG connector and update the connector link
         run: ddn connector build create --connector app/connector/mypg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link mypg
 
