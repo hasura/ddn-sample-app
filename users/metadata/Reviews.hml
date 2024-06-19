@@ -160,3 +160,40 @@ definition:
       select:
         filter: null
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: Reviews
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: users
+  source: Reviews
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id

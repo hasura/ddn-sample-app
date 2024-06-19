@@ -160,3 +160,74 @@ definition:
       select:
         filter: null
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: users
+  source: Orders
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: Orders
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+---
+kind: Relationship
+version: v1
+definition:
+  name: formattedCreatedAt
+  source: Orders
+  target:
+    command:
+      name: ToDateString
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: createdAt
+      target:
+        argument:
+          argumentName: date
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: formattedDeliveryDate
+  source: Orders
+  target:
+    command:
+      name: ToDateString
+      subgraph: null
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: deliveryDate
+      target:
+        argument:
+          argumentName: date

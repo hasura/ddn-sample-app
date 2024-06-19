@@ -172,3 +172,169 @@ definition:
       select:
         filter: null
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: carts
+  source: Users
+  target:
+    model:
+      name: Carts
+      subgraph: experience
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: coupons
+  source: Users
+  target:
+    model:
+      name: Coupons
+      subgraph: sales
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: notifications
+  source: Users
+  target:
+    model:
+      name: Notifications
+      subgraph: users
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orders
+  source: Users
+  target:
+    model:
+      name: Orders
+      subgraph: sales
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: reviews
+  source: Users
+  target:
+    model:
+      name: Reviews
+      subgraph: users
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: recentlyViewedProducts
+  source: Users
+  target:
+    model:
+      name: RecentlyViewedProducts
+      subgraph: analytics
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+---
+kind: Relationship
+version: v1
+definition:
+  name: SessionHistory
+  source: Users
+  target:
+    model:
+      name: SessionHistory
+      subgraph: analytics
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: githubprofile
+  source: Users
+  target:
+    command:
+      name: GetGithubProfileDescription
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: name
+      target:
+        argument:
+          argumentName: username
+---
+kind: Relationship
+version: v1
+definition:
+  name: githubprofilenoparallel
+  source: Users
+  target:
+    command:
+      name: GetGithubProfileDescriptionNoparallel
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: name
+      target:
+        argument:
+          argumentName: username

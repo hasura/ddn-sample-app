@@ -160,3 +160,39 @@ definition:
       select:
         filter: null
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: users
+  source: Coupons
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: formatCurrency
+  source: Coupons
+  target:
+    command:
+      name: ToCurrencyString
+      subgraph: null
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: amount
+      target:
+        argument:
+          argumentName: amount

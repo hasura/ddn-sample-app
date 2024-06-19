@@ -37,7 +37,13 @@ definition:
   name: Vector
   graphql:
     typeName: Experience_Vector
-
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Float8
+  graphql:
+    typeName: Experience_Float8
 ---
 kind: DataConnectorScalarRepresentation
 version: v1
@@ -105,4 +111,3 @@ definition:
   representation: Bool
   graphql:
     comparisonExpressionTypeName: Experience_BoolComparisonExp
-

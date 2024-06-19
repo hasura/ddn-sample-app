@@ -196,3 +196,170 @@ definition:
       select:
         filter: null
 
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartItems
+  source: Products
+  target:
+    model:
+      name: CartItems
+      subgraph: experience
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orders
+  source: Products
+  target:
+    model:
+      name: Orders
+      subgraph: sales
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: categories
+  source: Products
+  target:
+    model:
+      name: Categories
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: categoryId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: manufacturers
+  source: Products
+  target:
+    model:
+      name: Manufacturers
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: manufacturerId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: reviews
+  source: Products
+  target:
+    model:
+      name: Reviews
+      subgraph: users
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: product
+  source: ProductsVectorDistance
+  target:
+    model:
+      name: Products
+      subgraph: null
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: id
+---
+kind: Relationship
+version: v1
+definition:
+  name: productDetails
+  source: Products
+  target:
+    model:
+      name: ProductDetails
+      subgraph: null
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+---
+kind: Relationship
+version: v1
+definition:
+  name: recentlyViewedProducts
+  source: Products
+  target:
+    model:
+      name: RecentlyViewedProducts
+      subgraph: analytics
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: formatCurrency
+  source: Products
+  target:
+    command:
+      name: ToCurrencyString
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: price
+      target:
+        argument:
+          argumentName: amount
