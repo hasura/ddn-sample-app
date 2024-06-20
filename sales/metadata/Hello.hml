@@ -12,7 +12,7 @@ definition:
     dataConnectorCommand:
       function: hello
   graphql:
-    rootFieldName: sales_hello
+    rootFieldName: say_hello
     rootFieldKind: Query
 
 ---
