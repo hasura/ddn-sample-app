@@ -5,8 +5,8 @@ This demo provides a practical example of building an Ecommerce App using Hasura
 ## Instructions
 
 - [Install Hasura CLI](https://hasura.io/docs/3.0/cli/installation)
-- [Login to Hasura CLI](https://hasura.io/docs/3.0/cli/commands/login)
-- [Create Project](https://hasura.io/docs/3.0/cli/commands/create-project)
+- [Install Docker](https://docs.docker.com/engine/install/)
+
 
 ### local development
 
@@ -16,7 +16,12 @@ This demo provides a practical example of building an Ecommerce App using Hasura
 HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f docker-compose.hasura.yaml watch
 ```
 
+> Note: For local development, Hasura runs several services (engine, connectors, auth, etc.), which use the following ports: 3000, 4317, 4318, 8081, 8082, 8083, 8084, and 8085. Please ensure these ports are available. If not, modify the published ports in the Docker Compose files from this repository accordingly.
+
+
 2. start the TS function runtime
+
+Open a new terminal (the previous script needs to be running to continou further) and execute the following
 
 ```shell
 cd sales/connector/ts && npm i
@@ -29,11 +34,36 @@ npx dotenv -e .env.local -- npm run watch
 ddn supergraph build local --output-dir ./engine
 ```
 
+- Open console with this URL https://console.hasura.io/local/graphql?url=http://localhost:3000 and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
+  - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
+
+This example supergraph is composed of four subgraphs - users, analytics, experience, and sales, each backed by one or more data connectors. These subgraphs integrate various data sources to provide a comprehensive Ecommerce solution as follows.
+
+
 ### Deploy to DDN Cloud
 
-- Copy Project Name. Feel free to delete the project folders/files that were created. Cloning the repo will regenerate all of that for you. All you need is the project name.
-- Git Clone [Repo](https://github.com/hasura/ddn_beta_ecommerce.git) and cd into it
-- Go to Hasura.yaml and replace the project name with the one you get in the step above. Make sure you uncomment the project name.
+- [Create Project](https://hasura.io/docs/3.0/getting-started/deployment/create-a-project) 
+
+```sh
+ddn project create
+
+# 5:34PM INF Project "vast-buzzard-0000" created on Hasura DDN successfully
+# +-------------+-----------------------------------------------------+
+# | Name        | vast-buzzard-0000                                   |
+# +-------------+-----------------------------------------------------+
+# | Console URL | https://console.hasura.io/project/vast-buzzard-0000 |
+# +-------------+-----------------------------------------------------+
+```
+
+This will create a new project and shows the project name output in the terminal
+- Setup  Project Name and change it on [.hasura/context.yaml](.hasura/context.yaml) . Cloning the repo will generate all confgiration files you need. All you need to change is the project name.
+```sh
+ddn context set project <touched-mudfish-2410>
+
+# ddn context set project touched-mudfish-2410
+# 5:36PM INF Key "project" set to "touched-mudfish-2410" in the context successfully
+```
+
 - Execute the following commands to set up your subgraphs (copy paste them and run them one by one as it is)
 
 ```sh
@@ -65,6 +95,8 @@ ddn connector build create --connector users/connector/user_pg/connector.cloud.y
 ```shell
 ddn supergraph build create --supergraph supergraph.cloud.yaml
 ```
+
+> Note: Once deployed to your new project, if you don't have any connector changes, you can only rebuild supergraph alone, ie. connectors are only need to be deployed when there is change (data schema changes, functions etc.)
 
 
 - go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
