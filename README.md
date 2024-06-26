@@ -11,7 +11,7 @@ Please note that a new release for ther repo is out. Make sure to try the workfl
 
 You may also use a pre-packed [codespace](https://github.com/features/codespaces) that pre-installs all the above and clone this project by clicking on the following link.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/hasura/ddn_beta_ecommerce)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/hasura/ddn-sample-app)
 
 
 ### local development
