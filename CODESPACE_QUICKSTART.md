@@ -1,5 +1,3 @@
-const mdContent = `
-
 # Quickstart with GitHub Codespaces
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/soorajshankar/ecommerce_codespace_test)
