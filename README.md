@@ -4,8 +4,13 @@ This demo provides a practical example of building an Ecommerce App using Hasura
 
 ## Instructions
 
-- [Install Hasura CLI](https://hasura.io/docs/3.0/cli/installation)
+- [Install Hasura CLI & Login](https://hasura.io/docs/3.0/cli/installation)
 - [Install Docker](https://docs.docker.com/engine/install/)
+- [Install NodeJS](https://nodejs.org/en/download/package-manager)
+
+You may also use a pre-packed [codespace](https://github.com/features/codespaces) that pre-installs all the above and clone this project by clicking on the following link.
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/hasura/ddn_beta_ecommerce)
 
 
 ### local development
