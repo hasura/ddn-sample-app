@@ -1,0 +1,175 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: CartItems
+  fields:
+    - name: cartId
+      type: Uuid!
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: productId
+      type: Uuid!
+    - name: quantity
+      type: Int4!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: Experience_CartItems
+    inputTypeName: Experience_CartItemsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: pg
+      dataConnectorObjectType: cart_items
+      fieldMapping:
+        cartId:
+          column:
+            name: cart_id
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productId:
+          column:
+            name: product_id
+        quantity:
+          column:
+            name: quantity
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: CartItems
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - cartId
+          - createdAt
+          - id
+          - productId
+          - quantity
+          - updatedAt
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CartItemsBoolExp
+  objectType: CartItems
+  dataConnectorName: pg
+  dataConnectorObjectType: cart_items
+  comparableFields:
+    - fieldName: cartId
+      operators:
+        enableAll: true
+    - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: productId
+      operators:
+        enableAll: true
+    - fieldName: quantity
+      operators:
+        enableAll: true
+    - fieldName: updatedAt
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Experience_CartItemsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: CartItems
+  objectType: CartItems
+  source:
+    dataConnectorName: pg
+    collection: cart_items
+  filterExpressionType: CartItemsBoolExp
+  orderableFields:
+    - fieldName: cartId
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: quantity
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: experience_cartItems
+    selectUniques:
+      - queryRootField: experience_cartItemsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Experience_CartItemsOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: CartItems
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: carts
+  source: CartItems
+  target:
+    model:
+      name: Carts
+      subgraph: null
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: cartId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: CartItems
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id

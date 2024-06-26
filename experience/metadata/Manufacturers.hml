@@ -1,0 +1,101 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Manufacturers
+  fields:
+    - name: id
+      type: Uuid!
+    - name: name
+      type: Text!
+  graphql:
+    typeName: Experience_Manufacturers
+    inputTypeName: Experience_ManufacturersInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: pg
+      dataConnectorObjectType: manufacturers
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Manufacturers
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: ManufacturersBoolExp
+  objectType: Manufacturers
+  dataConnectorName: pg
+  dataConnectorObjectType: manufacturers
+  comparableFields:
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Experience_ManufacturersBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Manufacturers
+  objectType: Manufacturers
+  source:
+    dataConnectorName: pg
+    collection: manufacturers
+  filterExpressionType: ManufacturersBoolExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: experience_manufacturers
+    selectUniques:
+      - queryRootField: experience_manufacturersById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Experience_ManufacturersOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Manufacturers
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: Manufacturers
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: manufacturerId

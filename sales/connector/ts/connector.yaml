@@ -1,0 +1,8 @@
+kind: Connector
+version: v1
+definition:
+  name: ts
+  subgraph: sales
+  source: hasura/nodejs:v1.4.1
+  context: .
+  envFile: .env.local

@@ -1,0 +1,69 @@
+on:
+  pull_request:
+    branches:
+      - '**'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install and Login to DDN CLI
+        uses: hasura/ddn-deployment@2.1.0
+        with:
+          hasura-pat: ${{ secrets.HASURA_PAT }}
+
+      - name: Deploy connectors from analytics subgraph
+        run: ddn connector build create --connector analytics/connector/clickhouse/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link clickhouse
+
+      - name: Deploy pg connector from experience subgraph
+        run: ddn connector build create --connector experience/connector/pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link pg
+
+      - name: Deploy mongo connector from experience subgraph
+        run: ddn connector build create --connector experience/connector/mongo/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link mongo
+
+      - name: Deploy connectors from sales subgraph
+        run: ddn connector build create --connector sales/connector/pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link pg
+
+      - name: Deploy connectors from sales subgraph
+        run: ddn connector build create --connector sales/connector/ts/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link ts
+
+      - name: Deploy connectors from users subgraph
+        run: ddn connector build create --connector users/connector/user_pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link user_pg
+
+      - name: Deploy supergraph
+        run: ddn supergraph build create --supergraph supergraph.cloud.yaml
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Build and deploy TS functions and update the connector link
+        run: ddn supergraph build create --supergraph ./supergraph.cloud.yaml --description "Build for commit ${{ github.sha }}" --out=json > build_output.json
+
+      - name: Extract URLs from JSON
+        id: extract_urls
+        run: |
+          BUILD_URL=$(jq -r '.build_url' build_output.json)
+          CONSOLE_URL=$(jq -r '.console_url' build_output.json)
+          echo "::set-output name=build_url::$BUILD_URL"
+          echo "::set-output name=console_url::$CONSOLE_URL"
+
+      - name: Add PR comment with build details
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const buildUrl = '${{ steps.extract_urls.outputs.build_url }}';
+            const consoleUrl = '${{ steps.extract_urls.outputs.console_url }}';
+            const prNumber = context.payload.pull_request.number;
+            const commitId = context.sha;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `Supergraph build was successful! 🎉\n\n**Build URL:** [${buildUrl}](${buildUrl})\n**Console URL:** [${consoleUrl}](${consoleUrl})\n**Commit ID:** ${commitId}`
+            });
+          github-token: ${{ secrets.GITHUB_TOKEN }}

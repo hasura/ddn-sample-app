@@ -1,0 +1,107 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: SessionHistory
+  fields:
+    - name: loggedInAt
+      type: DateTime!
+    - name: userId
+      type: String!
+  graphql:
+    typeName: Analytics_SessionHistory
+    inputTypeName: Analytics_SessionHistoryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clickhouse
+      dataConnectorObjectType: session_history
+      fieldMapping:
+        loggedInAt:
+          column:
+            name: logged_in_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: SessionHistory
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - loggedInAt
+          - userId
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: SessionHistoryBoolExp
+  objectType: SessionHistory
+  dataConnectorName: clickhouse
+  dataConnectorObjectType: session_history
+  comparableFields:
+    - fieldName: loggedInAt
+      operators:
+        enableAll: true
+    - fieldName: userId
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Analytics_SessionHistoryBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: SessionHistory
+  objectType: SessionHistory
+  source:
+    dataConnectorName: clickhouse
+    collection: session_history
+  filterExpressionType: SessionHistoryBoolExp
+  orderableFields:
+    - fieldName: loggedInAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: analytics_sessionHistory
+    selectUniques:
+      - queryRootField: analytics_sessionHistoryByUserId
+        uniqueIdentifier:
+          - userId
+    orderByExpressionType: Analytics_SessionHistoryOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: SessionHistory
+  permissions:
+    - role: admin
+      select:
+        filter: null
+---
+kind: Relationship
+version: v1
+definition:
+  name: user
+  source: SessionHistory
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id

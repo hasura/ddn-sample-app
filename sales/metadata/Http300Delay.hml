@@ -1,0 +1,27 @@
+---
+kind: Command
+version: v1
+definition:
+  name: Http300Delay
+  outputType: String
+  arguments:
+    - name: username
+      type: String!
+  source:
+    dataConnectorName: ts
+    dataConnectorCommand:
+      function: http300delay
+  graphql:
+    rootFieldName: sales_http300Delay
+    rootFieldKind: Query
+  description: Typescript Function with a 300 HTTP Delay
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: Http300Delay
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,231 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductDetailsSpecificationsAdditionalSpecs
+  fields:
+    - name: brim
+      type: String
+    - name: build
+      type: String
+    - name: careInstructions
+      type: String
+    - name: closure
+      type: String
+    - name: durability
+      type: String
+    - name: fabricWeight
+      type: String
+    - name: heatResistance
+      type: String
+    - name: packaging
+      type: String
+  graphql:
+    typeName: Experience_ProductDetailsSpecificationsAdditionalSpecs
+    inputTypeName: Experience_ProductDetailsSpecificationsAdditionalSpecsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mongo
+      dataConnectorObjectType: product_details_specifications_additional_specs
+      fieldMapping:
+        brim:
+          column:
+            name: brim
+        build:
+          column:
+            name: build
+        careInstructions:
+          column:
+            name: care_instructions
+        closure:
+          column:
+            name: closure
+        durability:
+          column:
+            name: durability
+        fabricWeight:
+          column:
+            name: fabric_weight
+        heatResistance:
+          column:
+            name: heat_resistance
+        packaging:
+          column:
+            name: packaging
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductDetailsSpecificationsAdditionalSpecs
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - brim
+          - build
+          - careInstructions
+          - closure
+          - durability
+          - fabricWeight
+          - heatResistance
+          - packaging
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductDetailsSpecifications
+  fields:
+    - name: additionalSpecs
+      type: ProductDetailsSpecificationsAdditionalSpecs
+    - name: colorOptions
+      type: "[String!]"
+    - name: material
+      type: String
+    - name: sizeOptions
+      type: "[String!]"
+  graphql:
+    typeName: Experience_ProductDetailsSpecifications
+    inputTypeName: Experience_ProductDetailsSpecificationsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mongo
+      dataConnectorObjectType: product_details_specifications
+      fieldMapping:
+        additionalSpecs:
+          column:
+            name: additional_specs
+        colorOptions:
+          column:
+            name: color_options
+        material:
+          column:
+            name: material
+        sizeOptions:
+          column:
+            name: size_options
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductDetailsSpecifications
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - additionalSpecs
+          - colorOptions
+          - material
+          - sizeOptions
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductDetails
+  fields:
+    - name: id
+      type: ObjectId
+    - name: features
+      type: "[String!]"
+    - name: productId
+      type: String
+    - name: specifications
+      type: ProductDetailsSpecifications
+  graphql:
+    typeName: Experience_ProductDetails
+    inputTypeName: Experience_ProductDetailsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mongo
+      dataConnectorObjectType: product_details
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        features:
+          column:
+            name: features
+        productId:
+          column:
+            name: product_id
+        specifications:
+          column:
+            name: specifications
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductDetails
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - features
+          - productId
+          - specifications
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: ProductDetailsBoolExp
+  objectType: ProductDetails
+  dataConnectorName: mongo
+  dataConnectorObjectType: product_details
+  comparableFields:
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: features
+      operators:
+        enableAll: true
+    - fieldName: productId
+      operators:
+        enableAll: true
+    - fieldName: specifications
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Experience_ProductDetailsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ProductDetails
+  objectType: ProductDetails
+  source:
+    dataConnectorName: mongo
+    collection: product_details
+  filterExpressionType: ProductDetailsBoolExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: features
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: specifications
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: experience_productDetails
+    selectUniques: []
+    orderByExpressionType: Experience_ProductDetailsOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ProductDetails
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

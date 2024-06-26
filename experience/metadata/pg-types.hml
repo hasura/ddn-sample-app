@@ -1,0 +1,113 @@
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Uuid
+  graphql:
+    typeName: Experience_Uuid
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Text
+  graphql:
+    typeName: Experience_Text
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Timestamptz
+  graphql:
+    typeName: Experience_Timestamptz
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Int4
+  graphql:
+    typeName: Experience_Int4
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Vector
+  graphql:
+    typeName: Experience_Vector
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Float8
+  graphql:
+    typeName: Experience_Float8
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: pg
+  dataConnectorScalarType: uuid
+  representation: Uuid
+  graphql:
+    comparisonExpressionTypeName: Experience_UuidComparisonExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: pg
+  dataConnectorScalarType: text
+  representation: Text
+  graphql:
+    comparisonExpressionTypeName: Experience_TextComparisonExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: pg
+  dataConnectorScalarType: timestamptz
+  representation: Timestamptz
+  graphql:
+    comparisonExpressionTypeName: Experience_TimestamptzComparisonExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: pg
+  dataConnectorScalarType: int4
+  representation: Int4
+  graphql:
+    comparisonExpressionTypeName: Experience_Int4ComparisonExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: pg
+  dataConnectorScalarType: vector
+  representation: Vector
+  graphql:
+    comparisonExpressionTypeName: Experience_VectorComparisonExp
+
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Bool
+  graphql:
+    typeName: Experience_Bool
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: pg
+  dataConnectorScalarType: bool
+  representation: Bool
+  graphql:
+    comparisonExpressionTypeName: Experience_BoolComparisonExp

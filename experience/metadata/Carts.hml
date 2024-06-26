@@ -1,0 +1,174 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Carts
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: isComplete
+      type: Bool!
+    - name: isReminderSent
+      type: Bool!
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: Experience_Carts
+    inputTypeName: Experience_CartsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: pg
+      dataConnectorObjectType: carts
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        isComplete:
+          column:
+            name: is_complete
+        isReminderSent:
+          column:
+            name: is_reminder_sent
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Carts
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - isComplete
+          - isReminderSent
+          - updatedAt
+          - userId
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CartsBoolExp
+  objectType: Carts
+  dataConnectorName: pg
+  dataConnectorObjectType: carts
+  comparableFields:
+    - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: isComplete
+      operators:
+        enableAll: true
+    - fieldName: isReminderSent
+      operators:
+        enableAll: true
+    - fieldName: updatedAt
+      operators:
+        enableAll: true
+    - fieldName: userId
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Experience_CartsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Carts
+  objectType: Carts
+  source:
+    dataConnectorName: pg
+    collection: carts
+  filterExpressionType: CartsBoolExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: isComplete
+      orderByDirections:
+        enableAll: true
+    - fieldName: isReminderSent
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: experience_carts
+    selectUniques:
+      - queryRootField: experience_cartsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Experience_CartsOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Carts
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartItems
+  source: Carts
+  target:
+    model:
+      name: CartItems
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: cartId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: users
+  source: Carts
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id

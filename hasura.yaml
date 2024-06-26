@@ -1,12 +1,1 @@
-version: v1
-project: #hardy-pheasant-6274 Add your own project name here
-subgraphs:
-    analytics:
-        path: ./analytics
-    experience:
-        path: ./experience
-    sales:
-        path: ./sales
-    users:
-        path: ./users
-defaultSupergraphManifest: base
+version: v2

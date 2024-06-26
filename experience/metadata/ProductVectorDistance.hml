@@ -1,0 +1,97 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductsVectorDistance
+  fields:
+    - name: distance
+      type: Float8
+    - name: id
+      type: Uuid
+  graphql:
+    typeName: Experience_ProductsVectorDistance
+    inputTypeName: Experience_ProductsVectorDistanceInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: pg
+      dataConnectorObjectType: products_vector_distance
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductsVectorDistance
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - distance
+          - id
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: ProductsVectorDistanceBoolExp
+  objectType: ProductsVectorDistance
+  dataConnectorName: pg
+  dataConnectorObjectType: products_vector_distance
+  comparableFields:
+    - fieldName: distance
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Experience_ProductsVectorDistanceBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ProductsVectorDistance
+  objectType: ProductsVectorDistance
+  arguments:
+    - name: queryVector
+      type: Vector
+  source:
+    dataConnectorName: pg
+    collection: products_vector_distance
+    argumentMapping:
+      queryVector: query_vector
+  filterExpressionType: ProductsVectorDistanceBoolExp
+  orderableFields:
+    - fieldName: distance
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: experience_productsVectorDistance
+    selectUniques: []
+    argumentsInputType: Experience_ProductsVectorDistanceArguments
+    orderByExpressionType: Experience_ProductsVectorDistanceOrderBy
+  description: Description for model products_vector_distance (using pgvector and native query)
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ProductsVectorDistance
+  permissions:
+    - role: admin
+      select:
+        filter: null
+    - role: manufacturer
+      select:
+        filter:
+          relationship:
+            name: product
+            predicate:
+              fieldComparison:
+                field: manufacturerId
+                operator: _eq
+                value:
+                  sessionVariable: x-hasura-manufacturer-id

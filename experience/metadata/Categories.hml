@@ -1,0 +1,101 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Categories
+  fields:
+    - name: id
+      type: Uuid!
+    - name: name
+      type: Text!
+  graphql:
+    typeName: Experience_Categories
+    inputTypeName: Experience_CategoriesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: pg
+      dataConnectorObjectType: categories
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Categories
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CategoriesBoolExp
+  objectType: Categories
+  dataConnectorName: pg
+  dataConnectorObjectType: categories
+  comparableFields:
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Experience_CategoriesBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Categories
+  objectType: Categories
+  source:
+    dataConnectorName: pg
+    collection: categories
+  filterExpressionType: CategoriesBoolExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: experience_categories
+    selectUniques:
+      - queryRootField: experience_categoriesById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Experience_CategoriesOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Categories
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: Categories
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: categoryId

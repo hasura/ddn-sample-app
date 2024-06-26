@@ -1,0 +1,8 @@
+kind: Connector
+version: v1
+definition:
+  name: clickhouse
+  subgraph: analytics
+  source: hasura/clickhouse:v0.2.8
+  context: .
+  envFile: .env.local
