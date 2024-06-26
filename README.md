@@ -1,6 +1,7 @@
-# Ecommerce App Demo using DDN (beta)
+# Ecommerce Application Demo using Data Delivery Network
 
 This demo provides a practical example of building an Ecommerce App using Hasura's Data Delivery Network (DDN) with a [supergraph](https://supergraph.io) architecture.
+Please note that a new release for ther repo is out. Make sure to try the workflow again if you are a returning user.
 
 ## Instructions
 
