@@ -14,6 +14,8 @@ definition:
       type: Uuid!
     - name: rating
       type: Int4!
+      deprecated: 
+        reason: "deprecated because its a demo"
     - name: text
       type: Text!
     - name: updatedAt
