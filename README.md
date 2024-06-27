@@ -34,17 +34,18 @@ cd sales/connector/ts && npm i
 npx dotenv -e .env.local -- npm run watch
 ```
 
-3. To rebuild any changes
 
-```shell
-ddn supergraph build local --output-dir ./engine
-```
 
 - Open console with this URL https://console.hasura.io/local/graphql?url=http://localhost:3000 and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
   - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
 
 This example supergraph is composed of four subgraphs - users, analytics, experience, and sales, each backed by one or more data connectors. These subgraphs integrate various data sources to provide a comprehensive Ecommerce solution as follows.
 
+3. To rebuild after any changes, you may run the following command to get the changes reflected on the GraphQL schema.
+
+  ```shell
+  ddn supergraph build local --output-dir ./engine
+  ```
 
 ### Deploy to DDN Cloud
 
