@@ -1,7 +1,7 @@
 on:
   pull_request:
     branches:
-      - '**'
+      - "**"
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,27 +14,46 @@ jobs:
         with:
           hasura-pat: ${{ secrets.HASURA_PAT }}
 
-      - name: Deploy connectors from analytics subgraph
-        run: ddn connector build create --connector analytics/connector/clickhouse/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link clickhouse
+      - name: Create analytics subgraph
+        run: ddn project subgraph create analytics
+        continue-on-error: true # Continue on error to avoid failing the workflow if the subgraph already exists
 
-      - name: Deploy pg connector from experience subgraph
-        run: ddn connector build create --connector experience/connector/pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link pg
+      - name: Create sales subgraph
+        run: ddn project subgraph create sales
+        continue-on-error: true
 
-      - name: Deploy mongo connector from experience subgraph
-        run: ddn connector build create --connector experience/connector/mongo/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link mongo
+      - name: Create experience subgraph
+        run: ddn project subgraph create experience
+        continue-on-error: true
 
-      - name: Deploy connectors from sales subgraph
-        run: ddn connector build create --connector sales/connector/pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link pg
+      - name: Create users subgraph
+        run: ddn project subgraph create users
+        continue-on-error: true
 
-      - name: Deploy connectors from sales subgraph
-        run: ddn connector build create --connector sales/connector/ts/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link ts
+      - name: Create globals subgraph
+        run: ddn project subgraph create globals
+        continue-on-error: true
 
-      - name: Deploy connectors from users subgraph
-        run: ddn connector build create --connector users/connector/user_pg/connector.cloud.yaml --target-supergraph supergraph.cloud.yaml --target-connector-link user_pg
+      - name: Deploy Clickhouse connector from analytics subgraph
+        run: ddn connector build create --connector analytics/connector/clickhouse/connector.cloud.yaml --target-subgraph analytics/subgraph.cloud.yaml --target-connector-link clickhouse
+
+      - name: Deploy PG connector from experience subgraph
+        run: ddn connector build create --connector experience/connector/pg/connector.cloud.yaml --target-subgraph experience/subgraph.cloud.yaml --target-connector-link pg
+
+      - name: Deploy Mongo connector from experience subgraph
+        run: ddn connector build create --connector experience/connector/mongo/connector.cloud.yaml --target-subgraph experience/subgraph.cloud.yaml --target-connector-link mongo
+
+      - name: Deploy PG connector from sales subgraph
+        run: ddn connector build create --connector sales/connector/pg/connector.cloud.yaml --target-subgraph sales/subgraph.cloud.yaml --target-connector-link pg
+
+      - name: Deploy TS connector from sales subgraph with DEBUG log level
+        run: ddn connector build create --connector sales/connector/ts/connector.cloud.yaml --target-subgraph sales/subgraph.cloud.yaml --target-connector-link ts --log-level DEBUG
+
+      - name: Deploy User PG connector from users subgraph
+        run: ddn connector build create --connector users/connector/user_pg/connector.cloud.yaml --target-subgraph users/subgraph.cloud.yaml --target-connector-link user_pg
 
       - name: Deploy supergraph
         run: ddn supergraph build create --supergraph supergraph.cloud.yaml
-
       - name: Install dependencies
         run: |
           sudo apt-get update
