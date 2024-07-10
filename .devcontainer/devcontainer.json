@@ -30,5 +30,5 @@
       "documentationUrl": "https://hasura.io/docs/latest/api-reference/cloud-api-reference/#authentication"
     }
   },
-  "postCreateCommand": "curl -L https://graphql-engine-cdn.hasura.io/ddn/cli/v2/get.sh | bash && ddn auth login --pat $HASURA_PAT"
+  "postCreateCommand": "curl -L https://graphql-engine-cdn.hasura.io/ddn/cli/v3/get.sh | bash && ddn auth login --pat $HASURA_PAT"
 }
