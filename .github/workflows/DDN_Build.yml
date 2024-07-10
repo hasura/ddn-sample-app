@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install and Login to DDN CLI
-        uses: hasura/ddn-deployment@2.1.0
+        uses: hasura/ddn-deployment@2.2.0
         with:
           hasura-pat: ${{ secrets.HASURA_PAT }}
 
