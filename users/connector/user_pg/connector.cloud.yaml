@@ -1,8 +1,11 @@
 kind: Connector
-version: v1
+version: v2
 definition:
   name: user_pg
   subgraph: users
   source: hasura/postgres:v0.7.0
   context: .
   envFile: .env.cloud
+  envMapping:
+    CONNECTION_URI:
+      fromEnv: CONNECTION_URI

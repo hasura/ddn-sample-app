@@ -8,6 +8,9 @@ definition:
         valueFromEnv: SALES_TS_READ_URL
       write:
         valueFromEnv: SALES_TS_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: SALES_TS_AUTHORIZATION_HEADER
   schema:
     version: v0.1
     schema:

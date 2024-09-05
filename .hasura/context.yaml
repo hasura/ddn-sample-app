@@ -1,3 +1,15 @@
-context:
-  supergraph: ../supergraph.yaml
-  project: touched-mudfish-2410
+kind: Context
+version: v2
+definition:
+  current: default
+  contexts:
+    cloud:
+      project: exciting-chigger-2333
+      supergraph: ../supergraph.cloud.yaml
+      localEnvFile: ../.env
+      cloudEnvFile: ../.env.cloud
+    default:
+      project: exciting-chigger-2333
+      supergraph: ../supergraph.local.yaml
+      localEnvFile: ../.env
+      cloudEnvFile: ../.env.cloud

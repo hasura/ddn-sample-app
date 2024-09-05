@@ -1,9 +1,17 @@
 kind: Subgraph
-version: v1
+version: v2
 definition:
+  name: users
   generator:
     rootPath: .
   envFile: .env.cloud.users
   includePaths:
     - metadata
-  name: users
+  envMapping:
+    USERS_USER_PG_READ_URL:
+      fromEnv: USERS_USER_PG_READ_URL
+    USERS_USER_PG_WRITE_URL:
+      fromEnv: USERS_USER_PG_WRITE_URL
+  connectors:
+    - path: connector/user_pg/connector.cloud.yaml
+      connectorLinkName: user_pg
