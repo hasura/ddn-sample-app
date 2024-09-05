@@ -1,8 +1,11 @@
 kind: Connector
-version: v1
+version: v2
 definition:
   name: ts
   subgraph: sales
   source: hasura/nodejs:v1.4.1
   context: .
   envFile: .env.cloud
+  envMapping:
+    HASURA_CONNECTOR_PORT:
+      fromEnv: HASURA_CONNECTOR_PORT

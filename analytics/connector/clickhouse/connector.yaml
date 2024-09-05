@@ -1,8 +1,21 @@
 kind: Connector
-version: v1
+version: v2
 definition:
   name: clickhouse
   subgraph: analytics
   source: hasura/clickhouse:v0.2.8
   context: .
   envFile: .env.local
+  envMapping:
+    CLICKHOUSE_PASSWORD:
+      fromEnv: CLICKHOUSE_PASSWORD
+    CLICKHOUSE_URL:
+      fromEnv: CLICKHOUSE_URL
+    CLICKHOUSE_USERNAME:
+      fromEnv: CLICKHOUSE_USERNAME
+    HASURA_SERVICE_TOKEN_SECRET:
+      fromEnv: HASURA_SERVICE_TOKEN_SECRET
+    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
+      fromEnv: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+    OTEL_SERVICE_NAME:
+      fromEnv: OTEL_SERVICE_NAME
