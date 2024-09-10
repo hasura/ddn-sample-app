@@ -1,18 +1,20 @@
 kind: Context
 version: v3
 definition:
-  current: default
+  current: local
   contexts:
     cloud:
-      project: touched-mudfish-2410
+      project: exciting-chigger-2333
       supergraph: ../supergraph.cloud.yaml
       localEnvFile: ../.env
       cloudEnvFile: ../.env.cloud
     default:
-      project: touched-mudfish-2410
+      project: exciting-chigger-2333
       supergraph: ../supergraph.yaml
       localEnvFile: ../.env
       cloudEnvFile: ../.env.cloud
+    local:
+      supergraph: ../supergraph.yaml
   scripts:
     docker-start:
       bash: HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f compose.yaml --env-file .env up --build --pull always -d
