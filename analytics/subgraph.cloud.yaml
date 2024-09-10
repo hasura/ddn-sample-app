@@ -1,9 +1,17 @@
 kind: Subgraph
-version: v1
+version: v2
 definition:
+  name: analytics
   generator:
     rootPath: .
   envFile: .env.cloud.analytics
   includePaths:
     - metadata
-  name: analytics
+  envMapping:
+    ANALYTICS_CLICKHOUSE_READ_URL:
+      fromEnv: ANALYTICS_CLICKHOUSE_READ_URL
+    ANALYTICS_CLICKHOUSE_WRITE_URL:
+      fromEnv: ANALYTICS_CLICKHOUSE_WRITE_URL
+  connectors:
+    - path: connector/clickhouse/connector.cloud.yaml
+      connectorLinkName: clickhouse
