@@ -8,6 +8,9 @@ definition:
         valueFromEnv: EXPERIENCE_PG_READ_URL
       write:
         valueFromEnv: EXPERIENCE_PG_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: EXPERIENCE_PG_AUTHORIZATION_HEADER
   schema:
     version: v0.1
     schema:

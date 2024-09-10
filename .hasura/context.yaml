@@ -1,3 +1,21 @@
-context:
-  supergraph: ../supergraph.yaml
-  project: touched-mudfish-2410
+kind: Context
+version: v3
+definition:
+  current: local
+  contexts:
+    cloud:
+      project: exciting-chigger-2333
+      supergraph: ../supergraph.cloud.yaml
+      localEnvFile: ../.env
+      cloudEnvFile: ../.env.cloud
+    default:
+      project: exciting-chigger-2333
+      supergraph: ../supergraph.yaml
+      localEnvFile: ../.env
+      cloudEnvFile: ../.env.cloud
+    local:
+      supergraph: ../supergraph.yaml
+  scripts:
+    docker-start:
+      bash: HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f compose.yaml --env-file .env up --build --pull always -d
+      powershell: $Env:HASURA_DDN_PAT = ddn auth print-pat; docker compose -f compose.yaml --env-file .env up --build --pull always -d

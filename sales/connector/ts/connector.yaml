@@ -1,8 +1,17 @@
 kind: Connector
-version: v1
+version: v2
 definition:
   name: ts
   subgraph: sales
   source: hasura/nodejs:v1.4.1
   context: .
   envFile: .env.local
+  envMapping:
+    HASURA_CONNECTOR_PORT:
+      fromEnv: HASURA_CONNECTOR_PORT
+    HASURA_SERVICE_TOKEN_SECRET:
+      fromEnv: HASURA_SERVICE_TOKEN_SECRET
+    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
+      fromEnv: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+    OTEL_SERVICE_NAME:
+      fromEnv: OTEL_SERVICE_NAME
