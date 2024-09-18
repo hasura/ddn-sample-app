@@ -1,8 +1,17 @@
 kind: Connector
-version: v1
+version: v2
 definition:
   name: mongo
   subgraph: experience
   source: hasura/mongodb:v0.0.6
   context: .
   envFile: .env.local
+  envMapping:
+    HASURA_SERVICE_TOKEN_SECRET:
+      fromEnv: HASURA_SERVICE_TOKEN_SECRET
+    MONGODB_DATABASE_URI:
+      fromEnv: MONGODB_DATABASE_URI
+    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
+      fromEnv: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+    OTEL_SERVICE_NAME:
+      fromEnv: OTEL_SERVICE_NAME

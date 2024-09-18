@@ -8,6 +8,9 @@ definition:
         valueFromEnv: USERS_USER_PG_READ_URL
       write:
         valueFromEnv: USERS_USER_PG_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: USERS_USER_PG_AUTHORIZATION_HEADER
   schema:
     version: v0.1
     schema:
