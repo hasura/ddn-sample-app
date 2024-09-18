@@ -6,10 +6,10 @@ services:
       context: engine
       dockerfile_inline: |-
         FROM ghcr.io/hasura/v3-engine
-        COPY ./ /md/
+        COPY ./build /md/
     develop:
       watch:
-        - path: engine
+        - path: engine/build
           action: sync+restart
           target: /md/
     depends_on:

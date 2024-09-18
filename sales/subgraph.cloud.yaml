@@ -1,9 +1,27 @@
 kind: Subgraph
-version: v1
+version: v2
 definition:
+  name: sales
   generator:
     rootPath: .
   envFile: .env.cloud.sales
   includePaths:
     - metadata
-  name: sales
+  envMapping:
+    SALES_PG_AUTHORIZATION_HEADER:
+      fromEnv: SALES_PG_AUTHORIZATION_HEADER
+    SALES_PG_READ_URL:
+      fromEnv: SALES_PG_READ_URL
+    SALES_PG_WRITE_URL:
+      fromEnv: SALES_PG_WRITE_URL
+    SALES_TS_AUTHORIZATION_HEADER:
+      fromEnv: SALES_TS_AUTHORIZATION_HEADER
+    SALES_TS_READ_URL:
+      fromEnv: SALES_TS_READ_URL
+    SALES_TS_WRITE_URL:
+      fromEnv: SALES_TS_WRITE_URL
+  connectors:
+    - path: connector/pg/connector.cloud.yaml
+      connectorLinkName: pg
+    - path: connector/ts/connector.cloud.yaml
+      connectorLinkName: ts

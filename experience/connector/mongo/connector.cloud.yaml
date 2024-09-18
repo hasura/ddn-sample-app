@@ -1,8 +1,11 @@
 kind: Connector
-version: v1
+version: v2
 definition:
   name: mongo
   subgraph: experience
   source: hasura/mongodb:v0.0.6
   context: .
   envFile: .env.cloud
+  envMapping:
+    MONGODB_DATABASE_URI:
+      fromEnv: MONGODB_DATABASE_URI

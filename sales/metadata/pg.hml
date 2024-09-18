@@ -8,6 +8,9 @@ definition:
         valueFromEnv: SALES_PG_READ_URL
       write:
         valueFromEnv: SALES_PG_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: SALES_PG_AUTHORIZATION_HEADER
   schema:
     version: v0.1
     schema:

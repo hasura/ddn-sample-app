@@ -1,9 +1,27 @@
 kind: Subgraph
-version: v1
+version: v2
 definition:
+  name: experience
   generator:
     rootPath: .
   envFile: .env.cloud.experience
   includePaths:
     - metadata
-  name: experience
+  envMapping:
+    EXPERIENCE_MONGO_AUTHORIZATION_HEADER:
+      fromEnv: EXPERIENCE_MONGO_AUTHORIZATION_HEADER
+    EXPERIENCE_MONGO_READ_URL:
+      fromEnv: EXPERIENCE_MONGO_READ_URL
+    EXPERIENCE_MONGO_WRITE_URL:
+      fromEnv: EXPERIENCE_MONGO_WRITE_URL
+    EXPERIENCE_PG_AUTHORIZATION_HEADER:
+      fromEnv: EXPERIENCE_PG_AUTHORIZATION_HEADER
+    EXPERIENCE_PG_READ_URL:
+      fromEnv: EXPERIENCE_PG_READ_URL
+    EXPERIENCE_PG_WRITE_URL:
+      fromEnv: EXPERIENCE_PG_WRITE_URL
+  connectors:
+    - path: connector/pg/connector.cloud.yaml
+      connectorLinkName: pg
+    - path: connector/mongo/connector.cloud.yaml
+      connectorLinkName: mongo
