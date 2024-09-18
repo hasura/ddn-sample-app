@@ -8,7 +8,7 @@ definition:
       supergraph: ../supergraph.cloud.yaml
     default:
       project: touched-mudfish-2410
-      supergraph: ../supergraph.yaml
+      supergraph: ../supergraph.local.yaml
   scripts:
     docker-start:
       bash: HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f docker-compose.hasura.yaml up --build --pull always -d

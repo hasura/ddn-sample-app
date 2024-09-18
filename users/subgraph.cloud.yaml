@@ -8,6 +8,8 @@ definition:
   includePaths:
     - metadata
   envMapping:
+    USERS_USER_PG_AUTHORIZATION_HEADER:
+      fromEnv: USERS_USER_PG_AUTHORIZATION_HEADER
     USERS_USER_PG_READ_URL:
       fromEnv: USERS_USER_PG_READ_URL
     USERS_USER_PG_WRITE_URL:
