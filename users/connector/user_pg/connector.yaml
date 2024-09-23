@@ -1,0 +1,14 @@
+kind: Connector
+version: v2
+definition:
+  name: user_pg
+  subgraph: users
+  source: hasura/postgres:v0.7.0
+  context: .
+  envMapping:
+    HASURA_SERVICE_TOKEN_SECRET:
+      fromEnv: USERS_USER_PG_HASURA_SERVICE_TOKEN_SECRET
+    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
+      fromEnv: USERS_USER_PG_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+    OTEL_SERVICE_NAME:
+      fromEnv: USERS_USER_PG_OTEL_SERVICE_NAME
