@@ -6,6 +6,8 @@ definition:
   source: hasura/postgres:v0.7.0
   context: .
   envMapping:
+    CONNECTION_URI:
+      fromEnv: USERS_USER_PG_CONNECTION_URI
     HASURA_SERVICE_TOKEN_SECRET:
       fromEnv: USERS_USER_PG_HASURA_SERVICE_TOKEN_SECRET
     OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
