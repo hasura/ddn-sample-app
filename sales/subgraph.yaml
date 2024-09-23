@@ -6,3 +6,13 @@ definition:
     rootPath: .
   includePaths:
     - metadata
+  envMapping:
+    SALES_PG_AUTHORIZATION_HEADER:
+      fromEnv: SALES_PG_AUTHORIZATION_HEADER
+    SALES_PG_READ_URL:
+      fromEnv: SALES_PG_READ_URL
+    SALES_PG_WRITE_URL:
+      fromEnv: SALES_PG_WRITE_URL
+  connectors:
+    - path: connector/pg/connector.yaml
+      connectorLinkName: pg
