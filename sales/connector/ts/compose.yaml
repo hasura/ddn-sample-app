@@ -24,5 +24,5 @@ services:
     ports:
       - mode: ingress
         target: 8080
-        published: "8081"
+        published: "8086"
         protocol: tcp
