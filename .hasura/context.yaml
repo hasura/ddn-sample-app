@@ -8,5 +8,5 @@ definition:
       localEnvFile: ../.env
   scripts:
     docker-start:
-      bash: HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f compose.yaml --env-file .env up --build --pull always -d
+      bash: HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f compose.yaml --env-file .env up --build --pull always --watch
       powershell: $Env:HASURA_DDN_PAT = ddn auth print-pat; docker compose -f compose.yaml --env-file .env up --build --pull always -d
