@@ -1,0 +1,11 @@
+### AuthZ 
+
+query AuthZUserOrders {
+  sales_orders(order_by: {createdAt: Desc}) {
+    id
+    userId
+    products {
+      name
+    }
+  }
+}

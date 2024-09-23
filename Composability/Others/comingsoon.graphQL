@@ -1,0 +1,27 @@
+# ### Nested Aggregations 
+
+query MyQuery {
+  Artist {
+    Albums_aggregate {
+      aggregate {
+        sum {
+          AlbumId
+        }
+      }
+    }
+  }
+}
+
+## (Remote Relns in Predicates)
+
+query MyQuery {
+ StaffAvailability{
+   Slots {
+     Appointments(where: {PatientRef: {_eq: 1570204}}) {
+       PatientRef
+     }
+   }
+   AvailabilityDate
+   staffName
+ }
+}

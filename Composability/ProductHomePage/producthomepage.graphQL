@@ -1,0 +1,242 @@
+# Part 9 Nested paginate (top N)
+
+query ProductHomePage {
+  topTShirtsInUS: experience_products( #1 Select list
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}} # 2 Filtering and 7 Nested Filtering
+    # order_by: {price: Asc} # 3 Sorting
+    order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
+    offset: 1 # 4 Pagination
+    limit: 5 # 4 Pagination
+  ) {
+    id
+    name
+    price
+    description
+    manufacturedBy: manufacturers {
+      name # 5 Same Database Join
+    }
+    latestOrders: orders{  # Two level nested join across database
+      createdAt
+      userActivity:users{
+        name  # 6 Three Level Nested Join across database
+        lastSeen
+      }
+    }
+    # 9 Nested paginate (top n)
+    topReviews: reviews( 
+      where: {createdAt: {_gt: "2023-10-15"}} # Filtering
+      order_by: {rating: Desc} # Sorting
+      limit: 3 # Pagination
+    ) {
+      rating
+      text
+    }
+  }}
+
+# Building the query now step by step
+
+# Part 1 - Select List
+# GET /experience-products
+
+query Part1 {
+ allProducts: experience_products{
+    id
+    name
+    price
+    description
+  }
+}
+
+
+# Part 2 - Filter
+# GET /experience-products?countryOfOrigin=US
+
+query Part2 {
+  productsInUS: experience_products(where: {countryOfOrigin: {_eq: "US"}}) {
+    id
+    name
+    price
+    description
+  }
+}
+
+# Part 3 - Sorting
+# GET /experience-products?countryOfOrigin=US&sort=price:desc
+
+query Part3 {
+  productsInUSByPrice: experience_products(
+    where: {countryOfOrigin: {_eq: "US"}}
+    order_by: {price: Desc}
+  ) {
+    id
+    name
+    price
+    description
+  }
+}
+
+# Part 4 - Pagination
+# GET experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5
+query Part4 {
+   productsInUSByPrice: experience_products(
+    where: {countryOfOrigin: {_eq: "US"}}
+    order_by: {price: Desc}
+    offset: 1
+    limit: 5
+  ) {
+    id
+    name
+    price
+    description
+  }
+}
+
+# Part 5 - Same Database Joins
+
+# GET/ experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5&categoryFields=name,description&manufacturerFields=name,location
+
+query Part5 {
+  experience_products(
+    where: {countryOfOrigin: {_eq: "US"}}
+    order_by: {price: Desc}
+    offset: 1
+    limit: 5
+  ) {
+    id
+    name
+    price
+    description
+    categories{
+      name
+    }
+    manufacturedBy:manufacturers{
+      name
+    }
+  }
+}
+
+# Part 6 - Two Level Nested cross database joins
+
+# Part 6 - Two Level Nested cross database joins
+# Fetch Experience Products
+# GET http://localhost:3000/experience-products?countryOfOrigin=US&sort=price:desc&offset=1&limit=5
+# Fetch Categories for Each Product
+# GET http://localhost:3000/categories?productId=123
+# You might need to make multiple calls depending on the number of products:
+# Fetch Manufacturers for Each Product
+# GET http://localhost:3000/manufacturers?productId=123
+# Fetch Orders Related to Each Product
+# GET http://localhost:3000/orders?productId=123
+# Fetch Users for Each Order
+# GET http://localhost:3000/users?orderId=456
+
+query Part6 {
+  productsInUSByPrice: experience_products(
+    where: {countryOfOrigin: {_eq: "US"}}
+    order_by: {price: Desc}
+    offset: 1
+    limit: 5
+  ) {
+    id
+    name
+    price
+    description
+   manufacturedBy: manufacturers{
+      name
+    }
+    latestOrders:orders{
+      createdAt
+      userActivity: users{
+        name
+        lastSeen
+      }
+    }
+  }
+}
+
+# Part 7 - Nested Filtering (same database)
+
+query Part7 {
+ topTShirtsInUS: experience_products(
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
+    order_by: {price: Desc}
+    offset: 1
+    limit: 5
+  ) {
+    id
+    name
+    price
+    description
+    }
+    manufacturedBy:manufacturers {
+      name
+    }
+    latestOrders:orders {
+      createdAt
+      userActivity:users {
+        name
+      }
+    }
+  }
+}
+
+# Part 8 - Nested Sorting (same database)
+# GET /experience-products?countryOfOrigin=US&categoryName=T-Shirts&categorySort=DESC&offset=1&limit=5
+
+query Part8 {
+  topTShirtsInUS: experience_products(
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}}
+    offset: 1
+    limit: 5
+    order_by: {categories: {name: Asc}}
+  ) {
+    id
+    name
+    price
+    description
+   manufacturedBy: manufacturers {
+      name
+    }
+    latestOrders: orders {
+      createdAt
+      userActivity: users {
+        name
+      }
+    }
+  }
+}
+
+# Part 9 Nested paginate (top N)
+
+query ProductHomePage {
+  topTShirtsInUS: experience_products( #1 Select list
+    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}} # 2 Filtering and 7 Nested Filtering
+    # order_by: {price: Asc} # 3 Sorting
+    order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
+    offset: 1 # 4 Pagination
+    limit: 5 # 4 Pagination
+  ) {
+    id
+    name
+    price
+    description
+    manufacturedBy: manufacturers {
+      name # 5 Same Database Join
+    }
+    latestOrders: orders{  # Two level nested join across database
+      createdAt
+      userActivity:users{
+        name  # 6 Three Level Nested Join across database
+        lastSeen
+      }
+    }
+    # 9 Nested paginate (top n)
+    topReviews: reviews( 
+      where: {createdAt: {_gt: "2023-10-15"}} # Filtering
+      order_by: {rating: Desc} # Sorting
+      limit: 3 # Pagination
+    ) {
+      rating
+      text
+    }
+  }}

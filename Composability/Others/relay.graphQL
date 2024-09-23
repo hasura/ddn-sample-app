@@ -1,0 +1,41 @@
+query MyQuery {
+  users_users(limit: 1) {
+    id
+    name
+  }
+  sales_orders(limit: 1) {
+    id
+    productId
+    order_id
+  }
+}
+
+query MyRelayQuery($id: ID) {
+  node(id: $id) {
+    id
+    __typename
+    ... on Users_Users {
+      name
+      user_id
+    }
+    ... on Sales_Orders{
+      products{
+        description
+      }
+      order_id
+    }
+  }
+}
+
+
+
+
+/// Variables 
+
+{
+     "id": "eyJ2ZXJzaW9uIjoxLCJ0eXBlbmFtZSI6IlVzZXJzX1VzZXJzIiwiaWQiOnsidXNlcl9pZCI6IjdjZjBhNjZjLTY1YjctMTFlZC1iOTA0LWZiNDlmMDM0ZmJiYiJ9fQ==",
+     "id_user": "eyJ2ZXJzaW9uIjoxLCJ0eXBlbmFtZSI6IlVzZXJzX1VzZXJzIiwiaWQiOnsidXNlcl9pZCI6IjdjZjBhNjZjLTY1YjctMTFlZC1iOTA0LWZiNDlmMDM0ZmJiYiJ9fQ==",
+	"id_order":"eyJ2ZXJzaW9uIjoxLCJ0eXBlbmFtZSI6IlNhbGVzX09yZGVycyIsImlkIjp7Im9yZGVyX2lkIjoiYzc0MDZiNzUtNmIyNC00MWU0LTljNWItZmYzZmVhZGE5NDQ3In19"
+
+}
+

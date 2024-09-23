@@ -1,0 +1,72 @@
+
+
+  {
+    "aggregate": "product_details",
+    "pipeline": [
+      {
+        "$match": {
+          "product_id": {
+            "$eq": "3bef8a40-3c33-11ee-bb29-070df467ec94"
+          }
+        }
+      },
+      {
+        "$replaceWith": {
+          "id": {
+            "$ifNull": [
+              "$_id",
+              null
+            ]
+          },
+          "productId": {
+            "$ifNull": [
+              "$product_id",
+              null
+            ]
+          },
+          "features": {
+            "$ifNull": [
+              "$features",
+              null
+            ]
+          }
+        }
+      }
+    ],
+    "cursor": {}
+  }
+  
+
+
+{
+    "query": {
+      "aggregate": "product_details",
+      "pipeline": [
+        {
+          "$replaceWith": {
+            "specifications": {
+              "$cond": {
+                "if": "$specifications",
+                "then": {
+                  "material": {
+                    "$ifNull": [
+                      "$specifications.material",
+                      null
+                    ]
+                  },
+                  "sizeOptions": {
+                    "$ifNull": [
+                      "$specifications.size_options",
+                      null
+                    ]
+                  }
+                },
+                "else": null
+              }
+            }
+          }
+        }
+      ],
+      "cursor": {}
+    }
+  }

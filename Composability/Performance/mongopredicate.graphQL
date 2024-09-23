@@ -1,0 +1,9 @@
+query MongoPredicate {
+  experience_productDetails(
+    where: {productId: {_eq: "3bef8a40-3c33-11ee-bb29-070df467ec94"}}
+  ) {
+    features
+    id
+    productId
+  }
+}

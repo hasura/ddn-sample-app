@@ -1,0 +1,106 @@
+
+query ProductReviews {
+  experience_products(where: {id: {_eq: "7992fdfa-65b5-11ed-8612-6a8b11ef7372"}}) {
+    id
+    name
+    reviews(where: {rating: {_gte: 4}}, order_by: {createdAt: Desc}) {
+      id
+      text
+      rating
+      users {
+        id
+        email
+      }
+    }
+  }
+}
+
+# Select list
+query MyQuery {
+  experience_products {
+    name
+  }
+}
+# Select one
+query MyQuery {
+  experience_productsById(id: "")
+}
+# Filter
+query MyQuery {
+  experience_products(where: {countryOfOrigin: {_eq: "US"}}) {
+    id
+    countryOfOrigin
+  }
+}
+# Paginate
+query MyQuery {
+  experience_products(offset: 1, limit: 2) {
+    countryOfOrigin
+    name
+  }
+}
+# Sort
+query MyQuery {
+  experience_products(order_by: {createdAt: Asc}) {
+    name
+    createdAt
+  }
+}
+#Joins (Across DBs)
+
+query MyQuery {
+  experience_products {
+    name
+    orders {
+      createdAt
+      users {
+        name
+        reviews {
+          text
+        }
+      }
+    }
+  }
+}
+
+# Nested filter
+      #   fetch articles where article.author.city == SF
+query MyQuery {
+  experience_products(where: {categories: {name: {_eq: "Hats"}}}) {
+    id
+  }
+}
+# Nested sort 
+      # fetch articles orderby article.author.city
+query MyQuery {
+  experience_products(order_by: {manufacturers: {name: Asc}}) {
+    id
+  }
+}
+# Nested paginate (top n)
+      # fetch top 5 authors and their top 5 articles by rating
+
+query MyQuery {
+  experience_products(limit: 3, order_by: {price: Desc}) {
+    reviews(limit: 1, order_by: {createdAt: Asc}) {
+      id
+      text
+    }
+    name
+  }
+}
+
+query TopN{
+  experience_products(offset: 1, order_by: {manufacturers: {name: Asc}}) {
+    name
+    orders(order_by: {createdAt: Asc}, limit: 2) {
+      createdAt
+      users {
+        name
+        reviews(order_by: {rating: Desc}, limit: 1) {
+          text
+        }
+      }
+    }
+  }
+}

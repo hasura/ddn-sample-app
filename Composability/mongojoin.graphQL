@@ -1,0 +1,35 @@
+query mongoonemodel{
+  experience_productDetails {
+    specifications {
+      material
+      sizeOptions
+    }
+  }
+}
+
+query Mongo {
+  experience_products(offset: 1, order_by: {categories: {id: Asc}}) {
+    id
+    name
+    productDetails {
+      features
+      id
+      productId
+      specifications {
+        additionalSpecs {
+          packaging
+          heatResistance
+          durability
+          fabricWeight
+          closure
+          build
+          careInstructions
+          brim
+        }
+        colorOptions
+        sizeOptions
+        material
+      }
+    }
+  }
+}

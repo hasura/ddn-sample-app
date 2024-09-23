@@ -1,0 +1,19 @@
+query ClickhousePredicate {
+  analytics_sessionHistory(
+    where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+  ) {
+    loggedInAt
+    userId
+    user {
+      email
+    }
+  }
+  analytics_recentlyViewedProducts(
+    where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
+  ) {
+    viewed
+    product {
+      name
+    }
+  }
+}
