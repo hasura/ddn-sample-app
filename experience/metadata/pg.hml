@@ -1,0 +1,26 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: pg
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: EXPERIENCE_PG_READ_URL
+      write:
+        valueFromEnv: EXPERIENCE_PG_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: EXPERIENCE_PG_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types: {}
+      object_types: {}
+      collections: []
+      functions: []
+      procedures: []
+    capabilities:
+      version: ""
+      capabilities:
+        query: {}
+        mutation: {}

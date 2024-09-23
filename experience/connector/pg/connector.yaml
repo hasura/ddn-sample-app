@@ -1,0 +1,14 @@
+kind: Connector
+version: v2
+definition:
+  name: pg
+  subgraph: experience
+  source: hasura/postgres:v0.7.0
+  context: .
+  envMapping:
+    HASURA_SERVICE_TOKEN_SECRET:
+      fromEnv: EXPERIENCE_PG_HASURA_SERVICE_TOKEN_SECRET
+    OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
+      fromEnv: EXPERIENCE_PG_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+    OTEL_SERVICE_NAME:
+      fromEnv: EXPERIENCE_PG_OTEL_SERVICE_NAME
