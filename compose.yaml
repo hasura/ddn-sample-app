@@ -1,0 +1,38 @@
+services:
+  engine:
+    build:
+      context: engine
+      dockerfile_inline: |-
+        FROM ghcr.io/hasura/v3-engine
+        COPY ./build /md/
+    develop:
+      watch:
+        - path: engine/build
+          action: sync+restart
+          target: /md/
+    env_file:
+      - engine/.env.engine
+    extra_hosts:
+      - local.hasura.dev=host-gateway
+    ports:
+      - mode: ingress
+        target: 3000
+        published: "3000"
+        protocol: tcp
+  otel-collector:
+    command:
+      - --config=/etc/otel-collector-config.yaml
+    environment:
+      HASURA_DDN_PAT: ${HASURA_DDN_PAT}
+    image: otel/opentelemetry-collector:0.104.0
+    ports:
+      - mode: ingress
+        target: 4317
+        published: "4317"
+        protocol: tcp
+      - mode: ingress
+        target: 4318
+        published: "4318"
+        protocol: tcp
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
