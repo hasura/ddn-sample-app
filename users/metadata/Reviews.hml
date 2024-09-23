@@ -1,0 +1,199 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Reviews
+  fields:
+    - name: createdAt
+      type: Timestamptz!
+    - name: id
+      type: Uuid!
+    - name: isVisible
+      type: Bool!
+    - name: productId
+      type: Uuid!
+    - name: rating
+      type: Int4!
+    - name: text
+      type: Text!
+    - name: updatedAt
+      type: Timestamptz!
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: Users_Reviews
+    inputTypeName: Users_ReviewsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: user_pg
+      dataConnectorObjectType: reviews
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        isVisible:
+          column:
+            name: is_visible
+        productId:
+          column:
+            name: product_id
+        rating:
+          column:
+            name: rating
+        text:
+          column:
+            name: text
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Reviews
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - isVisible
+          - productId
+          - rating
+          - text
+          - updatedAt
+          - userId
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: ReviewsBoolExp
+  objectType: Reviews
+  dataConnectorName: user_pg
+  dataConnectorObjectType: reviews
+  comparableFields:
+    - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: isVisible
+      operators:
+        enableAll: true
+    - fieldName: productId
+      operators:
+        enableAll: true
+    - fieldName: rating
+      operators:
+        enableAll: true
+    - fieldName: text
+      operators:
+        enableAll: true
+    - fieldName: updatedAt
+      operators:
+        enableAll: true
+    - fieldName: userId
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Users_ReviewsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Reviews
+  objectType: Reviews
+  source:
+    dataConnectorName: user_pg
+    collection: reviews
+  filterExpressionType: ReviewsBoolExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: isVisible
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: rating
+      orderByDirections:
+        enableAll: true
+    - fieldName: text
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: users_reviews
+    selectUniques:
+      - queryRootField: users_reviewsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Users_ReviewsOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Reviews
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: products
+  source: Reviews
+  target:
+    model:
+      name: Products
+      subgraph: experience
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: users
+  source: Reviews
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id

@@ -1,0 +1,340 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Users
+  fields:
+    - name: createdAt
+      type: Timestamptz!
+    - name: email
+      type: Text!
+    - name: favoriteArtist
+      type: Int4
+    - name: id
+      type: Uuid!
+    - name: isEmailVerified
+      type: Bool
+    - name: lastSeen
+      type: Timestamptz
+    - name: name
+      type: Text!
+    - name: password
+      type: Text
+    - name: updatedAt
+      type: Timestamptz!
+  graphql:
+    typeName: Users_Users
+    inputTypeName: Users_UsersInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: user_pg
+      dataConnectorObjectType: users
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        email:
+          column:
+            name: email
+        favoriteArtist:
+          column:
+            name: favorite_artist
+        id:
+          column:
+            name: id
+        isEmailVerified:
+          column:
+            name: is_email_verified
+        lastSeen:
+          column:
+            name: last_seen
+        name:
+          column:
+            name: name
+        password:
+          column:
+            name: password
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Users
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - email
+          - favoriteArtist
+          - id
+          - isEmailVerified
+          - lastSeen
+          - name
+          - password
+          - updatedAt
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: UsersBoolExp
+  objectType: Users
+  dataConnectorName: user_pg
+  dataConnectorObjectType: users
+  comparableFields:
+    - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: email
+      operators:
+        enableAll: true
+    - fieldName: favoriteArtist
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: isEmailVerified
+      operators:
+        enableAll: true
+    - fieldName: lastSeen
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+    - fieldName: password
+      operators:
+        enableAll: true
+    - fieldName: updatedAt
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Users_UsersBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Users
+  objectType: Users
+  source:
+    dataConnectorName: user_pg
+    collection: users
+  filterExpressionType: UsersBoolExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: favoriteArtist
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: isEmailVerified
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastSeen
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: password
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: users_users
+    selectUniques:
+      - queryRootField: users_usersById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Users_UsersOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Users
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: carts
+  source: Users
+  target:
+    model:
+      name: Carts
+      subgraph: experience
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: coupons
+  source: Users
+  target:
+    model:
+      name: Coupons
+      subgraph: sales
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: notifications
+  source: Users
+  target:
+    model:
+      name: Notifications
+      subgraph: users
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orders
+  source: Users
+  target:
+    model:
+      name: Orders
+      subgraph: sales
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: reviews
+  source: Users
+  target:
+    model:
+      name: Reviews
+      subgraph: users
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: recentlyViewedProducts
+  source: Users
+  target:
+    model:
+      name: RecentlyViewedProducts
+      subgraph: analytics
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+---
+kind: Relationship
+version: v1
+definition:
+  name: SessionHistory
+  source: Users
+  target:
+    model:
+      name: SessionHistory
+      subgraph: analytics
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: githubprofile
+  source: Users
+  target:
+    command:
+      name: GetGithubProfileDescription
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: name
+      target:
+        argument:
+          argumentName: username
+---
+kind: Relationship
+version: v1
+definition:
+  name: githubprofilenoparallel
+  source: Users
+  target:
+    command:
+      name: GetGithubProfileDescriptionNoparallel
+      subgraph: sales
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: name
+      target:
+        argument:
+          argumentName: username

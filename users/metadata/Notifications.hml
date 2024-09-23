@@ -1,0 +1,144 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Notifications
+  fields:
+    - name: createdAt
+      type: Timestamptz!
+    - name: id
+      type: Uuid!
+    - name: message
+      type: Text!
+    - name: updatedAt
+      type: Timestamptz!
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: Users_Notifications
+    inputTypeName: Users_NotificationsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: user_pg
+      dataConnectorObjectType: notifications
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        message:
+          column:
+            name: message
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Notifications
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - message
+          - updatedAt
+          - userId
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: NotificationsBoolExp
+  objectType: Notifications
+  dataConnectorName: user_pg
+  dataConnectorObjectType: notifications
+  comparableFields:
+    - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: message
+      operators:
+        enableAll: true
+    - fieldName: updatedAt
+      operators:
+        enableAll: true
+    - fieldName: userId
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Users_NotificationsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Notifications
+  objectType: Notifications
+  source:
+    dataConnectorName: user_pg
+    collection: notifications
+  filterExpressionType: NotificationsBoolExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: message
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: users_notifications
+    selectUniques:
+      - queryRootField: users_notificationsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Users_NotificationsOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Notifications
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: users
+  source: Notifications
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
