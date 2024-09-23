@@ -6,3 +6,13 @@ definition:
     rootPath: .
   includePaths:
     - metadata
+  envMapping:
+    EXPERIENCE_MONGO_AUTHORIZATION_HEADER:
+      fromEnv: EXPERIENCE_MONGO_AUTHORIZATION_HEADER
+    EXPERIENCE_MONGO_READ_URL:
+      fromEnv: EXPERIENCE_MONGO_READ_URL
+    EXPERIENCE_MONGO_WRITE_URL:
+      fromEnv: EXPERIENCE_MONGO_WRITE_URL
+  connectors:
+    - path: connector/mongo/connector.yaml
+      connectorLinkName: mongo

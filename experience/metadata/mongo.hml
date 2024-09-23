@@ -1,0 +1,26 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: mongo
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: EXPERIENCE_MONGO_READ_URL
+      write:
+        valueFromEnv: EXPERIENCE_MONGO_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: EXPERIENCE_MONGO_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types: {}
+      object_types: {}
+      collections: []
+      functions: []
+      procedures: []
+    capabilities:
+      version: ""
+      capabilities:
+        query: {}
+        mutation: {}
