@@ -3,7 +3,7 @@ version: v2
 definition:
   name: user_pg
   subgraph: users
-  source: hasura/postgres:v0.7.0
+  source: hasura/postgres:v1.1.1
   context: .
   envMapping:
     CONNECTION_URI:
