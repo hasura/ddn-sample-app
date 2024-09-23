@@ -1,0 +1,26 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: clickhouse
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: ANALYTICS_CLICKHOUSE_READ_URL
+      write:
+        valueFromEnv: ANALYTICS_CLICKHOUSE_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: ANALYTICS_CLICKHOUSE_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types: {}
+      object_types: {}
+      collections: []
+      functions: []
+      procedures: []
+    capabilities:
+      version: ""
+      capabilities:
+        query: {}
+        mutation: {}
