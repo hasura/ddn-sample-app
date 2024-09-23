@@ -6,6 +6,8 @@ definition:
   source: hasura/nodejs:v1.4.1
   context: .
   envMapping:
+    HASURA_CONNECTOR_PORT:
+      fromEnv: SALES_TS_HASURA_CONNECTOR_PORT
     HASURA_SERVICE_TOKEN_SECRET:
       fromEnv: SALES_TS_HASURA_SERVICE_TOKEN_SECRET
     OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
