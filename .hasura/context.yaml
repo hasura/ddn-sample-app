@@ -4,8 +4,10 @@ definition:
   current: default
   contexts:
     default:
+      project: easy-labrador-2066
       supergraph: ../supergraph.yaml
       localEnvFile: ../.env
+      cloudEnvFile: ../.env.cloud
   scripts:
     docker-start:
       bash: HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f compose.yaml --env-file .env up --build --pull always --watch
