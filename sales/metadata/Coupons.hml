@@ -1,0 +1,198 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Coupons
+  fields:
+    - name: amount
+      type: Int4
+    - name: code
+      type: Text!
+    - name: createdAt
+      type: Timestamptz!
+    - name: expirationDate
+      type: Timestamptz!
+    - name: id
+      type: Uuid!
+    - name: percentOrValue
+      type: Text
+    - name: updatedAt
+      type: Timestamptz!
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: Sales_Coupons
+    inputTypeName: Sales_CouponsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: pg
+      dataConnectorObjectType: coupons
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        code:
+          column:
+            name: code
+        createdAt:
+          column:
+            name: created_at
+        expirationDate:
+          column:
+            name: expiration_date
+        id:
+          column:
+            name: id
+        percentOrValue:
+          column:
+            name: percent_or_value
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Coupons
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - code
+          - createdAt
+          - expirationDate
+          - id
+          - percentOrValue
+          - updatedAt
+          - userId
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CouponsBoolExp
+  objectType: Coupons
+  dataConnectorName: pg
+  dataConnectorObjectType: coupons
+  comparableFields:
+    - fieldName: amount
+      operators:
+        enableAll: true
+    - fieldName: code
+      operators:
+        enableAll: true
+    - fieldName: createdAt
+      operators:
+        enableAll: true
+    - fieldName: expirationDate
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: percentOrValue
+      operators:
+        enableAll: true
+    - fieldName: updatedAt
+      operators:
+        enableAll: true
+    - fieldName: userId
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Sales_CouponsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Coupons
+  objectType: Coupons
+  source:
+    dataConnectorName: pg
+    collection: coupons
+  filterExpressionType: CouponsBoolExp
+  orderableFields:
+    - fieldName: amount
+      orderByDirections:
+        enableAll: true
+    - fieldName: code
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: expirationDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: percentOrValue
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: sales_coupons
+    selectUniques:
+      - queryRootField: sales_couponsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: Sales_CouponsOrderBy
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Coupons
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: users
+  source: Coupons
+  target:
+    model:
+      name: Users
+      subgraph: users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: formatCurrency
+  source: Coupons
+  target:
+    command:
+      name: ToCurrencyString
+      subgraph: null
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: amount
+      target:
+        argument:
+          argumentName: amount

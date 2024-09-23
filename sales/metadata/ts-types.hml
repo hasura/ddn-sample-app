@@ -1,0 +1,20 @@
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: ts
+  dataConnectorScalarType: String
+  representation: String
+  graphql:
+    comparisonExpressionTypeName: Sales_StringComparisonExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: ts
+  dataConnectorScalarType: Float
+  representation: Float
+  graphql:
+    comparisonExpressionTypeName: Sales_FloatComparisonExp
+
