@@ -13,6 +13,14 @@ definition:
       fromEnv: SALES_PG_READ_URL
     SALES_PG_WRITE_URL:
       fromEnv: SALES_PG_WRITE_URL
+    SALES_TS_AUTHORIZATION_HEADER:
+      fromEnv: SALES_TS_AUTHORIZATION_HEADER
+    SALES_TS_READ_URL:
+      fromEnv: SALES_TS_READ_URL
+    SALES_TS_WRITE_URL:
+      fromEnv: SALES_TS_WRITE_URL
   connectors:
     - path: connector/pg/connector.yaml
       connectorLinkName: pg
+    - path: connector/ts/connector.yaml
+      connectorLinkName: ts
