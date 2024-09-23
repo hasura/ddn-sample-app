@@ -1,3 +1,9 @@
+include:
+  - path: analytics/connector/clickhouse/docker-compose.clickhouse.yaml
+  - path: experience/connector/mongo/docker-compose.mongo.yaml
+  - path: experience/connector/pg/docker-compose.pg.yaml
+  - path: sales/connector/pg/docker-compose.pg.yaml
+  - path: users/connector/user_pg/docker-compose.user_pg.yaml
 services:
   engine:
     build:
