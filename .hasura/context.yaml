@@ -5,7 +5,6 @@ definition:
   contexts:
     default:
       supergraph: ../supergraph.yaml
-      subgraph: ../app/subgraph.yaml
       localEnvFile: ../.env
   scripts:
     docker-start:

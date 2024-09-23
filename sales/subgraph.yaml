@@ -1,0 +1,8 @@
+kind: Subgraph
+version: v2
+definition:
+  name: sales
+  generator:
+    rootPath: .
+  includePaths:
+    - metadata

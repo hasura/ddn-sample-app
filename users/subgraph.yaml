@@ -1,7 +1,7 @@
 kind: Subgraph
 version: v2
 definition:
-  name: app
+  name: users
   generator:
     rootPath: .
   includePaths:

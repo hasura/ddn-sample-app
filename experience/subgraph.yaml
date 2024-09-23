@@ -1,0 +1,8 @@
+kind: Subgraph
+version: v2
+definition:
+  name: experience
+  generator:
+    rootPath: .
+  includePaths:
+    - metadata
