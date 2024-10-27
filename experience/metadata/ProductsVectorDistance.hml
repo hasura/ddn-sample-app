@@ -1,0 +1,121 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductsVectorDistance
+  fields:
+    - name: distance
+      type: Float8
+    - name: id
+      type: Uuid
+  graphql:
+    typeName: ProductsVectorDistance
+    inputTypeName: ProductsVectorDistanceInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: products_vector_distance
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductsVectorDistance
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - distance
+          - id
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductsVectorDistanceBoolExp
+  operand:
+    object:
+      type: ProductsVectorDistance
+      comparableFields:
+        - fieldName: distance
+          booleanExpressionType: Float8BoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductsVectorDistanceBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ProductsVectorDistanceAggExp
+  operand:
+    object:
+      aggregatedType: ProductsVectorDistance
+      aggregatableFields:
+        - fieldName: distance
+          aggregateExpression: Float8AggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ProductsVectorDistanceAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ProductsVectorDistance
+  objectType: ProductsVectorDistance
+  arguments:
+    - name: queryVector
+      type: Vector
+  source:
+    dataConnectorName: my_connector
+    collection: products_vector_distance
+    argumentMapping:
+      queryVector: query_vector
+  filterExpressionType: ProductsVectorDistanceBoolExp
+  aggregateExpression: ProductsVectorDistanceAggExp
+  orderableFields:
+    - fieldName: distance
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: productsVectorDistance
+    selectUniques: []
+    argumentsInputType: ProductsVectorDistanceArguments
+    orderByExpressionType: ProductsVectorDistanceOrderBy
+    filterInputTypeName: ProductsVectorDistanceFilterInput
+    aggregate:
+      queryRootField: productsVectorDistanceAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ProductsVectorDistance
+  permissions:
+    - role: admin
+      select:
+        filter: null
+    # - role: manufacturer
+    #   select:
+    #     filter:
+    #       relationship:
+    #         name: product
+    #         predicate:
+    #           fieldComparison:
+    #             field: manufacturerId
+    #             operator: _eq
+    #             value:
+    #               sessionVariable: x-hasura-manufacturer-id

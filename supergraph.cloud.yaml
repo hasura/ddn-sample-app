@@ -1,9 +1,0 @@
-kind: Supergraph
-version: v2
-definition:
-  subgraphs:
-    - supergraph_globals/subgraph.cloud.yaml
-    - users/subgraph.cloud.yaml
-    - analytics/subgraph.cloud.yaml
-    - experience/subgraph.cloud.yaml
-    - sales/subgraph.cloud.yaml

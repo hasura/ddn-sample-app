@@ -15,10 +15,10 @@ definition:
     - name: userId
       type: Uuid!
   graphql:
-    typeName: Users_Notifications
-    inputTypeName: Users_NotificationsInput
+    typeName: users_Notifications
+    inputTypeName: users_NotificationsInput
   dataConnectorTypeMapping:
-    - dataConnectorName: user_pg
+    - dataConnectorName: userspg
       dataConnectorObjectType: notifications
       fieldMapping:
         createdAt:
@@ -53,31 +53,55 @@ definition:
           - userId
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: NotificationsBoolExp
-  objectType: Notifications
-  dataConnectorName: user_pg
-  dataConnectorObjectType: notifications
-  comparableFields:
-    - fieldName: createdAt
-      operators:
-        enableAll: true
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: message
-      operators:
-        enableAll: true
-    - fieldName: updatedAt
-      operators:
-        enableAll: true
-    - fieldName: userId
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: Notifications
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: message
+          booleanExpressionType: TextBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: userId
+          booleanExpressionType: UuidBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Users_NotificationsBoolExp
+    typeName: users_NotificationsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: NotificationsAggExp
+  operand:
+    object:
+      aggregatedType: Notifications
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: message
+          aggregateExpression: TextAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: userId
+          aggregateExpression: UuidAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: users_NotificationsAggExp
 
 ---
 kind: Model
@@ -86,9 +110,10 @@ definition:
   name: Notifications
   objectType: Notifications
   source:
-    dataConnectorName: user_pg
+    dataConnectorName: userspg
     collection: notifications
   filterExpressionType: NotificationsBoolExp
+  aggregateExpression: NotificationsAggExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -107,12 +132,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: users_notifications
+      queryRootField: notifications
     selectUniques:
-      - queryRootField: users_notificationsById
+      - queryRootField: notificationsById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Users_NotificationsOrderBy
+    orderByExpressionType: users_NotificationsOrderBy
+    filterInputTypeName: users_NotificationsFilterInput
+    aggregate:
+      queryRootField: notificationsAggregate
 
 ---
 kind: ModelPermissions

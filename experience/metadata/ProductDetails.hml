@@ -21,8 +21,8 @@ definition:
     - name: packaging
       type: String
   graphql:
-    typeName: Experience_ProductDetailsSpecificationsAdditionalSpecs
-    inputTypeName: Experience_ProductDetailsSpecificationsAdditionalSpecsInput
+    typeName: ProductDetailsSpecificationsAdditionalSpecs
+    inputTypeName: ProductDetailsSpecificationsAdditionalSpecsInput
   dataConnectorTypeMapping:
     - dataConnectorName: mongo
       dataConnectorObjectType: product_details_specifications_additional_specs
@@ -85,8 +85,8 @@ definition:
     - name: sizeOptions
       type: "[String!]"
   graphql:
-    typeName: Experience_ProductDetailsSpecifications
-    inputTypeName: Experience_ProductDetailsSpecificationsInput
+    typeName: ProductDetailsSpecifications
+    inputTypeName: ProductDetailsSpecificationsInput
   dataConnectorTypeMapping:
     - dataConnectorName: mongo
       dataConnectorObjectType: product_details_specifications
@@ -125,7 +125,7 @@ definition:
   name: ProductDetails
   fields:
     - name: id
-      type: ObjectId
+      type: ObjectId!
     - name: features
       type: "[String!]"
     - name: productId
@@ -133,8 +133,8 @@ definition:
     - name: specifications
       type: ProductDetailsSpecifications
   graphql:
-    typeName: Experience_ProductDetails
-    inputTypeName: Experience_ProductDetailsInput
+    typeName: ProductDetails
+    inputTypeName: ProductDetailsInput
   dataConnectorTypeMapping:
     - dataConnectorName: mongo
       dataConnectorObjectType: product_details
@@ -167,28 +167,99 @@ definition:
           - specifications
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductDetailsSpecificationsAdditionalSpecsBoolExp
+  operand:
+    object:
+      type: ProductDetailsSpecificationsAdditionalSpecs
+      comparableFields:
+        - fieldName: brim
+          booleanExpressionType: StringBoolExp
+        - fieldName: build
+          booleanExpressionType: StringBoolExp
+        - fieldName: careInstructions
+          booleanExpressionType: StringBoolExp
+        - fieldName: closure
+          booleanExpressionType: StringBoolExp
+        - fieldName: durability
+          booleanExpressionType: StringBoolExp
+        - fieldName: fabricWeight
+          booleanExpressionType: StringBoolExp
+        - fieldName: heatResistance
+          booleanExpressionType: StringBoolExp
+        - fieldName: packaging
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductDetailsSpecificationsAdditionalSpecsBoolExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductDetailsSpecificationsBoolExp
+  operand:
+    object:
+      type: ProductDetailsSpecifications
+      comparableFields:
+        - fieldName: additionalSpecs
+          booleanExpressionType: ProductDetailsSpecificationsAdditionalSpecsBoolExp
+        - fieldName: material
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductDetailsSpecificationsBoolExp
+
+---
+kind: BooleanExpressionType
 version: v1
 definition:
   name: ProductDetailsBoolExp
-  objectType: ProductDetails
-  dataConnectorName: mongo
-  dataConnectorObjectType: product_details
-  comparableFields:
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: features
-      operators:
-        enableAll: true
-    - fieldName: productId
-      operators:
-        enableAll: true
-    - fieldName: specifications
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: ProductDetails
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: productId
+          booleanExpressionType: StringBoolExp
+        - fieldName: specifications
+          booleanExpressionType: ProductDetailsSpecificationsBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Experience_ProductDetailsBoolExp
+    typeName: ProductDetailsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ProductDetailsAggExp
+  operand:
+    object:
+      aggregatedType: ProductDetails
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: productId
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ProductDetailsAggExp
 
 ---
 kind: Model
@@ -200,6 +271,7 @@ definition:
     dataConnectorName: mongo
     collection: product_details
   filterExpressionType: ProductDetailsBoolExp
+  aggregateExpression: ProductDetailsAggExp
   orderableFields:
     - fieldName: id
       orderByDirections:
@@ -215,9 +287,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_productDetails
-    selectUniques: []
-    orderByExpressionType: Experience_ProductDetailsOrderBy
+      queryRootField: productDetails
+    selectUniques:
+      - queryRootField: productDetailsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: ProductDetailsOrderBy
+    filterInputTypeName: ProductDetailsFilterInput
+    aggregate:
+      queryRootField: productDetailsAggregate
 
 ---
 kind: ModelPermissions

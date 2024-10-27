@@ -9,11 +9,11 @@ definition:
       type: String
       description: The date string to format.
   source:
-    dataConnectorName: ts
+    dataConnectorName: salests
     dataConnectorCommand:
       function: toDateString
   graphql:
-    rootFieldName: sales_toDateString
+    rootFieldName: toDateString
     rootFieldKind: Query
   description: Formats a date string to a human-readable format.
 

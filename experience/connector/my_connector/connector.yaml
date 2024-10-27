@@ -1,0 +1,16 @@
+kind: Connector
+version: v2
+definition:
+  name: my_connector
+  subgraph: experience
+  source: hasura/postgres:v1.2.0
+  context: .
+  envMapping:
+    CONNECTION_URI:
+      fromEnv: EXPERIENCE_MY_CONNECTOR_CONNECTION_URI
+    HASURA_SERVICE_TOKEN_SECRET:
+      fromEnv: EXPERIENCE_MY_CONNECTOR_HASURA_SERVICE_TOKEN_SECRET
+    OTEL_EXPORTER_OTLP_ENDPOINT:
+      fromEnv: EXPERIENCE_MY_CONNECTOR_OTEL_EXPORTER_OTLP_ENDPOINT
+    OTEL_SERVICE_NAME:
+      fromEnv: EXPERIENCE_MY_CONNECTOR_OTEL_SERVICE_NAME

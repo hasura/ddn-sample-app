@@ -17,10 +17,10 @@ definition:
     - name: userId
       type: Uuid!
   graphql:
-    typeName: Experience_Carts
-    inputTypeName: Experience_CartsInput
+    typeName: Carts
+    inputTypeName: CartsInput
   dataConnectorTypeMapping:
-    - dataConnectorName: pg
+    - dataConnectorName: my_connector
       dataConnectorObjectType: carts
       fieldMapping:
         createdAt:
@@ -59,34 +59,59 @@ definition:
           - userId
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: CartsBoolExp
-  objectType: Carts
-  dataConnectorName: pg
-  dataConnectorObjectType: carts
-  comparableFields:
-    - fieldName: createdAt
-      operators:
-        enableAll: true
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: isComplete
-      operators:
-        enableAll: true
-    - fieldName: isReminderSent
-      operators:
-        enableAll: true
-    - fieldName: updatedAt
-      operators:
-        enableAll: true
-    - fieldName: userId
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: Carts
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: isComplete
+          booleanExpressionType: BoolBoolExp
+        - fieldName: isReminderSent
+          booleanExpressionType: BoolBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: userId
+          booleanExpressionType: UuidBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Experience_CartsBoolExp
+    typeName: CartsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CartsAggExp
+  operand:
+    object:
+      aggregatedType: Carts
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: isComplete
+          aggregateExpression: BoolAggExp
+        - fieldName: isReminderSent
+          aggregateExpression: BoolAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: userId
+          aggregateExpression: UuidAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CartsAggExp
 
 ---
 kind: Model
@@ -95,9 +120,10 @@ definition:
   name: Carts
   objectType: Carts
   source:
-    dataConnectorName: pg
+    dataConnectorName: my_connector
     collection: carts
   filterExpressionType: CartsBoolExp
+  aggregateExpression: CartsAggExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -119,12 +145,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_carts
+      queryRootField: carts
     selectUniques:
-      - queryRootField: experience_cartsById
+      - queryRootField: cartsById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Experience_CartsOrderBy
+    orderByExpressionType: CartsOrderBy
+    filterInputTypeName: CartsFilterInput
+    aggregate:
+      queryRootField: cartsAggregate
 
 ---
 kind: ModelPermissions

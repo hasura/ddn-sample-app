@@ -1,34 +1,17 @@
 {
-  "name": "Hasura DDN Dev Container with Docker-in-Docker",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu", // Any generic, debian-based image.
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:1": {
-      "version": "latest",
-      "moby": true
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20",
-      "additionalVersions": "18"
-    }
-  },
   "customizations": {
     "vscode": {
-      "extensions": ["HasuraHQ.hasura"],
+      "extensions": [
+        "HasuraHQ.hasura"
+      ],
       "settings": {
         "terminal.integrated.shell.linux": "/bin/bash",
-        "terminal.integrated.shellArgs.linux": ["-l"]
+        "terminal.integrated.shellArgs.linux": [
+          "-l"
+        ]
       }
-    },
-    "codespaces": {
-      "openFiles": ["CODESPACE_QUICKSTART.md"]
     }
   },
-
-  "secrets": {
-    "HASURA_PAT": {
-      "description": "Set Hasura PAT for CLI authentication",
-      "documentationUrl": "https://hasura.io/docs/latest/api-reference/cloud-api-reference/#authentication"
-    }
-  },
-  "postCreateCommand": "curl -L https://graphql-engine-cdn.hasura.io/ddn/cli/v3/get.sh | bash && ddn auth login --pat $HASURA_PAT"
+  "name": "Hasura DDN Codespace",
+  "postCreateCommand": "curl -L https://graphql-engine-cdn.hasura.io/ddn/cli/v4/get.sh | bash"
 }
