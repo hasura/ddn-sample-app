@@ -253,25 +253,6 @@ definition:
 kind: Relationship
 version: v1
 definition:
-  name: orders
-  source: Products
-  target:
-    model:
-      name: Orders
-      subgraph: sales
-      relationshipType: Array
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: productId
-
----
-kind: Relationship
-version: v1
-definition:
   name: categories
   source: Products
   target:
@@ -310,25 +291,6 @@ definition:
 kind: Relationship
 version: v1
 definition:
-  name: reviews
-  source: Products
-  target:
-    model:
-      name: Reviews
-      subgraph: users
-      relationshipType: Array
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: productId
-
----
-kind: Relationship
-version: v1
-definition:
   name: product
   source: ProductsVectorDistance
   target:
@@ -361,39 +323,3 @@ definition:
       target:
         modelField:
           - fieldName: productId
----
-kind: Relationship
-version: v1
-definition:
-  name: recentlyViewedProducts
-  source: Products
-  target:
-    model:
-      name: RecentlyViewedProducts
-      subgraph: users
-      relationshipType: Array
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: productId
-
----
-kind: Relationship
-version: v1
-definition:
-  name: formatCurrency
-  source: Products
-  target:
-    command:
-      name: ToCurrencyString
-      subgraph: sales
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: price
-      target:
-        argument:
-          argumentName: amount
