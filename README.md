@@ -99,7 +99,7 @@ flowchart TD
   - _Typescript Functions_
     - _Commands_: ToCurrencyString, ToDateString
 
-![alt text](supergraph.png)
+![alt text](images/supergraph.png)
 
 5. To rebuild after any changes, you may run the following command to get the changes reflected.
 
@@ -156,11 +156,11 @@ ddn run build-supergraph
 
 2. Enable PromptQL by going to the console
 
-![alt text](Promptql1.png)
+![alt text](images/Promptql1.png)
 
 3. Start asking questions about the data
 
-![alt text](promptql2.png)
+![alt text](images/promptql2.png)
 
 Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d).
 
