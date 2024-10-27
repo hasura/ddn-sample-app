@@ -156,7 +156,7 @@ ddn run build-supergraph
 
 2. Enable PromptQL by going to the console
 
-![alt text](promptql1.png)
+![alt text](Promptql1.png)
 
 3. Start asking questions about the data
 
