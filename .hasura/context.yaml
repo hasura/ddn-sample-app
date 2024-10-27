@@ -8,7 +8,7 @@ definition:
       supergraph: ../supergraph.yaml
       subgraph: ../users/subgraph.yaml
       localEnvFile: ../.env
-      cloudEnvFile: ../.env.cloud
+      cloudEnvFile:
   scripts:
     docker-start:
       bash: HASURA_DDN_PAT=$(ddn auth print-pat) docker compose -f compose.yaml --env-file .env up --build --pull always -d
