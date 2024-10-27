@@ -56,6 +56,25 @@ Create a Supergraph Build. This will also create the connector builds automatica
 ```shell
 ddn supergraph build create
 ```
+Explore API on the console
+```shell
+ddn console --build-version 37036d3c05
+```
+
+Apply the build to the project to get the consumer facing API URL for the first time.
+   
+```shell
+ddn supergraph build apply <build-version>
+```
+
+2. Team1 creates new subgraph "sales" and invites Team2 to the project which owns the "sales" domain.
+
+Create Subgraph name "Sales"
+```shell
+ddn subgraph init sales --dir ./sales
+ddn subgraph add --subgraph ./sales/subgraph.yaml --target-supergraph ./supergraph.yaml
+```
+
 
 ## Core Concepts
 
@@ -63,8 +82,6 @@ The following section outlines the core concepts of Hasura DDN, providing a deep
 
 ### Subgraph Builds
 
-A build is a fully-functional, immutable supergraph API which is built based on your project's configuration.
 
-During the build process, Hasura builds and deploys all the data connectors and supergraph builds. This includes connector configurations, models, functions, and all other related components, which are integrated into the deployments.
 
 Considering the size of the supergraph and separate deployments, it may initially take some time to complete. Once deployed, the supergraph provides a unified GraphQL API that leverages the capabilities of all subgraphs to offer a comprehensive Ecommerce solution.
