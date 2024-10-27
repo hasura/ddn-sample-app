@@ -51,6 +51,11 @@ ddn context set project <Project Name>
 # ddn context set project vast-buzzard-0000
 # 5:36PM INF Key "project" set to "vast-buzzard-0000" in the context successfully
 ```
+Create a Supergraph Build. This will also create the connector builds automatically.
+   
+```shell
+ddn supergraph build create
+```
 
 ## Core Concepts
 
