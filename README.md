@@ -185,6 +185,10 @@ Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d)
 
 ## DDN Advanced
 
+Two Main Features 
+- Independent Subgraph Development
+- Multi Repo CI/CD
+
 ![alt text](images/ddnadvanced.png)
 
 See more details on DDN Advanced [here](https://hasura.io/pricing).
