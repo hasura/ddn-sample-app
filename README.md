@@ -13,6 +13,9 @@ Please note that a new release for the repo is out. Make sure to try the workflo
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/hasura/ddn-sample-app) -->
 
+## Disclaimer
+
+This repository has credentials for databases, which are intentionally published by Hasura for demo purposes. These credentials allows for read-only access to synthetic datasets, which do not contain any user or customer sensitive data.
 
 ## Local Development
 
@@ -147,10 +150,20 @@ ddn run build-supergraph
 
 4. Go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
 
+## Configure PromptQL
 
-## Disclaimer
+1. Keep your Anthropic API Key ready (See: Getting started - Anthropic)
 
-This repository has credentials for databases, which are intentionally published by Hasura for demo purposes. These credentials allows for read-only access to synthetic datasets, which do not contain any user or customer sensitive data.
+2. Enable PromptQL by going to the console
+
+![alt text](promptql1.png)
+
+3. Start asking questions about the data
+
+![alt text](promptql2.png)
+
+Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d).
+
 
 ## Core Concepts
 
