@@ -193,7 +193,7 @@ Two Main Features
 
 See more details on DDN Advanced [here](https://hasura.io/pricing).
 
-1. Switch to this branch to start the DDN Advanced Workflow
+**Switch to this branch to start the DDN Advanced Workflow - https://github.com/hasura/ddn-sample-app/tree/multirepo/team1admin**
 
 ## Core Concepts
 
