@@ -1,187 +1,9 @@
 # Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [Ecommerce Application Demo using Data Delivery Network](#ecommerce-application-demo-using-data-delivery-network)
-  - [Pre Requisites](#pre-requisites)
-  - [Disclaimer](#disclaimer)
-  - [Local Development](#local-development)
-    - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
-  - [Deploy to DDN Cloud](#deploy-to-ddn-cloud)
-  - [Configure PromptQL](#configure-promptql)
   - [DDN Advanced](#ddn-advanced)
   - [Core Concepts](#core-concepts)
-    - [Subgraph](#subgraph)
-    - [Models](#models)
-    - [Commands](#commands)
-    - [Build Process](#build-process)
-
-# Ecommerce Application Demo using Data Delivery Network
-
-This demo repo provides a practical example of building an Ecommerce App using Hasura's [Data Delivery Network (DDN)](https://hasura.io/docs/3.0/getting-started/overview) with a [supergraph](https://supergraph.io) architecture.
-Please note that a new release for the repo is out. Make sure to try the workflow again if you are a returning user.
-
-## Pre Requisites
-
-- [Install Hasura CLI & Login](https://hasura.io/docs/3.0/cli/installation)
-- [Login into the Hasura CLI](https://hasura.io/docs/3.0/cli/commands/ddn_auth_login/)
-- [Install Docker](https://docs.docker.com/engine/install/), you'll need docker compose v2.27.1 or later.
-- [Install NodeJS](https://nodejs.org/en/download/package-manager)
-  - Note we have business logic connectors in Python and Go as well. Download dependencies accordingly. We will be using Typescript in this example demo.
-- Keep your Anthropic API Key ready (See: Getting started - Anthropic)
-
-<!-- You may also use a pre-packed [codespace](https://github.com/features/codespaces) that pre-installs all the above and clone this project by clicking on the following link.
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/hasura/ddn-sample-app) -->
-
-## Disclaimer
-
-This repository has credentials for databases, which are intentionally published by Hasura for demo purposes. These credentials allows for read-only access to synthetic datasets, which do not contain any user or customer sensitive data.
-
-## Local Development
-
-1. Git Clone this repo: https://github.com/hasura/ddn-sample-app.git and cd into it
-   
-2. Build the supergraph locally using the following command 
-```shell 
-   ddn supergraph build local 
-```
-
-3. Run Docker. For local development, Hasura runs several services (engine, connectors, auth, etc.), which use the following ports: 3000, 4317 and so on. Please ensure these ports are available. If not, modify the published ports in the Docker Compose files from this repository accordingly.
-```shell 
-   ddn run docker-start
-```
-
-4. Check out the console to discover and test the API 
-```shell 
-   ddn console --local
-``` 
-Test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
-  - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
-
-This example supergraph is composed of three subgraphs - users, experience, and sales, each backed by one or more data connectors. These subgraphs integrate various data sources to provide a comprehensive Ecommerce solution as follows.
-
-```mermaid
-flowchart TD
-    %% Module 1
-    M1[Experience Subgraph]
-    M1 --> D1A[Postgres]
-    M1 --> D1B[Mongo]
-    
-    D1A --> T1A[• Products
-             • Manufacturers
-             • Categories
-             • Carts
-             • CartItems
-             • ProductVectorDistance]
-             
-    D1B --> T1B[• ProductDetails]
-             
-    %% Module 2
-    M2[Users Subgraph]
-    M2 --> D2A[Postgres]
-    M2 --> D2B[Clickhouse]
-    
-    D2A --> T2A[• Notifications
-             • Reviews 
-             • Users]
-             
-    D2B --> T2B[• Browsing History
-             • Recently Viewed Products
-             • Session History]
-             
-    %% Module 3
-    M3[Sales Subgraph]
-    M3 --> D3A[Postgres]
-    M3 --> D3B[Typescript]
-    
-    D3A --> T3A[• Coupons
-             • Orders]
-             
-    D3B --> T3B[• ToCurrencyString
-             • ToDateString]
-```
-
-### Subgraphs and Data Sources
-
-- **Subgraph: users**
-  - _Data Connector: postgres_
-    - _Models_: Users, Notifications, Reviews
-  - _Data Connector: clickhouse_
-    - _Models_: BrowsingHistory, RecentlyViewedProducts, SessionHistory
-- **Subgraph: experience**
-  - _Data Connector: postgres_
-    - _Models_: Cart, CartItems, Categories, Manufacturers, Products, ProductVectorDistance
-  - _Data Connector: mongoDB_
-    - _Models_: ProductDetails
-- **Subgraph: sales**
-  - _Data Connector: postgres_
-    - _Models_: Coupons, Orders
-  - _Typescript Functions_
-    - _Commands_: ToCurrencyString, ToDateString
-
-![alt text](images/supergraph.png)
-
-5. To rebuild after any changes, you may run the following command to get the changes reflected.
-
-  ```shell
-  ddn supergraph build local
-  ```
-
-## Deploy to DDN Cloud
-
-1. Initiate a new DDN Project
-
-```shell
-ddn project init
-  ```
-
-This will create a new project and shows the project name output in the terminal. You get an output such as below - 
-
-```shell
-+-----------+--------------------------------+
-| Project   | sincere-turtle-2027            |
-+-----------+--------------------------------+
-| Subgraphs | globals,experience,sales,users |
-+-----------+--------------------------------+
-```
-
-2. Make sure your own project name shows up in [.hasura/context.yaml](.hasura/context.yaml). Run the following just in case.
-
-```sh
-ddn context set project <Project Name>
-
-# ddn context set project vast-buzzard-0000
-# 5:36PM INF Key "project" set to "vast-buzzard-0000" in the context successfully
-```
-
-2. Create a Supergraph Build. This will also create the connector builds automatically.
-   
-```shell
-ddn supergraph build create
-```
-
-3. If you want to just make metadata changes and quickly see changes without rebuilding the connectors, run the following command:
-
-```shell
-ddn run build-supergraph
-```
-> Note: Once deployed to your new project, if you don't have any connector changes, you can only rebuild supergraph alone, ie. connectors are only need to be deployed when there is change (data schema changes, functions etc.)
-
-
-4. Go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
-
-## Configure PromptQL
-
-1. Enable PromptQL by going to the console
-
-![alt text](images/Promptql1.png)
-
-2. Start asking questions about the data
-
-![alt text](images/promptql2.png)
-
-Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d).
-
+    - [Subgraph Builds](#subgraph-builds)
 
 ## DDN Advanced
 
@@ -193,29 +15,48 @@ Two Main Features
 
 See more details on DDN Advanced [here](https://hasura.io/pricing).
 
-1. Switch to this branch to start the DDN Advanced Workflow
+**DDN Advanced Workflow**
+
+Team 1 owner of experience subgraph is also the admin of the supergraph.
+It is recommended to shut down all DDN related dockers before starting.
+
+1. Team1 sets up the globals and experience subgraphs
+
+Build the supergraph locally using the following command 
+```shell 
+   ddn supergraph build local 
+```
+
+Run Docker.
+```shell 
+   ddn run docker-start
+```
+
+Check out the console to discover and test the API 
+```shell 
+   ddn console --local
+```
+
+Initiate a new DDN Project
+
+```sh
+ddn project init
+```
+
+Make sure your own project name shows up in [.hasura/context.yaml](.hasura/context.yaml). Run the following just in case.
+
+```sh
+ddn context set project <Project Name>
+
+# ddn context set project vast-buzzard-0000
+# 5:36PM INF Key "project" set to "vast-buzzard-0000" in the context successfully
+```
 
 ## Core Concepts
 
 The following section outlines the core concepts of Hasura DDN, providing a deeper understanding of its architecture and functionality.
 
-### Subgraph
-
-For a multi-team organization working on a Hasura project, it can make sense for any one team to not have access to all metadata objects. Subgraphs introduces the notion of a module system for your Hasura metadata. Think of it is as an independent domain consisting of one or more data sources.
-[Read More](https://hasura.io/docs/3.0/project-configuration/subgraphs/)
-
-### Models
-
-Models are the link between your data connectors and the API Hasura generates. A model may be backed by a database table, an ad-hoc SQL query, a pre-materialized view, a custom REST or GraphQL API server, etc.
-[Read More](https://hasura.io/docs/3.0/supergraph-modeling/models/)
-
-### Commands
-
-Commands are backed by functions or procedures declared in a DataConnectorLink allowing you to execute business logic directly from your GraphQL API. You can use them to validate, process or enrich data, call another API, or even log a user in.
-
-[Read More](https://hasura.io/docs/3.0/supergraph-modeling/commands)
-
-### Build Process
+### Subgraph Builds
 
 A build is a fully-functional, immutable supergraph API which is built based on your project's configuration.
 
