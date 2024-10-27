@@ -1,3 +1,20 @@
+# Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Ecommerce Application Demo using Data Delivery Network](#ecommerce-application-demo-using-data-delivery-network)
+  - [Pre Requisites](#pre-requisites)
+  - [Disclaimer](#disclaimer)
+  - [Local Development](#local-development)
+    - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
+  - [Deploy to DDN Cloud](#deploy-to-ddn-cloud)
+  - [Configure PromptQL](#configure-promptql)
+  - [DDN Advanced](#ddn-advanced)
+  - [Core Concepts](#core-concepts)
+    - [Subgraph](#subgraph)
+    - [Models](#models)
+    - [Commands](#commands)
+    - [Build Process](#build-process)
+
 # Ecommerce Application Demo using Data Delivery Network
 
 This demo repo provides a practical example of building an Ecommerce App using Hasura's [Data Delivery Network (DDN)](https://hasura.io/docs/3.0/getting-started/overview) with a [supergraph](https://supergraph.io) architecture.
@@ -8,6 +25,9 @@ Please note that a new release for the repo is out. Make sure to try the workflo
 - [Install Hasura CLI & Login](https://hasura.io/docs/3.0/cli/installation)
 - [Login into the Hasura CLI](https://hasura.io/docs/3.0/cli/commands/ddn_auth_login/)
 - [Install Docker](https://docs.docker.com/engine/install/), you'll need docker compose v2.27.1 or later.
+- [Install NodeJS](https://nodejs.org/en/download/package-manager)
+  - Note we have business logic connectors in Python and Go as well. Download dependencies accordingly. We will be using Typescript in this example demo.
+- Keep your Anthropic API Key ready (See: Getting started - Anthropic)
 
 <!-- You may also use a pre-packed [codespace](https://github.com/features/codespaces) that pre-installs all the above and clone this project by clicking on the following link.
 
@@ -99,7 +119,7 @@ flowchart TD
   - _Typescript Functions_
     - _Commands_: ToCurrencyString, ToDateString
 
-![alt text](supergraph.png)
+![alt text](images/supergraph.png)
 
 5. To rebuild after any changes, you may run the following command to get the changes reflected.
 
@@ -152,18 +172,24 @@ ddn run build-supergraph
 
 ## Configure PromptQL
 
-1. Keep your Anthropic API Key ready (See: Getting started - Anthropic)
+1. Enable PromptQL by going to the console
 
-2. Enable PromptQL by going to the console
+![alt text](images/Promptql1.png)
 
-![alt text](Promptql1.png)
+2. Start asking questions about the data
 
-3. Start asking questions about the data
-
-![alt text](promptql2.png)
+![alt text](images/promptql2.png)
 
 Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d).
 
+
+## DDN Advanced
+
+![alt text](images/ddnadvanced.png)
+
+See more details on DDN Advanced [here](https://hasura.io/pricing).
+
+1. Switch to this branch to start the DDN Advanced Workflow
 
 ## Core Concepts
 
