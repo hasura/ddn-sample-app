@@ -1,0 +1,43 @@
+include:
+  - path: experience/connector/my_connector/compose.yaml
+  - path: experience/connector/mongo/compose.yaml
+  - path: sales/connector/salespg/compose.yaml
+  - path: sales/connector/salests/compose.yaml
+  - path: users/connector/userspg/compose.yaml
+  - path: users/connector/clickhouse/compose.yaml
+services:
+  engine:
+    build:
+      context: engine
+      dockerfile: Dockerfile.engine
+      pull: true
+    environment:
+      AUTHN_CONFIG_PATH: /md/auth_config.json
+      ENABLE_CORS: "true"
+      INTROSPECTION_METADATA_FILE: /md/metadata.json
+      METADATA_PATH: /md/open_dd.json
+      OTLP_ENDPOINT: http://local.hasura.dev:4317
+    extra_hosts:
+      - local.hasura.dev:host-gateway
+    ports:
+      - mode: ingress
+        protocol: tcp
+        published: "3000"
+        target: 3000
+  otel-collector:
+    command:
+      - --config=/etc/otel-collector-config.yaml
+    environment:
+      HASURA_DDN_PAT: ${HASURA_DDN_PAT}
+    image: otel/opentelemetry-collector:0.104.0
+    ports:
+      - mode: ingress
+        protocol: tcp
+        published: "4317"
+        target: 4317
+      - mode: ingress
+        protocol: tcp
+        published: "4318"
+        target: 4318
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml

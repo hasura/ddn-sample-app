@@ -1,0 +1,17 @@
+services:
+  users_userspg:
+    build:
+      context: .
+      dockerfile: .hasura-connector/Dockerfile.userspg
+    environment:
+      CONNECTION_URI: $USERS_USERSPG_CONNECTION_URI
+      HASURA_SERVICE_TOKEN_SECRET: $USERS_USERSPG_HASURA_SERVICE_TOKEN_SECRET
+      OTEL_EXPORTER_OTLP_ENDPOINT: $USERS_USERSPG_OTEL_EXPORTER_OTLP_ENDPOINT
+      OTEL_SERVICE_NAME: $USERS_USERSPG_OTEL_SERVICE_NAME
+    extra_hosts:
+      - local.hasura.dev:host-gateway
+    ports:
+      - mode: ingress
+        protocol: tcp
+        published: "4674"
+        target: 8080

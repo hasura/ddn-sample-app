@@ -8,6 +8,9 @@ definition:
         valueFromEnv: EXPERIENCE_MONGO_READ_URL
       write:
         valueFromEnv: EXPERIENCE_MONGO_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: EXPERIENCE_MONGO_AUTHORIZATION_HEADER
   schema:
     version: v0.1
     schema:
@@ -207,8 +210,70 @@ definition:
         ExtendedJSON:
           representation:
             type: json
-          aggregate_functions: {}
-          comparison_operators: {}
+          aggregate_functions:
+            avg:
+              result_type:
+                type: named
+                name: ExtendedJSON
+            count:
+              result_type:
+                type: named
+                name: Int
+            max:
+              result_type:
+                type: named
+                name: ExtendedJSON
+            min:
+              result_type:
+                type: named
+                name: ExtendedJSON
+            sum:
+              result_type:
+                type: named
+                name: ExtendedJSON
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: ExtendedJSON
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: ExtendedJSON
+            _in:
+              type: custom
+              argument_type:
+                type: named
+                name: ExtendedJSON
+            _iregex:
+              type: custom
+              argument_type:
+                type: named
+                name: String
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: ExtendedJSON
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: ExtendedJSON
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: ExtendedJSON
+            _regex:
+              type: custom
+              argument_type:
+                type: named
+                name: String
         Int:
           representation:
             type: int32
@@ -521,10 +586,8 @@ definition:
           fields:
             _id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: ObjectId
+                type: named
+                name: ObjectId
             features:
               type:
                 type: nullable
@@ -629,16 +692,25 @@ definition:
         - name: product_details
           arguments: {}
           type: product_details
-          uniqueness_constraints: {}
+          uniqueness_constraints:
+            product_details_id:
+              unique_columns:
+                - _id
           foreign_keys: {}
       functions: []
       procedures: []
     capabilities:
-      version: 0.1.2
+      version: 0.1.6
       capabilities:
         query:
           aggregates: {}
           variables: {}
           explain: {}
+          nested_fields:
+            filter_by: {}
+            order_by: {}
+          exists:
+            nested_collections: {}
         mutation: {}
-        relationships: {}
+        relationships:
+          relation_comparisons: {}

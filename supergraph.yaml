@@ -2,8 +2,7 @@ kind: Supergraph
 version: v2
 definition:
   subgraphs:
-    - supergraph_globals/subgraph.yaml
-    - analytics/subgraph.yaml
+    - globals/subgraph.yaml
     - experience/subgraph.yaml
     - sales/subgraph.yaml
     - users/subgraph.yaml

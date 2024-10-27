@@ -27,10 +27,10 @@ definition:
     - name: vector
       type: Vector
   graphql:
-    typeName: Experience_Products
-    inputTypeName: Experience_ProductsInput
+    typeName: Products
+    inputTypeName: ProductsInput
   dataConnectorTypeMapping:
-    - dataConnectorName: pg
+    - dataConnectorName: my_connector
       dataConnectorObjectType: products
       fieldMapping:
         categoryId:
@@ -89,49 +89,79 @@ definition:
           - vector
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: ProductsBoolExp
-  objectType: Products
-  dataConnectorName: pg
-  dataConnectorObjectType: products
-  comparableFields:
-    - fieldName: categoryId
-      operators:
-        enableAll: true
-    - fieldName: countryOfOrigin
-      operators:
-        enableAll: true
-    - fieldName: createdAt
-      operators:
-        enableAll: true
-    - fieldName: description
-      operators:
-        enableAll: true
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: image
-      operators:
-        enableAll: true
-    - fieldName: manufacturerId
-      operators:
-        enableAll: true
-    - fieldName: name
-      operators:
-        enableAll: true
-    - fieldName: price
-      operators:
-        enableAll: true
-    - fieldName: updatedAt
-      operators:
-        enableAll: true
-    - fieldName: vector
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: Products
+      comparableFields:
+        - fieldName: categoryId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: countryOfOrigin
+          booleanExpressionType: TextBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: description
+          booleanExpressionType: TextBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: image
+          booleanExpressionType: TextBoolExp
+        - fieldName: manufacturerId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: name
+          booleanExpressionType: TextBoolExp
+        - fieldName: price
+          booleanExpressionType: Int4BoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: vector
+          booleanExpressionType: VectorBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Experience_ProductsBoolExp
+    typeName: ProductsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ProductsAggExp
+  operand:
+    object:
+      aggregatedType: Products
+      aggregatableFields:
+        - fieldName: categoryId
+          aggregateExpression: UuidAggExp
+        - fieldName: countryOfOrigin
+          aggregateExpression: TextAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: description
+          aggregateExpression: TextAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: image
+          aggregateExpression: TextAggExp
+        - fieldName: manufacturerId
+          aggregateExpression: UuidAggExp
+        - fieldName: name
+          aggregateExpression: TextAggExp
+        - fieldName: price
+          aggregateExpression: Int4AggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: vector
+          aggregateExpression: VectorAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ProductsAggExp
 
 ---
 kind: Model
@@ -140,9 +170,10 @@ definition:
   name: Products
   objectType: Products
   source:
-    dataConnectorName: pg
+    dataConnectorName: my_connector
     collection: products
   filterExpressionType: ProductsBoolExp
+  aggregateExpression: ProductsAggExp
   orderableFields:
     - fieldName: categoryId
       orderByDirections:
@@ -179,12 +210,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_products
+      queryRootField: products
     selectUniques:
-      - queryRootField: experience_productsById
+      - queryRootField: productsById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Experience_ProductsOrderBy
+    orderByExpressionType: ProductsOrderBy
+    filterInputTypeName: ProductsFilterInput
+    aggregate:
+      queryRootField: productsAggregate
 
 ---
 kind: ModelPermissions
@@ -336,7 +370,7 @@ definition:
   target:
     model:
       name: RecentlyViewedProducts
-      subgraph: analytics
+      subgraph: users
       relationshipType: Array
   mapping:
     - source:

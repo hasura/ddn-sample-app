@@ -1,0 +1,128 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: BrowsingHistory
+  fields:
+    - name: productId
+      type: String!
+    - name: userId
+      type: String!
+    - name: viewedAt
+      type: DateTime!
+  graphql:
+    typeName: users_BrowsingHistory
+    inputTypeName: users_BrowsingHistoryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clickhouse
+      dataConnectorObjectType: browsing_history
+      fieldMapping:
+        productId:
+          column:
+            name: product_id
+        userId:
+          column:
+            name: user_id
+        viewedAt:
+          column:
+            name: viewed_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: BrowsingHistory
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - productId
+          - userId
+          - viewedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: BrowsingHistoryBoolExp
+  operand:
+    object:
+      type: BrowsingHistory
+      comparableFields:
+        - fieldName: productId
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+        - fieldName: viewedAt
+          booleanExpressionType: DateTimeBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: users_BrowsingHistoryBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: BrowsingHistoryAggExp
+  operand:
+    object:
+      aggregatedType: BrowsingHistory
+      aggregatableFields:
+        - fieldName: productId
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+        - fieldName: viewedAt
+          aggregateExpression: DateTimeAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: users_BrowsingHistoryAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: BrowsingHistory
+  objectType: BrowsingHistory
+  source:
+    dataConnectorName: clickhouse
+    collection: browsing_history
+  filterExpressionType: BrowsingHistoryBoolExp
+  aggregateExpression: BrowsingHistoryAggExp
+  orderableFields:
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+    - fieldName: viewedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: browsingHistory
+    selectUniques:
+      - queryRootField: browsingHistoryByUserId
+        uniqueIdentifier:
+          - userId
+    orderByExpressionType: users_BrowsingHistoryOrderBy
+    filterInputTypeName: users_BrowsingHistoryFilterInput
+    aggregate:
+      queryRootField: browsingHistoryAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: BrowsingHistory
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

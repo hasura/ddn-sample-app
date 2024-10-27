@@ -17,10 +17,10 @@ definition:
     - name: updatedAt
       type: Timestamptz
   graphql:
-    typeName: Experience_CartItems
-    inputTypeName: Experience_CartItemsInput
+    typeName: CartItems
+    inputTypeName: CartItemsInput
   dataConnectorTypeMapping:
-    - dataConnectorName: pg
+    - dataConnectorName: my_connector
       dataConnectorObjectType: cart_items
       fieldMapping:
         cartId:
@@ -59,34 +59,59 @@ definition:
           - updatedAt
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: CartItemsBoolExp
-  objectType: CartItems
-  dataConnectorName: pg
-  dataConnectorObjectType: cart_items
-  comparableFields:
-    - fieldName: cartId
-      operators:
-        enableAll: true
-    - fieldName: createdAt
-      operators:
-        enableAll: true
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: productId
-      operators:
-        enableAll: true
-    - fieldName: quantity
-      operators:
-        enableAll: true
-    - fieldName: updatedAt
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: CartItems
+      comparableFields:
+        - fieldName: cartId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: productId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: quantity
+          booleanExpressionType: Int4BoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Experience_CartItemsBoolExp
+    typeName: CartItemsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CartItemsAggExp
+  operand:
+    object:
+      aggregatedType: CartItems
+      aggregatableFields:
+        - fieldName: cartId
+          aggregateExpression: UuidAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: productId
+          aggregateExpression: UuidAggExp
+        - fieldName: quantity
+          aggregateExpression: Int4AggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CartItemsAggExp
 
 ---
 kind: Model
@@ -95,9 +120,10 @@ definition:
   name: CartItems
   objectType: CartItems
   source:
-    dataConnectorName: pg
+    dataConnectorName: my_connector
     collection: cart_items
   filterExpressionType: CartItemsBoolExp
+  aggregateExpression: CartItemsAggExp
   orderableFields:
     - fieldName: cartId
       orderByDirections:
@@ -119,12 +145,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_cartItems
+      queryRootField: cartItems
     selectUniques:
-      - queryRootField: experience_cartItemsById
+      - queryRootField: cartItemsById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Experience_CartItemsOrderBy
+    orderByExpressionType: CartItemsOrderBy
+    filterInputTypeName: CartItemsFilterInput
+    aggregate:
+      queryRootField: cartItemsAggregate
 
 ---
 kind: ModelPermissions

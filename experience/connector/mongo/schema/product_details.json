@@ -10,9 +10,7 @@
       "fields": {
         "_id": {
           "type": {
-            "nullable": {
-              "scalar": "objectId"
-            }
+            "scalar": "objectId"
           }
         },
         "features": {

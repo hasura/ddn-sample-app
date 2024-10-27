@@ -9,10 +9,10 @@ definition:
     - name: name
       type: Text!
   graphql:
-    typeName: Experience_Manufacturers
-    inputTypeName: Experience_ManufacturersInput
+    typeName: Manufacturers
+    inputTypeName: ManufacturersInput
   dataConnectorTypeMapping:
-    - dataConnectorName: pg
+    - dataConnectorName: my_connector
       dataConnectorObjectType: manufacturers
 
 ---
@@ -28,22 +28,43 @@ definition:
           - name
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: ManufacturersBoolExp
-  objectType: Manufacturers
-  dataConnectorName: pg
-  dataConnectorObjectType: manufacturers
-  comparableFields:
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: name
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: Manufacturers
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: name
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Experience_ManufacturersBoolExp
+    typeName: ManufacturersBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ManufacturersAggExp
+  operand:
+    object:
+      aggregatedType: Manufacturers
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: name
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ManufacturersAggExp
 
 ---
 kind: Model
@@ -52,9 +73,10 @@ definition:
   name: Manufacturers
   objectType: Manufacturers
   source:
-    dataConnectorName: pg
+    dataConnectorName: my_connector
     collection: manufacturers
   filterExpressionType: ManufacturersBoolExp
+  aggregateExpression: ManufacturersAggExp
   orderableFields:
     - fieldName: id
       orderByDirections:
@@ -64,12 +86,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_manufacturers
+      queryRootField: manufacturers
     selectUniques:
-      - queryRootField: experience_manufacturersById
+      - queryRootField: manufacturersById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Experience_ManufacturersOrderBy
+    orderByExpressionType: ManufacturersOrderBy
+    filterInputTypeName: ManufacturersFilterInput
+    aggregate:
+      queryRootField: manufacturersAggregate
 
 ---
 kind: ModelPermissions

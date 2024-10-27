@@ -1,0 +1,3532 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: userspg
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: USERS_USERSPG_READ_URL
+      write:
+        valueFromEnv: USERS_USERSPG_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: USERS_USERSPG_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types:
+        bool:
+          representation:
+            type: boolean
+          aggregate_functions:
+            bool_and:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            bool_or:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            every:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: bool
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: bool
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: bool
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: bool
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: bool
+        int4:
+          representation:
+            type: int32
+          aggregate_functions:
+            avg:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            bit_and:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            bit_or:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            bit_xor:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            stddev:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            sum:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int8
+            var_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            var_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            variance:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: int4
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: int4
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: int4
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: int4
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: int4
+        int8:
+          representation:
+            type: int64
+          aggregate_functions:
+            avg:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            bit_and:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int8
+            bit_or:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int8
+            bit_xor:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int8
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int8
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int8
+            stddev:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            sum:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            var_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            var_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            variance:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: int8
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: int8
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: int8
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: int8
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: int8
+        numeric:
+          representation:
+            type: bigdecimal
+          aggregate_functions:
+            avg:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            sum:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            var_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            var_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            variance:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+        text:
+          representation:
+            type: string
+          aggregate_functions:
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _ilike:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _in:
+              type: in
+            _iregex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _like:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _nilike:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _niregex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _nlike:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _nregex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _regex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            starts_with:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            ts_match_tt:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+        timestamptz:
+          representation:
+            type: timestamptz
+          aggregate_functions:
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamptz
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamptz
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamptz
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamptz
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamptz
+        uuid:
+          representation:
+            type: uuid
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+        vector:
+          aggregate_functions:
+            avg:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: vector
+            sum:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: vector
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: vector
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: vector
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: vector
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: vector
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: vector
+      object_types:
+        cart_items:
+          fields:
+            cart_id:
+              type:
+                type: named
+                name: uuid
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            product_id:
+              type:
+                type: named
+                name: uuid
+            quantity:
+              type:
+                type: named
+                name: int4
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        carts:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            is_complete:
+              type:
+                type: named
+                name: bool
+            is_reminder_sent:
+              type:
+                type: named
+                name: bool
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        categories:
+          fields:
+            id:
+              type:
+                type: named
+                name: uuid
+            name:
+              type:
+                type: named
+                name: text
+        coupons:
+          fields:
+            amount:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            code:
+              type:
+                type: named
+                name: text
+            created_at:
+              type:
+                type: named
+                name: timestamptz
+            expiration_date:
+              type:
+                type: named
+                name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            percent_or_value:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+            updated_at:
+              type:
+                type: named
+                name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        delete_cart_items_by_id_response:
+          description: Responses from the 'delete_cart_items_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: cart_items
+        delete_carts_by_id_response:
+          description: Responses from the 'delete_carts_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: carts
+        delete_categories_by_id_response:
+          description: Responses from the 'delete_categories_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: categories
+        delete_coupons_by_id_response:
+          description: Responses from the 'delete_coupons_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: coupons
+        delete_manufacturers_by_id_response:
+          description: Responses from the 'delete_manufacturers_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: manufacturers
+        delete_notifications_by_id_response:
+          description: Responses from the 'delete_notifications_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: notifications
+        delete_orders_by_id_response:
+          description: Responses from the 'delete_orders_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: orders
+        delete_products_by_id_response:
+          description: Responses from the 'delete_products_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: products
+        delete_reviews_by_id_response:
+          description: Responses from the 'delete_reviews_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: reviews
+        delete_users_by_id_response:
+          description: Responses from the 'delete_users_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: users
+        insert_cart_items_object:
+          fields:
+            cart_id:
+              type:
+                type: named
+                name: uuid
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            product_id:
+              type:
+                type: named
+                name: uuid
+            quantity:
+              type:
+                type: named
+                name: int4
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        insert_cart_items_response:
+          description: Responses from the 'insert_cart_items' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: cart_items
+        insert_carts_object:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            is_complete:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            is_reminder_sent:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        insert_carts_response:
+          description: Responses from the 'insert_carts' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: carts
+        insert_categories_object:
+          fields:
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            name:
+              type:
+                type: named
+                name: text
+        insert_categories_response:
+          description: Responses from the 'insert_categories' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: categories
+        insert_coupons_object:
+          fields:
+            amount:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            code:
+              type:
+                type: named
+                name: text
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            expiration_date:
+              type:
+                type: named
+                name: timestamptz
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            percent_or_value:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        insert_coupons_response:
+          description: Responses from the 'insert_coupons' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: coupons
+        insert_manufacturers_object:
+          fields:
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            name:
+              type:
+                type: named
+                name: text
+        insert_manufacturers_response:
+          description: Responses from the 'insert_manufacturers' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: manufacturers
+        insert_notifications_object:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            message:
+              type:
+                type: named
+                name: text
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        insert_notifications_response:
+          description: Responses from the 'insert_notifications' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: notifications
+        insert_orders_object:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            delivery_date:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            is_reviewed:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            product_id:
+              type:
+                type: named
+                name: uuid
+            status:
+              type:
+                type: named
+                name: text
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        insert_orders_response:
+          description: Responses from the 'insert_orders' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: orders
+        insert_products_object:
+          fields:
+            category_id:
+              type:
+                type: named
+                name: uuid
+            country_of_origin:
+              type:
+                type: named
+                name: text
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            description:
+              type:
+                type: named
+                name: text
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            image:
+              type:
+                type: named
+                name: text
+            manufacturer_id:
+              type:
+                type: named
+                name: uuid
+            name:
+              type:
+                type: named
+                name: text
+            price:
+              type:
+                type: named
+                name: int4
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            vector:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: vector
+        insert_products_response:
+          description: Responses from the 'insert_products' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: products
+        insert_reviews_object:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            is_visible:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            product_id:
+              type:
+                type: named
+                name: uuid
+            rating:
+              type:
+                type: named
+                name: int4
+            text:
+              type:
+                type: named
+                name: text
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        insert_reviews_response:
+          description: Responses from the 'insert_reviews' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: reviews
+        insert_users_object:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            email:
+              type:
+                type: named
+                name: text
+            favorite_artist:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            is_email_verified:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            last_seen:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            name:
+              type:
+                type: named
+                name: text
+            password:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        insert_users_response:
+          description: Responses from the 'insert_users' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: users
+        manufacturers:
+          fields:
+            id:
+              type:
+                type: named
+                name: uuid
+            name:
+              type:
+                type: named
+                name: text
+        notifications:
+          fields:
+            created_at:
+              type:
+                type: named
+                name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            message:
+              type:
+                type: named
+                name: text
+            updated_at:
+              type:
+                type: named
+                name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        orders:
+          fields:
+            created_at:
+              type:
+                type: named
+                name: timestamptz
+            delivery_date:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            is_reviewed:
+              type:
+                type: named
+                name: bool
+            product_id:
+              type:
+                type: named
+                name: uuid
+            status:
+              type:
+                type: named
+                name: text
+            updated_at:
+              type:
+                type: named
+                name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        products:
+          fields:
+            category_id:
+              type:
+                type: named
+                name: uuid
+            country_of_origin:
+              type:
+                type: named
+                name: text
+            created_at:
+              type:
+                type: named
+                name: timestamptz
+            description:
+              type:
+                type: named
+                name: text
+            id:
+              type:
+                type: named
+                name: uuid
+            image:
+              type:
+                type: named
+                name: text
+            manufacturer_id:
+              type:
+                type: named
+                name: uuid
+            name:
+              type:
+                type: named
+                name: text
+            price:
+              type:
+                type: named
+                name: int4
+            updated_at:
+              type:
+                type: named
+                name: timestamptz
+            vector:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: vector
+        reviews:
+          fields:
+            created_at:
+              type:
+                type: named
+                name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            is_visible:
+              type:
+                type: named
+                name: bool
+            product_id:
+              type:
+                type: named
+                name: uuid
+            rating:
+              type:
+                type: named
+                name: int4
+            text:
+              type:
+                type: named
+                name: text
+            updated_at:
+              type:
+                type: named
+                name: timestamptz
+            user_id:
+              type:
+                type: named
+                name: uuid
+        update_cart_items_by_id_response:
+          description: Responses from the 'update_cart_items_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: cart_items
+        update_cart_items_by_id_update_columns:
+          description: Update the columns of the 'cart_items' collection
+          fields:
+            cart_id:
+              description: Update the 'cart_id' column in the 'cart_items' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_cart_items_cart_id
+            created_at:
+              description: Update the 'created_at' column in the 'cart_items' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_cart_items_created_at
+            id:
+              description: Update the 'id' column in the 'cart_items' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_cart_items_id
+            product_id:
+              description: Update the 'product_id' column in the 'cart_items' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_cart_items_product_id
+            quantity:
+              description: Update the 'quantity' column in the 'cart_items' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_cart_items_quantity
+            updated_at:
+              description: Update the 'updated_at' column in the 'cart_items' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_cart_items_updated_at
+        update_carts_by_id_response:
+          description: Responses from the 'update_carts_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: carts
+        update_carts_by_id_update_columns:
+          description: Update the columns of the 'carts' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'carts' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_carts_created_at
+            id:
+              description: Update the 'id' column in the 'carts' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_carts_id
+            is_complete:
+              description: Update the 'is_complete' column in the 'carts' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_carts_is_complete
+            is_reminder_sent:
+              description: Update the 'is_reminder_sent' column in the 'carts' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_carts_is_reminder_sent
+            updated_at:
+              description: Update the 'updated_at' column in the 'carts' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_carts_updated_at
+            user_id:
+              description: Update the 'user_id' column in the 'carts' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_carts_user_id
+        update_categories_by_id_response:
+          description: Responses from the 'update_categories_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: categories
+        update_categories_by_id_update_columns:
+          description: Update the columns of the 'categories' collection
+          fields:
+            id:
+              description: Update the 'id' column in the 'categories' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_categories_id
+            name:
+              description: Update the 'name' column in the 'categories' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_categories_name
+        update_column_cart_items_cart_id:
+          description: Update the 'cart_id' column in the 'cart_items' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_cart_items_created_at:
+          description: Update the 'created_at' column in the 'cart_items' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_cart_items_id:
+          description: Update the 'id' column in the 'cart_items' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_cart_items_product_id:
+          description: Update the 'product_id' column in the 'cart_items' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_cart_items_quantity:
+          description: Update the 'quantity' column in the 'cart_items' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: int4
+        update_column_cart_items_updated_at:
+          description: Update the 'updated_at' column in the 'cart_items' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_carts_created_at:
+          description: Update the 'created_at' column in the 'carts' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_carts_id:
+          description: Update the 'id' column in the 'carts' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_carts_is_complete:
+          description: Update the 'is_complete' column in the 'carts' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: bool
+        update_column_carts_is_reminder_sent:
+          description: Update the 'is_reminder_sent' column in the 'carts' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: bool
+        update_column_carts_updated_at:
+          description: Update the 'updated_at' column in the 'carts' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_carts_user_id:
+          description: Update the 'user_id' column in the 'carts' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_categories_id:
+          description: Update the 'id' column in the 'categories' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_categories_name:
+          description: Update the 'name' column in the 'categories' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_coupons_amount:
+          description: Update the 'amount' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+        update_column_coupons_code:
+          description: Update the 'code' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_coupons_created_at:
+          description: Update the 'created_at' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_coupons_expiration_date:
+          description: Update the 'expiration_date' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_coupons_id:
+          description: Update the 'id' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_coupons_percent_or_value:
+          description: Update the 'percent_or_value' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+        update_column_coupons_updated_at:
+          description: Update the 'updated_at' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_coupons_user_id:
+          description: Update the 'user_id' column in the 'coupons' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_manufacturers_id:
+          description: Update the 'id' column in the 'manufacturers' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_manufacturers_name:
+          description: Update the 'name' column in the 'manufacturers' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_notifications_created_at:
+          description: Update the 'created_at' column in the 'notifications' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_notifications_id:
+          description: Update the 'id' column in the 'notifications' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_notifications_message:
+          description: Update the 'message' column in the 'notifications' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_notifications_updated_at:
+          description: Update the 'updated_at' column in the 'notifications' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_notifications_user_id:
+          description: Update the 'user_id' column in the 'notifications' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_orders_created_at:
+          description: Update the 'created_at' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_orders_delivery_date:
+          description: Update the 'delivery_date' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_orders_id:
+          description: Update the 'id' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_orders_is_reviewed:
+          description: Update the 'is_reviewed' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: bool
+        update_column_orders_product_id:
+          description: Update the 'product_id' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_orders_status:
+          description: Update the 'status' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_orders_updated_at:
+          description: Update the 'updated_at' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_orders_user_id:
+          description: Update the 'user_id' column in the 'orders' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_products_category_id:
+          description: Update the 'category_id' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_products_country_of_origin:
+          description: Update the 'country_of_origin' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_products_created_at:
+          description: Update the 'created_at' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_products_description:
+          description: Update the 'description' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_products_id:
+          description: Update the 'id' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_products_image:
+          description: Update the 'image' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_products_manufacturer_id:
+          description: Update the 'manufacturer_id' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_products_name:
+          description: Update the 'name' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_products_price:
+          description: Update the 'price' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: int4
+        update_column_products_updated_at:
+          description: Update the 'updated_at' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_products_vector:
+          description: Update the 'vector' column in the 'products' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: vector
+        update_column_reviews_created_at:
+          description: Update the 'created_at' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_reviews_id:
+          description: Update the 'id' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_reviews_is_visible:
+          description: Update the 'is_visible' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: bool
+        update_column_reviews_product_id:
+          description: Update the 'product_id' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_reviews_rating:
+          description: Update the 'rating' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: int4
+        update_column_reviews_text:
+          description: Update the 'text' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_reviews_updated_at:
+          description: Update the 'updated_at' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_reviews_user_id:
+          description: Update the 'user_id' column in the 'reviews' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_users_created_at:
+          description: Update the 'created_at' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_column_users_email:
+          description: Update the 'email' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_users_favorite_artist:
+          description: Update the 'favorite_artist' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+        update_column_users_id:
+          description: Update the 'id' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_users_is_email_verified:
+          description: Update the 'is_email_verified' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+        update_column_users_last_seen:
+          description: Update the 'last_seen' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_users_name:
+          description: Update the 'name' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: text
+        update_column_users_password:
+          description: Update the 'password' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+        update_column_users_updated_at:
+          description: Update the 'updated_at' column in the 'users' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: timestamptz
+        update_coupons_by_id_response:
+          description: Responses from the 'update_coupons_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: coupons
+        update_coupons_by_id_update_columns:
+          description: Update the columns of the 'coupons' collection
+          fields:
+            amount:
+              description: Update the 'amount' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_amount
+            code:
+              description: Update the 'code' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_code
+            created_at:
+              description: Update the 'created_at' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_created_at
+            expiration_date:
+              description: Update the 'expiration_date' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_expiration_date
+            id:
+              description: Update the 'id' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_id
+            percent_or_value:
+              description: Update the 'percent_or_value' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_percent_or_value
+            updated_at:
+              description: Update the 'updated_at' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_updated_at
+            user_id:
+              description: Update the 'user_id' column in the 'coupons' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_coupons_user_id
+        update_manufacturers_by_id_response:
+          description: Responses from the 'update_manufacturers_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: manufacturers
+        update_manufacturers_by_id_update_columns:
+          description: Update the columns of the 'manufacturers' collection
+          fields:
+            id:
+              description: Update the 'id' column in the 'manufacturers' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_manufacturers_id
+            name:
+              description: Update the 'name' column in the 'manufacturers' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_manufacturers_name
+        update_notifications_by_id_response:
+          description: Responses from the 'update_notifications_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: notifications
+        update_notifications_by_id_update_columns:
+          description: Update the columns of the 'notifications' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'notifications' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_notifications_created_at
+            id:
+              description: Update the 'id' column in the 'notifications' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_notifications_id
+            message:
+              description: Update the 'message' column in the 'notifications' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_notifications_message
+            updated_at:
+              description: Update the 'updated_at' column in the 'notifications' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_notifications_updated_at
+            user_id:
+              description: Update the 'user_id' column in the 'notifications' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_notifications_user_id
+        update_orders_by_id_response:
+          description: Responses from the 'update_orders_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: orders
+        update_orders_by_id_update_columns:
+          description: Update the columns of the 'orders' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_created_at
+            delivery_date:
+              description: Update the 'delivery_date' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_delivery_date
+            id:
+              description: Update the 'id' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_id
+            is_reviewed:
+              description: Update the 'is_reviewed' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_is_reviewed
+            product_id:
+              description: Update the 'product_id' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_product_id
+            status:
+              description: Update the 'status' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_status
+            updated_at:
+              description: Update the 'updated_at' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_updated_at
+            user_id:
+              description: Update the 'user_id' column in the 'orders' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_orders_user_id
+        update_products_by_id_response:
+          description: Responses from the 'update_products_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: products
+        update_products_by_id_update_columns:
+          description: Update the columns of the 'products' collection
+          fields:
+            category_id:
+              description: Update the 'category_id' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_category_id
+            country_of_origin:
+              description: Update the 'country_of_origin' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_country_of_origin
+            created_at:
+              description: Update the 'created_at' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_created_at
+            description:
+              description: Update the 'description' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_description
+            id:
+              description: Update the 'id' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_id
+            image:
+              description: Update the 'image' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_image
+            manufacturer_id:
+              description: Update the 'manufacturer_id' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_manufacturer_id
+            name:
+              description: Update the 'name' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_name
+            price:
+              description: Update the 'price' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_price
+            updated_at:
+              description: Update the 'updated_at' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_updated_at
+            vector:
+              description: Update the 'vector' column in the 'products' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_products_vector
+        update_reviews_by_id_response:
+          description: Responses from the 'update_reviews_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: reviews
+        update_reviews_by_id_update_columns:
+          description: Update the columns of the 'reviews' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_created_at
+            id:
+              description: Update the 'id' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_id
+            is_visible:
+              description: Update the 'is_visible' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_is_visible
+            product_id:
+              description: Update the 'product_id' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_product_id
+            rating:
+              description: Update the 'rating' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_rating
+            text:
+              description: Update the 'text' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_text
+            updated_at:
+              description: Update the 'updated_at' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_updated_at
+            user_id:
+              description: Update the 'user_id' column in the 'reviews' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_reviews_user_id
+        update_users_by_id_response:
+          description: Responses from the 'update_users_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: users
+        update_users_by_id_update_columns:
+          description: Update the columns of the 'users' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_created_at
+            email:
+              description: Update the 'email' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_email
+            favorite_artist:
+              description: Update the 'favorite_artist' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_favorite_artist
+            id:
+              description: Update the 'id' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_id
+            is_email_verified:
+              description: Update the 'is_email_verified' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_is_email_verified
+            last_seen:
+              description: Update the 'last_seen' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_last_seen
+            name:
+              description: Update the 'name' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_name
+            password:
+              description: Update the 'password' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_password
+            updated_at:
+              description: Update the 'updated_at' column in the 'users' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_users_updated_at
+        users:
+          fields:
+            created_at:
+              type:
+                type: named
+                name: timestamptz
+            email:
+              type:
+                type: named
+                name: text
+            favorite_artist:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: int4
+            id:
+              type:
+                type: named
+                name: uuid
+            is_email_verified:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            last_seen:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            name:
+              type:
+                type: named
+                name: text
+            password:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+            updated_at:
+              type:
+                type: named
+                name: timestamptz
+      collections:
+        - name: cart_items
+          arguments: {}
+          type: cart_items
+          uniqueness_constraints:
+            cart_items_pkey:
+              unique_columns:
+                - id
+          foreign_keys:
+            cart_items_cart_id_foreign:
+              column_mapping:
+                cart_id: id
+              foreign_collection: carts
+            cart_items_product_id_foreign:
+              column_mapping:
+                product_id: id
+              foreign_collection: products
+        - name: carts
+          arguments: {}
+          type: carts
+          uniqueness_constraints:
+            carts_pkey:
+              unique_columns:
+                - id
+          foreign_keys:
+            carts_user_id_foreign:
+              column_mapping:
+                user_id: id
+              foreign_collection: users
+        - name: categories
+          arguments: {}
+          type: categories
+          uniqueness_constraints:
+            categories_pkey:
+              unique_columns:
+                - id
+          foreign_keys: {}
+        - name: coupons
+          arguments: {}
+          type: coupons
+          uniqueness_constraints:
+            coupons_pkey:
+              unique_columns:
+                - id
+          foreign_keys:
+            coupons_user_id_fkey:
+              column_mapping:
+                user_id: id
+              foreign_collection: users
+        - name: manufacturers
+          arguments: {}
+          type: manufacturers
+          uniqueness_constraints:
+            manufacturers_pkey:
+              unique_columns:
+                - id
+          foreign_keys: {}
+        - name: notifications
+          arguments: {}
+          type: notifications
+          uniqueness_constraints:
+            notifications_pkey:
+              unique_columns:
+                - id
+          foreign_keys:
+            notifications_user_id_fkey:
+              column_mapping:
+                user_id: id
+              foreign_collection: users
+        - name: orders
+          arguments: {}
+          type: orders
+          uniqueness_constraints:
+            orders_pkey:
+              unique_columns:
+                - id
+          foreign_keys:
+            orders_customer_id_fkey:
+              column_mapping:
+                user_id: id
+              foreign_collection: users
+            orders_product_id_fkey:
+              column_mapping:
+                product_id: id
+              foreign_collection: products
+        - name: products
+          arguments: {}
+          type: products
+          uniqueness_constraints:
+            products_pkey:
+              unique_columns:
+                - id
+          foreign_keys:
+            products_category_foreign:
+              column_mapping:
+                category_id: id
+              foreign_collection: categories
+            products_manufacturer_foreign:
+              column_mapping:
+                manufacturer_id: id
+              foreign_collection: manufacturers
+        - name: reviews
+          arguments: {}
+          type: reviews
+          uniqueness_constraints:
+            reviews_pkey:
+              unique_columns:
+                - id
+          foreign_keys:
+            reviews_product_id_foreign:
+              column_mapping:
+                product_id: id
+              foreign_collection: products
+            reviews_user_id_foreign:
+              column_mapping:
+                user_id: id
+              foreign_collection: users
+        - name: users
+          arguments: {}
+          type: users
+          uniqueness_constraints:
+            users_pkey:
+              unique_columns:
+                - id
+          foreign_keys: {}
+      functions: []
+      procedures:
+        - name: delete_cart_items_by_id
+          description: Delete any row on the 'cart_items' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'cart_items' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: cart_items
+          result_type:
+            type: named
+            name: delete_cart_items_by_id_response
+        - name: delete_carts_by_id
+          description: Delete any row on the 'carts' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'carts' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: carts
+          result_type:
+            type: named
+            name: delete_carts_by_id_response
+        - name: delete_categories_by_id
+          description: Delete any row on the 'categories' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'categories' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: categories
+          result_type:
+            type: named
+            name: delete_categories_by_id_response
+        - name: delete_coupons_by_id
+          description: Delete any row on the 'coupons' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'coupons' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: coupons
+          result_type:
+            type: named
+            name: delete_coupons_by_id_response
+        - name: delete_manufacturers_by_id
+          description: Delete any row on the 'manufacturers' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'manufacturers' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: manufacturers
+          result_type:
+            type: named
+            name: delete_manufacturers_by_id_response
+        - name: delete_notifications_by_id
+          description: Delete any row on the 'notifications' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'notifications' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: notifications
+          result_type:
+            type: named
+            name: delete_notifications_by_id_response
+        - name: delete_orders_by_id
+          description: Delete any row on the 'orders' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'orders' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: orders
+          result_type:
+            type: named
+            name: delete_orders_by_id_response
+        - name: delete_products_by_id
+          description: Delete any row on the 'products' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'products' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: products
+          result_type:
+            type: named
+            name: delete_products_by_id_response
+        - name: delete_reviews_by_id
+          description: Delete any row on the 'reviews' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'reviews' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: reviews
+          result_type:
+            type: named
+            name: delete_reviews_by_id_response
+        - name: delete_users_by_id
+          description: Delete any row on the 'users' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'users' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: users
+          result_type:
+            type: named
+            name: delete_users_by_id_response
+        - name: insert_cart_items
+          description: Insert into the cart_items table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_cart_items_object
+            post_check:
+              description: Insert permission predicate over the 'cart_items' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: cart_items
+          result_type:
+            type: named
+            name: insert_cart_items_response
+        - name: insert_carts
+          description: Insert into the carts table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_carts_object
+            post_check:
+              description: Insert permission predicate over the 'carts' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: carts
+          result_type:
+            type: named
+            name: insert_carts_response
+        - name: insert_categories
+          description: Insert into the categories table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_categories_object
+            post_check:
+              description: Insert permission predicate over the 'categories' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: categories
+          result_type:
+            type: named
+            name: insert_categories_response
+        - name: insert_coupons
+          description: Insert into the coupons table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_coupons_object
+            post_check:
+              description: Insert permission predicate over the 'coupons' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: coupons
+          result_type:
+            type: named
+            name: insert_coupons_response
+        - name: insert_manufacturers
+          description: Insert into the manufacturers table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_manufacturers_object
+            post_check:
+              description: Insert permission predicate over the 'manufacturers' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: manufacturers
+          result_type:
+            type: named
+            name: insert_manufacturers_response
+        - name: insert_notifications
+          description: Insert into the notifications table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_notifications_object
+            post_check:
+              description: Insert permission predicate over the 'notifications' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: notifications
+          result_type:
+            type: named
+            name: insert_notifications_response
+        - name: insert_orders
+          description: Insert into the orders table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_orders_object
+            post_check:
+              description: Insert permission predicate over the 'orders' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: orders
+          result_type:
+            type: named
+            name: insert_orders_response
+        - name: insert_products
+          description: Insert into the products table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_products_object
+            post_check:
+              description: Insert permission predicate over the 'products' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: products
+          result_type:
+            type: named
+            name: insert_products_response
+        - name: insert_reviews
+          description: Insert into the reviews table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_reviews_object
+            post_check:
+              description: Insert permission predicate over the 'reviews' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: reviews
+          result_type:
+            type: named
+            name: insert_reviews_response
+        - name: insert_users
+          description: Insert into the users table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_users_object
+            post_check:
+              description: Insert permission predicate over the 'users' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: users
+          result_type:
+            type: named
+            name: insert_users_response
+        - name: update_cart_items_by_id
+          description: Update any row on the 'cart_items' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'cart_items' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: cart_items
+            pre_check:
+              description: Update permission pre-condition predicate over the 'cart_items' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: cart_items
+            update_columns:
+              type:
+                type: named
+                name: update_cart_items_by_id_update_columns
+          result_type:
+            type: named
+            name: update_cart_items_by_id_response
+        - name: update_carts_by_id
+          description: Update any row on the 'carts' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'carts' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: carts
+            pre_check:
+              description: Update permission pre-condition predicate over the 'carts' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: carts
+            update_columns:
+              type:
+                type: named
+                name: update_carts_by_id_update_columns
+          result_type:
+            type: named
+            name: update_carts_by_id_response
+        - name: update_categories_by_id
+          description: Update any row on the 'categories' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'categories' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: categories
+            pre_check:
+              description: Update permission pre-condition predicate over the 'categories' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: categories
+            update_columns:
+              type:
+                type: named
+                name: update_categories_by_id_update_columns
+          result_type:
+            type: named
+            name: update_categories_by_id_response
+        - name: update_coupons_by_id
+          description: Update any row on the 'coupons' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'coupons' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: coupons
+            pre_check:
+              description: Update permission pre-condition predicate over the 'coupons' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: coupons
+            update_columns:
+              type:
+                type: named
+                name: update_coupons_by_id_update_columns
+          result_type:
+            type: named
+            name: update_coupons_by_id_response
+        - name: update_manufacturers_by_id
+          description: Update any row on the 'manufacturers' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'manufacturers' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: manufacturers
+            pre_check:
+              description: Update permission pre-condition predicate over the 'manufacturers' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: manufacturers
+            update_columns:
+              type:
+                type: named
+                name: update_manufacturers_by_id_update_columns
+          result_type:
+            type: named
+            name: update_manufacturers_by_id_response
+        - name: update_notifications_by_id
+          description: Update any row on the 'notifications' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'notifications' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: notifications
+            pre_check:
+              description: Update permission pre-condition predicate over the 'notifications' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: notifications
+            update_columns:
+              type:
+                type: named
+                name: update_notifications_by_id_update_columns
+          result_type:
+            type: named
+            name: update_notifications_by_id_response
+        - name: update_orders_by_id
+          description: Update any row on the 'orders' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'orders' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: orders
+            pre_check:
+              description: Update permission pre-condition predicate over the 'orders' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: orders
+            update_columns:
+              type:
+                type: named
+                name: update_orders_by_id_update_columns
+          result_type:
+            type: named
+            name: update_orders_by_id_response
+        - name: update_products_by_id
+          description: Update any row on the 'products' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'products' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: products
+            pre_check:
+              description: Update permission pre-condition predicate over the 'products' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: products
+            update_columns:
+              type:
+                type: named
+                name: update_products_by_id_update_columns
+          result_type:
+            type: named
+            name: update_products_by_id_response
+        - name: update_reviews_by_id
+          description: Update any row on the 'reviews' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'reviews' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: reviews
+            pre_check:
+              description: Update permission pre-condition predicate over the 'reviews' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: reviews
+            update_columns:
+              type:
+                type: named
+                name: update_reviews_by_id_update_columns
+          result_type:
+            type: named
+            name: update_reviews_by_id_response
+        - name: update_users_by_id
+          description: Update any row on the 'users' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'users' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: users
+            pre_check:
+              description: Update permission pre-condition predicate over the 'users' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: users
+            update_columns:
+              type:
+                type: named
+                name: update_users_by_id_update_columns
+          result_type:
+            type: named
+            name: update_users_by_id_response
+    capabilities:
+      version: 0.1.6
+      capabilities:
+        query:
+          aggregates: {}
+          variables: {}
+          explain: {}
+          nested_fields:
+            filter_by: {}
+            order_by: {}
+          exists:
+            nested_collections: {}
+        mutation:
+          transactional: {}
+          explain: {}
+        relationships:
+          relation_comparisons: {}
+          order_by_aggregate: {}

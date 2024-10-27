@@ -21,10 +21,10 @@ definition:
     - name: userId
       type: Uuid!
   graphql:
-    typeName: Sales_Orders
-    inputTypeName: Sales_OrdersInput
+    typeName: Orders
+    inputTypeName: OrdersInput
   dataConnectorTypeMapping:
-    - dataConnectorName: pg
+    - dataConnectorName: salespg
       dataConnectorObjectType: orders
       fieldMapping:
         createdAt:
@@ -71,40 +71,67 @@ definition:
           - userId
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: OrdersBoolExp
-  objectType: Orders
-  dataConnectorName: pg
-  dataConnectorObjectType: orders
-  comparableFields:
-    - fieldName: createdAt
-      operators:
-        enableAll: true
-    - fieldName: deliveryDate
-      operators:
-        enableAll: true
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: isReviewed
-      operators:
-        enableAll: true
-    - fieldName: productId
-      operators:
-        enableAll: true
-    - fieldName: status
-      operators:
-        enableAll: true
-    - fieldName: updatedAt
-      operators:
-        enableAll: true
-    - fieldName: userId
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: Orders
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: deliveryDate
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: isReviewed
+          booleanExpressionType: BoolBoolExp
+        - fieldName: productId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: status
+          booleanExpressionType: TextBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: userId
+          booleanExpressionType: UuidBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Sales_OrdersBoolExp
+    typeName: OrdersBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrdersAggExp
+  operand:
+    object:
+      aggregatedType: Orders
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: deliveryDate
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: isReviewed
+          aggregateExpression: BoolAggExp
+        - fieldName: productId
+          aggregateExpression: UuidAggExp
+        - fieldName: status
+          aggregateExpression: TextAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: userId
+          aggregateExpression: UuidAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrdersAggExp
 
 ---
 kind: Model
@@ -113,9 +140,10 @@ definition:
   name: Orders
   objectType: Orders
   source:
-    dataConnectorName: pg
+    dataConnectorName: salespg
     collection: orders
   filterExpressionType: OrdersBoolExp
+  aggregateExpression: OrdersAggExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -143,12 +171,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: sales_orders
+      queryRootField: orders
     selectUniques:
-      - queryRootField: sales_ordersById
+      - queryRootField: ordersById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Sales_OrdersOrderBy
+    orderByExpressionType: OrdersOrderBy
+    filterInputTypeName: OrdersFilterInput
+    aggregate:
+      queryRootField: ordersAggregate
 
 ---
 kind: ModelPermissions

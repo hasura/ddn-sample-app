@@ -23,10 +23,10 @@ definition:
     - name: updatedAt
       type: Timestamptz!
   graphql:
-    typeName: Users_Users
-    inputTypeName: Users_UsersInput
+    typeName: users_Users
+    inputTypeName: users_UsersInput
   dataConnectorTypeMapping:
-    - dataConnectorName: user_pg
+    - dataConnectorName: userspg
       dataConnectorObjectType: users
       fieldMapping:
         createdAt:
@@ -77,43 +77,71 @@ definition:
           - updatedAt
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: UsersBoolExp
-  objectType: Users
-  dataConnectorName: user_pg
-  dataConnectorObjectType: users
-  comparableFields:
-    - fieldName: createdAt
-      operators:
-        enableAll: true
-    - fieldName: email
-      operators:
-        enableAll: true
-    - fieldName: favoriteArtist
-      operators:
-        enableAll: true
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: isEmailVerified
-      operators:
-        enableAll: true
-    - fieldName: lastSeen
-      operators:
-        enableAll: true
-    - fieldName: name
-      operators:
-        enableAll: true
-    - fieldName: password
-      operators:
-        enableAll: true
-    - fieldName: updatedAt
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: Users
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: email
+          booleanExpressionType: TextBoolExp
+        - fieldName: favoriteArtist
+          booleanExpressionType: Int4BoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: isEmailVerified
+          booleanExpressionType: BoolBoolExp
+        - fieldName: lastSeen
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: name
+          booleanExpressionType: TextBoolExp
+        - fieldName: password
+          booleanExpressionType: TextBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Users_UsersBoolExp
+    typeName: users_UsersBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: UsersAggExp
+  operand:
+    object:
+      aggregatedType: Users
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: email
+          aggregateExpression: TextAggExp
+        - fieldName: favoriteArtist
+          aggregateExpression: Int4AggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: isEmailVerified
+          aggregateExpression: BoolAggExp
+        - fieldName: lastSeen
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: name
+          aggregateExpression: TextAggExp
+        - fieldName: password
+          aggregateExpression: TextAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: users_UsersAggExp
 
 ---
 kind: Model
@@ -122,9 +150,10 @@ definition:
   name: Users
   objectType: Users
   source:
-    dataConnectorName: user_pg
+    dataConnectorName: userspg
     collection: users
   filterExpressionType: UsersBoolExp
+  aggregateExpression: UsersAggExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -155,12 +184,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: users_users
+      queryRootField: users
     selectUniques:
-      - queryRootField: users_usersById
+      - queryRootField: usersById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Users_UsersOrderBy
+    orderByExpressionType: users_UsersOrderBy
+    filterInputTypeName: users_UsersFilterInput
+    aggregate:
+      queryRootField: usersAggregate
 
 ---
 kind: ModelPermissions
@@ -276,7 +308,7 @@ definition:
   target:
     model:
       name: RecentlyViewedProducts
-      subgraph: analytics
+      subgraph: users
       relationshipType: Array
   mapping:
     - source:
@@ -294,7 +326,7 @@ definition:
   target:
     model:
       name: SessionHistory
-      subgraph: analytics
+      subgraph: users
       relationshipType: Array
   mapping:
     - source:
@@ -303,38 +335,3 @@ definition:
       target:
         modelField:
           - fieldName: userId
-
----
-kind: Relationship
-version: v1
-definition:
-  name: githubprofile
-  source: Users
-  target:
-    command:
-      name: GetGithubProfileDescription
-      subgraph: sales
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: name
-      target:
-        argument:
-          argumentName: username
----
-kind: Relationship
-version: v1
-definition:
-  name: githubprofilenoparallel
-  source: Users
-  target:
-    command:
-      name: GetGithubProfileDescriptionNoparallel
-      subgraph: sales
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: name
-      target:
-        argument:
-          argumentName: username

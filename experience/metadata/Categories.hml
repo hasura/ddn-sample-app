@@ -9,10 +9,10 @@ definition:
     - name: name
       type: Text!
   graphql:
-    typeName: Experience_Categories
-    inputTypeName: Experience_CategoriesInput
+    typeName: Categories
+    inputTypeName: CategoriesInput
   dataConnectorTypeMapping:
-    - dataConnectorName: pg
+    - dataConnectorName: my_connector
       dataConnectorObjectType: categories
 
 ---
@@ -28,22 +28,43 @@ definition:
           - name
 
 ---
-kind: ObjectBooleanExpressionType
+kind: BooleanExpressionType
 version: v1
 definition:
   name: CategoriesBoolExp
-  objectType: Categories
-  dataConnectorName: pg
-  dataConnectorObjectType: categories
-  comparableFields:
-    - fieldName: id
-      operators:
-        enableAll: true
-    - fieldName: name
-      operators:
-        enableAll: true
+  operand:
+    object:
+      type: Categories
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: name
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
   graphql:
-    typeName: Experience_CategoriesBoolExp
+    typeName: CategoriesBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CategoriesAggExp
+  operand:
+    object:
+      aggregatedType: Categories
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: name
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CategoriesAggExp
 
 ---
 kind: Model
@@ -52,9 +73,10 @@ definition:
   name: Categories
   objectType: Categories
   source:
-    dataConnectorName: pg
+    dataConnectorName: my_connector
     collection: categories
   filterExpressionType: CategoriesBoolExp
+  aggregateExpression: CategoriesAggExp
   orderableFields:
     - fieldName: id
       orderByDirections:
@@ -64,12 +86,15 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: experience_categories
+      queryRootField: categories
     selectUniques:
-      - queryRootField: experience_categoriesById
+      - queryRootField: categoriesById
         uniqueIdentifier:
           - id
-    orderByExpressionType: Experience_CategoriesOrderBy
+    orderByExpressionType: CategoriesOrderBy
+    filterInputTypeName: CategoriesFilterInput
+    aggregate:
+      queryRootField: categoriesAggregate
 
 ---
 kind: ModelPermissions

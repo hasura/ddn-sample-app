@@ -1,0 +1,17 @@
+services:
+  experience_my_connector:
+    build:
+      context: .
+      dockerfile: .hasura-connector/Dockerfile.my_connector
+    environment:
+      CONNECTION_URI: $EXPERIENCE_MY_CONNECTOR_CONNECTION_URI
+      HASURA_SERVICE_TOKEN_SECRET: $EXPERIENCE_MY_CONNECTOR_HASURA_SERVICE_TOKEN_SECRET
+      OTEL_EXPORTER_OTLP_ENDPOINT: $EXPERIENCE_MY_CONNECTOR_OTEL_EXPORTER_OTLP_ENDPOINT
+      OTEL_SERVICE_NAME: $EXPERIENCE_MY_CONNECTOR_OTEL_SERVICE_NAME
+    extra_hosts:
+      - local.hasura.dev:host-gateway
+    ports:
+      - mode: ingress
+        protocol: tcp
+        published: "9517"
+        target: 8080

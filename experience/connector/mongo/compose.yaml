@@ -1,0 +1,17 @@
+services:
+  experience_mongo:
+    build:
+      context: .
+      dockerfile: .hasura-connector/Dockerfile.mongo
+    environment:
+      HASURA_SERVICE_TOKEN_SECRET: $EXPERIENCE_MONGO_HASURA_SERVICE_TOKEN_SECRET
+      MONGODB_DATABASE_URI: $EXPERIENCE_MONGO_MONGODB_DATABASE_URI
+      OTEL_EXPORTER_OTLP_ENDPOINT: $EXPERIENCE_MONGO_OTEL_EXPORTER_OTLP_ENDPOINT
+      OTEL_SERVICE_NAME: $EXPERIENCE_MONGO_OTEL_SERVICE_NAME
+    extra_hosts:
+      - local.hasura.dev:host-gateway
+    ports:
+      - mode: ingress
+        protocol: tcp
+        published: "5870"
+        target: 8080

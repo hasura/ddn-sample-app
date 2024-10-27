@@ -9,11 +9,11 @@ definition:
       type: Float
       description: The number to format into currency.
   source:
-    dataConnectorName: ts
+    dataConnectorName: salests
     dataConnectorCommand:
       function: toCurrencyString
   graphql:
-    rootFieldName: sales_toCurrencyString
+    rootFieldName: toCurrencyString
     rootFieldKind: Query
   description: Formats a number into a currency string.
 
