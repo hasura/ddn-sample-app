@@ -1,2 +1,0 @@
-FROM ghcr.io/hasura/ndc-clickhouse:v1.0.5
-COPY ./ /etc/connector

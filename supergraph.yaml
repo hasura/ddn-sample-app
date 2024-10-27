@@ -4,5 +4,3 @@ definition:
   subgraphs:
     - globals/subgraph.yaml
     - experience/subgraph.yaml
-    - sales/subgraph.yaml
-    - users/subgraph.yaml
