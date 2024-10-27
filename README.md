@@ -71,9 +71,16 @@ ddn supergraph build apply <build-version>
 
 Create Subgraph name "Sales"
 ```shell
-ddn subgraph init sales --dir ./sales
-ddn subgraph add --subgraph ./sales/subgraph.yaml --target-supergraph ./supergraph.yaml
+ddn project subgraph create sales
 ```
+Go to Console and upgrade to DDN Advanced Tier
+(this is needed to provide subgraph level access to Team 2 Admin).
+![alt text](images/upgradetoadvanced.png)
+
+After starting DDN Advanced Free Trial, go to the Console and click Share.
+Enter the email ID of Team2 Admin and press invite.
+![alt text](images/granularaccess.png)
+
 
 
 ## Core Concepts
