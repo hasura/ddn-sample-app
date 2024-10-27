@@ -84,13 +84,3 @@ Enter the email ID of Team2 Admin and press invite.
 3. *Git Clone https://github.com/hasura/ddn-federation-sample-team2 *
 
 To continue with the Team2 workflow.
-
-## Core Concepts
-
-The following section outlines the core concepts of Hasura DDN, providing a deeper understanding of its architecture and functionality.
-
-### Subgraph Builds
-
-
-
-Considering the size of the supergraph and separate deployments, it may initially take some time to complete. Once deployed, the supergraph provides a unified GraphQL API that leverages the capabilities of all subgraphs to offer a comprehensive Ecommerce solution.
