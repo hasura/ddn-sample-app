@@ -81,7 +81,9 @@ After starting DDN Advanced Free Trial, go to the Console and click Share.
 Enter the email ID of Team2 Admin and press invite.
 ![alt text](images/granularaccess.png)
 
+3. *Git Clone https://github.com/hasura/ddn-federation-sample-team2 *
 
+To continue with the Team2 workflow.
 
 ## Core Concepts
 
