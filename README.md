@@ -1,3 +1,44 @@
+const generateTOC = (markdown) => {
+  // Split content into lines
+  const lines = markdown.split('\n');
+  
+  // Initialize TOC array
+  const toc = ['# Table of Contents\n'];
+  
+  // Find headers and build TOC
+  lines.forEach((line, index) => {
+    if (line.startsWith('#')) {
+      // Count the number of # to determine heading level
+      const level = line.match(/^#+/)[0].length;
+      
+      // Remove the # symbols and any extra spaces
+      const title = line.replace(/^#+\s*/, '');
+      
+      // Create anchor link - lowercase, remove special chars, replace spaces with hyphens
+      const anchor = title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-');
+      
+      // Add indentation based on heading level
+      const indent = '  '.repeat(level - 1);
+      
+      // Add TOC entry with proper indentation and link
+      toc.push(`${indent}- [${title}](#${anchor})\n`);
+    }
+  });
+  
+  // Join TOC lines and add spacing after TOC
+  return toc.join('') + '\n';
+}
+
+// Example usage with your markdown
+const markdown = `# Ecommerce Application Demo using Data Delivery Network
+
+This demo repo provides a practical example...`;
+
+console.log(generateTOC(markdown));
+
 # Ecommerce Application Demo using Data Delivery Network
 
 This demo repo provides a practical example of building an Ecommerce App using Hasura's [Data Delivery Network (DDN)](https://hasura.io/docs/3.0/getting-started/overview) with a [supergraph](https://supergraph.io) architecture.
@@ -8,6 +49,9 @@ Please note that a new release for the repo is out. Make sure to try the workflo
 - [Install Hasura CLI & Login](https://hasura.io/docs/3.0/cli/installation)
 - [Login into the Hasura CLI](https://hasura.io/docs/3.0/cli/commands/ddn_auth_login/)
 - [Install Docker](https://docs.docker.com/engine/install/), you'll need docker compose v2.27.1 or later.
+- [Install NodeJS](https://nodejs.org/en/download/package-manager)
+  - Note we have business logic connectors in Python and Go as well. Download dependencies accordingly. We will be using Typescript in this example demo.
+- Keep your Anthropic API Key ready (See: Getting started - Anthropic)
 
 <!-- You may also use a pre-packed [codespace](https://github.com/features/codespaces) that pre-installs all the above and clone this project by clicking on the following link.
 
@@ -152,18 +196,24 @@ ddn run build-supergraph
 
 ## Configure PromptQL
 
-1. Keep your Anthropic API Key ready (See: Getting started - Anthropic)
-
-2. Enable PromptQL by going to the console
+1. Enable PromptQL by going to the console
 
 ![alt text](images/Promptql1.png)
 
-3. Start asking questions about the data
+2. Start asking questions about the data
 
 ![alt text](images/promptql2.png)
 
 Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d).
 
+
+## DDN Advanced
+
+![alt text](images/ddnadvanced.png)
+
+See more details on DDN Advanced [here](https://hasura.io/pricing).
+
+1. Switch to this branch to start the DDN Advanced Workflow
 
 ## Core Concepts
 
