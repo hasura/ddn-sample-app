@@ -1,43 +1,19 @@
-const generateTOC = (markdown) => {
-  // Split content into lines
-  const lines = markdown.split('\n');
-  
-  // Initialize TOC array
-  const toc = ['# Table of Contents\n'];
-  
-  // Find headers and build TOC
-  lines.forEach((line, index) => {
-    if (line.startsWith('#')) {
-      // Count the number of # to determine heading level
-      const level = line.match(/^#+/)[0].length;
-      
-      // Remove the # symbols and any extra spaces
-      const title = line.replace(/^#+\s*/, '');
-      
-      // Create anchor link - lowercase, remove special chars, replace spaces with hyphens
-      const anchor = title
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-');
-      
-      // Add indentation based on heading level
-      const indent = '  '.repeat(level - 1);
-      
-      // Add TOC entry with proper indentation and link
-      toc.push(`${indent}- [${title}](#${anchor})\n`);
-    }
-  });
-  
-  // Join TOC lines and add spacing after TOC
-  return toc.join('') + '\n';
-}
+# Table of Contents
 
-// Example usage with your markdown
-const markdown = `# Ecommerce Application Demo using Data Delivery Network
-
-This demo repo provides a practical example...`;
-
-console.log(generateTOC(markdown));
+- [Table of Contents](#table-of-contents)
+- [Ecommerce Application Demo using Data Delivery Network](#ecommerce-application-demo-using-data-delivery-network)
+  - [Pre Requisites](#pre-requisites)
+  - [Disclaimer](#disclaimer)
+  - [Local Development](#local-development)
+    - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
+  - [Deploy to DDN Cloud](#deploy-to-ddn-cloud)
+  - [Configure PromptQL](#configure-promptql)
+  - [DDN Advanced](#ddn-advanced)
+  - [Core Concepts](#core-concepts)
+    - [Subgraph](#subgraph)
+    - [Models](#models)
+    - [Commands](#commands)
+    - [Build Process](#build-process)
 
 # Ecommerce Application Demo using Data Delivery Network
 
