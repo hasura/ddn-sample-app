@@ -100,7 +100,7 @@ flowchart TD
     D3B --> T3B[• ToCurrencyString
              • ToDateString]
 ```
-
+<br><br>
 ### Subgraphs and Data Sources
 
 - **Subgraph: users**
@@ -120,7 +120,7 @@ flowchart TD
     - _Commands_: ToCurrencyString, ToDateString
 
 ![alt text](images/supergraph.png)
-
+<br><br>
 5. To rebuild after any changes, you may run the following command to get the changes reflected.
 
   ```shell
@@ -175,14 +175,14 @@ ddn run build-supergraph
 1. Enable PromptQL by going to the console
 
 ![alt text](images/Promptql1.png)
-
+<br><br>
 2. Start asking questions about the data
 
 ![alt text](images/promptql2.png)
-
+<br><br>
 Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d).
 
-
+<br>
 ## DDN Advanced
 
 Two Main Features 
@@ -190,11 +190,11 @@ Two Main Features
 - Multi Repo CI/CD
 
 ![alt text](images/ddnadvanced.png)
-
+<br><br>
 See more details on DDN Advanced [here](https://hasura.io/pricing).
 
 **Switch to this branch to start the DDN Advanced Workflow - https://github.com/hasura/ddn-sample-app/tree/multirepo/team1admin**
-
+<br><br><br><br>
 ## Core Concepts
 
 The following section outlines the core concepts of Hasura DDN, providing a deeper understanding of its architecture and functionality.
