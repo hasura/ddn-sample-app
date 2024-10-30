@@ -4,8 +4,8 @@
 - [Ecommerce Application Demo using Data Delivery Network](#ecommerce-application-demo-using-data-delivery-network)
   - [Pre Requisites](#pre-requisites)
   - [Disclaimer](#disclaimer)
-  - [Local Development](#local-development)
     - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
+  - [Local Development](#local-development)
   - [Deploy to DDN Cloud](#deploy-to-ddn-cloud)
   - [Configure PromptQL](#configure-promptql)
   - [DDN Advanced](#ddn-advanced)
@@ -36,27 +36,6 @@ Please note that a new release for the repo is out. Make sure to try the workflo
 ## Disclaimer
 
 This repository has credentials for databases, which are intentionally published by Hasura for demo purposes. These credentials allows for read-only access to synthetic datasets, which do not contain any user or customer sensitive data.
-
-## Local Development
-
-1. Git Clone this repo: https://github.com/hasura/ddn-sample-app.git and cd into it
-   
-2. Build the supergraph locally using the following command 
-```shell 
-   ddn supergraph build local 
-```
-
-3. Run Docker. For local development, Hasura runs several services (engine, connectors, auth, etc.), which use the following ports: 3000, 4317 and so on. Please ensure these ports are available. If not, modify the published ports in the Docker Compose files from this repository accordingly.
-```shell 
-   ddn run docker-start
-```
-
-4. Check out the console to discover and test the API 
-```shell 
-   ddn console --local
-``` 
-Test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
-  - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
 
 This example supergraph is composed of three subgraphs - users, experience, and sales, each backed by one or more data connectors. These subgraphs integrate various data sources to provide a comprehensive Ecommerce solution as follows.
 
@@ -118,6 +97,34 @@ flowchart TD
     - _Models_: Coupons, Orders
   - _Typescript Functions_
     - _Commands_: ToCurrencyString, ToDateString
+
+## Local Development
+
+1. Git Clone this repo: https://github.com/hasura/ddn-sample-app.git and cd into it
+   
+2. Build the supergraph locally using the following command 
+```shell 
+   ddn supergraph build local 
+```
+
+3. Run Docker. For local development, Hasura runs several services (engine, connectors, auth, etc.), which use the following ports: 3000, 4317 and so on. Please ensure these ports are available. If not, modify the published ports in the Docker Compose files from this repository accordingly.
+```shell 
+   ddn run docker-start
+```
+
+4. Check out the console to discover and test the GraphQL API 
+```shell 
+   ddn console --local
+``` 
+  4a. DDN also supports JSON API as output. The feature is out in experimental phase.
+  Run the following command to  fetch the openapi JSON file. An example of the swagger file is shown here.
+```shel
+  curl http://localhost:3000/v1/rest/__schema > ddn_openapi.json
+```
+
+Test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
+  - For [AuthZ](https://github.com/hasura/ddn_beta_ecommerce/blob/main/Composability/authZ.graphQL): Set x-hasura-role = customer and x-hasura-user-id = some_user_id and run the AuthZ query
+
 
 ![alt text](images/supergraph.png)
 <br><br>
