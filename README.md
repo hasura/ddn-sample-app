@@ -4,7 +4,7 @@
 - [Ecommerce Application Demo using Data Delivery Network](#ecommerce-application-demo-using-data-delivery-network)
   - [Pre Requisites](#pre-requisites)
   - [Disclaimer](#disclaimer)
-    - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
+  - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
   - [Local Development](#local-development)
   - [Deploy to DDN Cloud](#deploy-to-ddn-cloud)
   - [Configure PromptQL](#configure-promptql)
@@ -80,7 +80,7 @@ flowchart TD
              • ToDateString]
 ```
 <br><br>
-### Subgraphs and Data Sources
+## Subgraphs and Data Sources
 
 - **Subgraph: users**
   - _Data Connector: postgres_
