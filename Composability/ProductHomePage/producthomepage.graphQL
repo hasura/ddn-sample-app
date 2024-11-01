@@ -3,7 +3,8 @@
 query ProductHomePage {
   topTShirtsInUS: products(  #1 Select list
     where: {countryOfOrigin: {_eq: "US"}, 
-    categoryId: {_eq: "672913fc-65b5-11ed-860f-6a8b11ef7372"}}
+    categoryId: {_eq: "672913fc-65b5-11ed-860f-6a8b11ef7372"},
+    reviews: { rating: {_gt: "1"}}}, #Remote Relationship in Predicate
     # 2 Filtering and 7 Nested Filtering
     order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
     offset: 1 # 4 Pagination
