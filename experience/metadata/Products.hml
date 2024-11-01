@@ -119,7 +119,9 @@ definition:
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: vector
           booleanExpressionType: VectorBoolExp
-      comparableRelationships: []
+      comparableRelationships:
+        - relationshipName: reviews
+          booleanExpressionType: ReviewsBoolExp
   logicalOperators:
     enable: true
   isNull:
