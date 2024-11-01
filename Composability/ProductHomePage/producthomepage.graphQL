@@ -1,9 +1,10 @@
 # Part 9 Nested paginate (top N)
 
 query ProductHomePage {
-  topTShirtsInUS: experience_products( #1 Select list
-    where: {countryOfOrigin: {_eq: "US"}, categories: {name: {_eq: "T-Shirts"}}} # 2 Filtering and 7 Nested Filtering
-    # order_by: {price: Asc} # 3 Sorting
+  topTShirtsInUS: products(  #1 Select list
+    where: {countryOfOrigin: {_eq: "US"}, 
+    categoryId: {_eq: "672913fc-65b5-11ed-860f-6a8b11ef7372"}}
+    # 2 Filtering and 7 Nested Filtering
     order_by: {categories: {name: Asc}} # 8 Nested Sorting Same Database
     offset: 1 # 4 Pagination
     limit: 5 # 4 Pagination
@@ -15,15 +16,15 @@ query ProductHomePage {
     manufacturedBy: manufacturers {
       name # 5 Same Database Join
     }
-    latestOrders: orders{  # Two level nested join across database
+    latestOrders: orders {  # Two level nested join across database
       createdAt
-      userActivity:users{
-        name  # 6 Three Level Nested Join across database
+      userActivity: users {
+        name # 6 Three Level Nested Join across database
         lastSeen
       }
     }
     # 9 Nested paginate (top n)
-    topReviews: reviews( 
+    topReviews: reviews(
       where: {createdAt: {_gt: "2023-10-15"}} # Filtering
       order_by: {rating: Desc} # Sorting
       limit: 3 # Pagination
@@ -31,7 +32,8 @@ query ProductHomePage {
       rating
       text
     }
-  }}
+  }
+}
 
 # Building the query now step by step
 
