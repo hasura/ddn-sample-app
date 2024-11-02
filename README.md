@@ -183,8 +183,6 @@ This is a script which passes the flag `--no-build-connectors`
 
 ## API Features (Both GraphQL and REST API)
 
-I'll analyze this GraphQL query and list down all the features being used:
-
 1. **Filtering and Sorting Operations**
    - Basic field filtering eg. (`countryOfOrigin: {_eq: "US"}`)
    - Category filtering using UUID
