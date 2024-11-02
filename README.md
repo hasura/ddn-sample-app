@@ -185,65 +185,61 @@ This is a script which passes the flag `--no-build-connectors`
 
 I'll analyze this GraphQL query and list down all the features being used:
 
-1. **Basic Query Selection**
-   - Main query named `ProductHomePage`
-   - Aliasing (`topTShirtsInUS` for products query)
-
-2. **Filtering and Sorting Operations**
-   - Basic field filtering (`countryOfOrigin: {_eq: "US"}`)
+1. **Filtering and Sorting Operations**
+   - Basic field filtering eg. (`countryOfOrigin: {_eq: "US"}`)
    - Category filtering using UUID
-   - Rating filtering (`_gt` operator)
-   - Ascending order by distance (`order_by: { distance: Asc }`)
+   - Rating filtering eg. (`_gt` operator)
+   - Ascending order by distance eg. (`order_by: { distance: Asc }`)
 
-3. **Remote Relationships in Predicates**
+2. **Remote Relationships in Predicates**
    - Reviews relationship used in filtering conditions
 
-4. **Pagination**
-   - Using `offset` parameter (value: 1)
-   - Using `limit` parameter (value: 5)
+3. **Pagination**
+   - Using `offset` parameter 
+   - Using `limit` parameter
 
-5. **Same Database Join**
-   - Manufacturers table join with aliasing (`manufacturedBy`)
+4. **Same Database Join**
+   - Manufacturers table join with aliasing such as (`manufacturedBy`)
 
-6. **Cross-Database Operations**
+5. **Cross-Database Operations**
    - Integration with Clickhouse and MongoDb databases
      - With Custom (Native Queries)
    - Session history tracking and Product Details
 
-7. **Multi-Level Nested Joins**
+6. **Multi-Level Nested Joins**
    - Two-level: Products → Orders
    - Three-level: Products → Orders → Users
 
-8. **Nested Filtering**
+7. **Nested Filtering**
    - Filtering within reviews section
 
-9. **Nested Sorting**
+8. **Nested Sorting**
    - Sorting by category name in ascending order
    - Sorting reviews by rating in descending order
 
-10. **Nested Pagination**
+9. **Nested Pagination**
    - Top N reviews selection (limit: 3)
    - Filtering by date in nested query
    - Sorting in nested query
 
-11. **Field Selection**
+10. **Field Selection**
     - Basic fields (id, name, price, description)
     - Nested fields (createdAt, lastSeen)
     - Custom field aliases
   
-12. **Data Transformations**
+11. **Data Transformations**
 
     - Date and Currency formatting transformations
     - TypeScript function integrations for formatting
 
-13. **Vector Search Operations**
+12. **Vector Search Operations**
 
     - Main query named SearchProductsVector
     - Vector distance calculation based on query vector
     - 50-dimensional vector input
     - Similarity-based ranking
 
-14. **Query Arguments**
+13. **Query Arguments**
 
     - Vector argument passing using args parameter
     - Query vector as a string of floating-point numbers
