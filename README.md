@@ -7,7 +7,7 @@
   - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
   - [Local Development](#local-development)
   - [Deploy to DDN Cloud](#deploy-to-ddn-cloud)
-  - [API Features](#api-features)
+  - [API Features (Both GraphQL and REST API)](#api-features-both-graphql-and-rest-api)
   - [Configure PromptQL](#configure-promptql)
   - [DDN Advanced](#ddn-advanced)
   - [Core Concepts](#core-concepts)
@@ -181,7 +181,7 @@ This is a script which passes the flag `--no-build-connectors`
 
 4. Go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
 
-## API Features
+## API Features (Both GraphQL and REST API)
 
 I'll analyze this GraphQL query and list down all the features being used:
 
