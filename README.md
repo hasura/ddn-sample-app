@@ -256,6 +256,7 @@ This is a script which passes the flag `--no-build-connectors`
 Get round-the-clock support on our Discord Server [here](https://bit.ly/3YhGP8d).
 
 <br>
+
 ## DDN Advanced
 
 Two Main Features 
@@ -268,6 +269,7 @@ See more details on DDN Advanced [here](https://hasura.io/pricing).
 
 **Switch to this branch to start the DDN Advanced Workflow - https://github.com/hasura/ddn-sample-app/tree/multirepo/team1admin**
 <br><br><br><br>
+
 ## Core Concepts
 
 The following section outlines the core concepts of Hasura DDN, providing a deeper understanding of its architecture and functionality.
