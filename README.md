@@ -7,6 +7,7 @@
   - [Subgraphs and Data Sources](#subgraphs-and-data-sources)
   - [Local Development](#local-development)
   - [Deploy to DDN Cloud](#deploy-to-ddn-cloud)
+  - [API Features](#api-features)
   - [Configure PromptQL](#configure-promptql)
   - [DDN Advanced](#ddn-advanced)
   - [Core Concepts](#core-concepts)
@@ -161,21 +162,92 @@ ddn context set project <Project Name>
 # 5:36PM INF Key "project" set to "vast-buzzard-0000" in the context successfully
 ```
 
-2. Create a Supergraph Build. This will also create the connector builds automatically.
+3. Create a Supergraph Build. This will also create the connector builds automatically.
    
 ```shell
 ddn supergraph build create
 ```
+> ⚠️ First Time Build can take 8 to 10 mins. Subsequent builds will be faster because of caching. Recommend
 
-3. If you want to just make metadata changes and quickly see changes without rebuilding the connectors, run the following command:
+If you want to just make metadata changes and quickly see changes without rebuilding the connectors, run the following command:
 
 ```shell
 ddn run build-supergraph
 ```
+This is a script which passes the flag `--no-build-connectors`
+
 > Note: Once deployed to your new project, if you don't have any connector changes, you can only rebuild supergraph alone, ie. connectors are only need to be deployed when there is change (data schema changes, functions etc.)
 
 
 4. Go to console and test using GraphQL API queries from the [Composability folder](https://github.com/hasura/ddn_beta_ecommerce/tree/main/Composability).
+
+## API Features
+
+I'll analyze this GraphQL query and list down all the features being used:
+
+1. **Basic Query Selection**
+   - Main query named `ProductHomePage`
+   - Aliasing (`topTShirtsInUS` for products query)
+
+2. **Filtering and Sorting Operations**
+   - Basic field filtering (`countryOfOrigin: {_eq: "US"}`)
+   - Category filtering using UUID
+   - Rating filtering (`_gt` operator)
+   - Ascending order by distance (`order_by: { distance: Asc }`)
+
+3. **Remote Relationships in Predicates**
+   - Reviews relationship used in filtering conditions
+
+4. **Pagination**
+   - Using `offset` parameter (value: 1)
+   - Using `limit` parameter (value: 5)
+
+5. **Same Database Join**
+   - Manufacturers table join with aliasing (`manufacturedBy`)
+
+6. **Cross-Database Operations**
+   - Integration with Clickhouse and MongoDb databases
+     - With Custom (Native Queries)
+   - Session history tracking and Product Details
+
+7. **Multi-Level Nested Joins**
+   - Two-level: Products → Orders
+   - Three-level: Products → Orders → Users
+
+8. **Nested Filtering**
+   - Filtering within reviews section
+
+9. **Nested Sorting**
+   - Sorting by category name in ascending order
+   - Sorting reviews by rating in descending order
+
+10. **Nested Pagination**
+   - Top N reviews selection (limit: 3)
+   - Filtering by date in nested query
+   - Sorting in nested query
+
+11. **Field Selection**
+    - Basic fields (id, name, price, description)
+    - Nested fields (createdAt, lastSeen)
+    - Custom field aliases
+  
+12. **Data Transformations**
+
+    - Date and Currency formatting transformations
+    - TypeScript function integrations for formatting
+
+13. **Vector Search Operations**
+
+    - Main query named SearchProductsVector
+    - Vector distance calculation based on query vector
+    - 50-dimensional vector input
+    - Similarity-based ranking
+
+14. **Query Arguments**
+
+    - Vector argument passing using args parameter
+    - Query vector as a string of floating-point numbers
+    - Pre-computed embedding vector input
 
 ## Configure PromptQL
 
