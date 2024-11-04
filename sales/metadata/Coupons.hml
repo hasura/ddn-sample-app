@@ -16,6 +16,8 @@ definition:
       type: Uuid!
     - name: percentOrValue
       type: Text
+      deprecated:
+        reason: Only going with percent coupons
     - name: updatedAt
       type: Timestamptz!
     - name: userId

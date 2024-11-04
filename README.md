@@ -173,6 +173,8 @@ If you want to just make metadata changes and quickly see changes without rebuil
 
 ```shell
 ddn run build-supergraph
+or
+ddn supergraph build create --no-build-connectors
 ```
 This is a script which passes the flag `--no-build-connectors`
 

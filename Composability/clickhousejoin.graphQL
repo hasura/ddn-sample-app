@@ -1,6 +1,6 @@
 # Clickhouse
 query ClickhouseJoin {
-  users_users {
+  users {
     createdAt
     email
     favoriteArtist

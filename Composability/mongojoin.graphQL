@@ -1,5 +1,5 @@
 query mongoonemodel{
-  experience_productDetails {
+  productDetails {
     specifications {
       material
       sizeOptions
@@ -8,7 +8,7 @@ query mongoonemodel{
 }
 
 query Mongo {
-  experience_products(offset: 1, order_by: {categories: {id: Asc}}) {
+  products(offset: 1, order_by: {categories: {id: Asc}}) {
     id
     name
     productDetails {

@@ -12,6 +12,8 @@ definition:
       type: Bool!
     - name: isReminderSent
       type: Bool!
+      deprecated:
+        reason: Not sending reminder emails anymore
     - name: updatedAt
       type: Timestamptz
     - name: userId

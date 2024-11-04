@@ -26,6 +26,8 @@ definition:
       type: Timestamptz!
     - name: vector
       type: Vector
+      deprecated:
+        reason: Use PromptQL functionality
   graphql:
     typeName: Products
     inputTypeName: ProductsInput

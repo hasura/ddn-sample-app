@@ -20,7 +20,7 @@ query OrderNestedFields {
 
 
 query DateTransformation {
-  sales_orders {
+  orders {
     createdAt
     formattedCreatedAt # data transformation using TS functions
     deliveryDate
@@ -36,7 +36,7 @@ query DateTransformation {
 
 
 query SalesOrdersPage {
-  sales_orders {
+  orders {
     createdAt
     formattedCreatedAt # data transformation using TS functions
     deliveryDate

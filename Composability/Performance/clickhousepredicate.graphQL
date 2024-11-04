@@ -1,5 +1,5 @@
 query ClickhousePredicate {
-  analytics_sessionHistory(
+  sessionHistory(
     where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
   ) {
     loggedInAt
@@ -8,7 +8,7 @@ query ClickhousePredicate {
       email
     }
   }
-  analytics_recentlyViewedProducts(
+  recentlyViewedProducts(
     where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
   ) {
     viewed

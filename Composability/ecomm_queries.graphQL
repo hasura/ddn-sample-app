@@ -1,5 +1,5 @@
 query UserOrderHistory {
-  sales_orders(
+  orders(
     where: {userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
     order_by: {createdAt: Desc}
     limit: 1
@@ -28,8 +28,8 @@ query UserOrderHistory {
 
 
 query OrderTracking {
-  sales_orders(
-    where: {order_id: {_eq: "c7406b75-6b24-41e4-9c5b-ff3feada9447"}}
+  orders(
+    where: {id: {_eq: "c7406b75-6b24-41e4-9c5b-ff3feada9447"}}
   ) {
     id
     status
@@ -53,7 +53,7 @@ query OrderTracking {
 
 
 query CartSummaryWithOffers {
-  experience_carts(
+  carts(
     where: {id: {_eq: "e2f27008-673d-11ed-8a24-7224baf239e5"}, userId: {_eq: "7cf0a66c-65b7-11ed-b904-fb49f034fbbb"}}
   ) {
     id
