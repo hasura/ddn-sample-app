@@ -194,6 +194,32 @@ This is a script which passes the flag `--no-build-connectors`
 2. **Remote Relationships in Predicates**
    - Reviews relationship used in filtering conditions
 
+```yaml
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductsBoolExp
+  operand:
+    object:
+      type: Products
+      comparableFields:
+        - fieldName: categoryId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: countryOfOrigin
+          booleanExpressionType: TextBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: reviews
+          booleanExpressionType: ReviewsBoolExp
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductsBoolExp
+```
+
 3. **Pagination**
    - Using `offset` parameter 
    - Using `limit` parameter
@@ -205,6 +231,26 @@ This is a script which passes the flag `--no-build-connectors`
    - Integration with Clickhouse and MongoDb databases
      - With Custom (Native Queries)
    - Session history tracking and Product Details
+
+```yaml
+kind: Relationship
+version: v1
+definition:
+  name: recentlyViewedProducts
+  source: Users
+  target:
+    model:
+      name: RecentlyViewedProducts
+      subgraph: users
+      relationshipType: Array
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+```
 
 6. **Multi-Level Nested Joins**
    - Two-level: Products → Orders
@@ -231,6 +277,40 @@ This is a script which passes the flag `--no-build-connectors`
 
     - Date and Currency formatting transformations
     - TypeScript function integrations for formatting
+
+```yaml
+kind: Command
+version: v1
+definition:
+  name: ToCurrencyString
+  outputType: String!
+  arguments:
+    - name: amount
+      type: Float
+      description: The number to format into currency.
+  source:
+    dataConnectorName: salests
+    dataConnectorCommand:
+      function: toCurrencyString
+  graphql:
+    rootFieldName: toCurrencyString
+    rootFieldKind: Query
+  description: Formats a number into a currency string.
+```
+```ts
+export function toDateString(date?: string): string {
+  console.log("date", date);
+  if (!date) {
+    return "Invalid date";
+  }
+  try {
+    return new Date(date).toDateString();
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    return "Invalid date";
+  }
+}
+```
 
 12. **Vector Search Operations**
 
