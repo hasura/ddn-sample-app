@@ -17,7 +17,7 @@ services:
       INTROSPECTION_METADATA_FILE: /md/metadata.json
       METADATA_PATH: /md/open_dd.json
       OTLP_ENDPOINT: http://local.hasura.dev:4317
-      UNSTABLE_FEATURES: enable-json-api
+      # UNSTABLE_FEATURES: enable-json-api
     extra_hosts:
       - local.hasura.dev:host-gateway
     ports:
