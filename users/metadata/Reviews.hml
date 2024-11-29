@@ -215,7 +215,7 @@ definition:
 kind: Relationship
 version: v1
 definition:
-  name: users
+  name: customers
   source: Reviews
   target:
     model:
